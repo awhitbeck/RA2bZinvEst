@@ -55,11 +55,14 @@ double CalcdPhi( double phi1 , double phi2 ){
 
 template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("*",0);
+  ntuple->fChain->SetBranchStatus("NMuons",1);
+  ntuple->fChain->SetBranchStatus("NElectrons",1);
+  ntuple->fChain->SetBranchStatus("iso*Tracks",1);
   ntuple->fChain->SetBranchStatus("Jets",1);
   ntuple->fChain->SetBranchStatus("DeltaPhi*",1);
   ntuple->fChain->SetBranchStatus("HT",1);
   ntuple->fChain->SetBranchStatus("NJets",1);
-  ntuple->fChain->SetBranchStatus("BTags",1);
+  ntuple->fChain->SetBranchStatus("BTags*",1);
   ntuple->fChain->SetBranchStatus("MHT",1);
   ntuple->fChain->SetBranchStatus("Weight",1);
   ntuple->fChain->SetBranchStatus("puWeight",1);
@@ -81,6 +84,15 @@ template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
 template<typename ntupleType> bool cutFlow_none(ntupleType* ntuple){
     return true;
 }
+
+template<typename ntupleType> bool cutFlow_leptonVeto(ntupleType* ntuple){
+  return (ntuple->NMuons==0 &&
+	  ntuple->NElectrons==0 &&
+	  ntuple->isoElectronTracks==0 &&
+	  ntuple->isoMuonTracks==0 && 
+	  ntuple->isoPionTracks==0);
+}
+
 template<typename ntupleType> bool cutFlow_onePhoton(ntupleType* ntuple){
     return ntuple->Photons->size()==1
         && isPromptPhoton(ntuple)
@@ -103,20 +115,22 @@ template<typename ntupleType> bool cutFlow_nJetsTwo(ntupleType* ntuple){
     return ntuple->NJets==2;
 }
 template<typename ntupleType> bool cutFlow_btagsZero(ntupleType* ntuple){
-    return ntuple->BTags==0;
+    return ntuple->BTagsDeepCSV==0;
 }
 template<typename ntupleType> bool cutFlow_filters(ntupleType* ntuple){
-    return ntuple->HT5/ntuple->HT < 2.
-        && ntuple->globalTightHalo2016Filter==1
-        && ntuple->HBHENoiseFilter==1
-        && ntuple->HBHEIsoNoiseFilter==1
-        && ntuple->eeBadScFilter==1
-        && ntuple->EcalDeadCellTriggerPrimitiveFilter == 1
-        && ntuple->BadChargedCandidateFilter == 1
-        && ntuple->BadPFMuonFilter == 1
-        && ntuple->NVtx>0
-        && ntuple->JetID == 1
-        ;
+    return ( ntuple->HT5/ntuple->HT < 2.
+	     && ntuple->PFCaloMETRatio < 5. 
+	     && ntuple->globalSuperTightHalo2016Filter==1
+	     && ntuple->HBHENoiseFilter==1
+	     && ntuple->HBHEIsoNoiseFilter==1
+	     && ntuple->eeBadScFilter==1
+	     && ntuple->ecalBadCalibFilter==1 
+	     && ntuple->EcalDeadCellTriggerPrimitiveFilter == 1
+	     && ntuple->BadChargedCandidateFilter == 1
+	     && ntuple->BadPFMuonFilter == 1
+	     && ntuple->NVtx>0
+	     && ntuple->JetID == 1
+	     );
 }
 
 /******************************************/
@@ -439,7 +453,7 @@ template<typename ntupleType> double fillNJets(ntupleType* ntuple){
 }
 
 template<typename ntupleType> double fillBTags(ntupleType* ntuple){
-  return ntuple->BTags;
+  return ntuple->BTagsDeepCSV;
 }
 
   /////////////////
@@ -636,7 +650,7 @@ template<typename ntupleType> double fillRA2b13Bins(ntupleType* ntuple){
 
 template<typename ntupleType> double fillRA2b59Bins( ntupleType* ntuple ){
 
-  int BTags = int(ntuple->BTags);
+  int BTags = int(ntuple->BTagsDeepCSV);
   if( BTags != 0 ) return -999999.;
   int NJets = int(ntuple->NJets);
 
@@ -656,7 +670,7 @@ template<typename ntupleType> double fillRA2b59Bins( ntupleType* ntuple ){
 
 template<typename ntupleType> double fillRA2b46Bins( ntupleType* ntuple ){
 
-  int BTags = int(ntuple->BTags);
+  int BTags = int(ntuple->BTagsDeepCSV);
   if( BTags != 0 ) return -999999.;
   int NJets = int(ntuple->NJets);
 
@@ -676,7 +690,7 @@ template<typename ntupleType> double fillRA2b46Bins( ntupleType* ntuple ){
 
 template<typename ntupleType> double fillRA2bNJet2Bins( ntupleType* ntuple ){
 
-  int BTags = int(ntuple->BTags);
+  int BTags = int(ntuple->BTagsDeepCSV);
   int NJets = int(ntuple->NJets);
 
   if( NJets == 2 ){
@@ -692,7 +706,7 @@ template<typename ntupleType> double fillRA2bNJet2Bins( ntupleType* ntuple ){
 
 template<typename ntupleType> double fillRA2b174Bins( ntupleType* ntuple ){
 
-  int BTags = int(ntuple->BTags);
+  int BTags = int(ntuple->BTagsDeepCSV);
   int NJets = int(ntuple->NJets);
 
   if( NJets == 2 ){
