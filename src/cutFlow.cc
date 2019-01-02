@@ -30,7 +30,7 @@ int main(int argc, char** argv){
     vector<TString> sampleNames;
 
     TString skimType;
-    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV12/tree_signal/";
+    skimType="/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_signal/";
     
     vector<TString> ZJetsFileNames;
     ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200.root");
@@ -47,14 +47,13 @@ int main(int argc, char** argv){
     //samples.push_back(new RA2bTree(ZJets));
     //sampleNames.push_back("ZJets");
 
-    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV12/tree_GJet_CleanVars";
+    skimType="/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJetLoose_CleanVars/";
 
     vector<TString> GJetsFileNames;
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
-    
+    GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
         GJets->Add(skimType+"/"+GJetsFileNames[i]);
@@ -68,6 +67,8 @@ int main(int argc, char** argv){
     vector<TString> cutName;
     cutFlow.push_back(*cutFlow_none<RA2bTree>);
     cutName.push_back("none");
+    cutFlow.push_back(*cutFlow_leptonVeto<RA2bTree>);
+    cutName.push_back("leptonVeto");
     cutFlow.push_back(*cutFlow_onePhoton<RA2bTree>);
     cutName.push_back("onePhoton");
     cutFlow.push_back(*cutFlow_photonPt200<RA2bTree>);
@@ -107,6 +108,8 @@ int main(int argc, char** argv){
         }
 
         int numEvents = ntuple->fChain->GetEntries();
+	cout << "Sample: " << sampleNames[iSample] << endl;
+	cout << "number of events: " << numEvents << endl;
         ntupleBranchStatus<RA2bTree>(ntuple);
         double weight=1.0;
         for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
@@ -117,7 +120,7 @@ int main(int argc, char** argv){
                 for( int iPlot = 0 ; iPlot < plots[iCut].size() ; iPlot++ ){
                     weight = ntuple->Weight*lumi*customPUweights(ntuple);
                     if( sampleNames[iSample] == "GJets" ){
-                        weight*=/*photonTriggerWeight(ntuple)**/GJets0p4Weights(ntuple)*dRweights(ntuple);
+		        //weight*=/*photonTriggerWeight(ntuple)**/GJets0p4Weights(ntuple)*dRweights(ntuple);
                         plots[iCut][iPlot].fill(ntuple,weight);
                     }else 
                         plots[iCut][iPlot].fill(ntuple,weight);
