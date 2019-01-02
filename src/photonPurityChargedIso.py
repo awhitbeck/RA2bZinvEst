@@ -40,9 +40,9 @@ def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) :
 
     IsoChrg = RooRealVar("iso","Iso_{chrg} [GeV]",0,10.)
     if isEndcap : 
-        IsoChrg.setRange("SR",0.0,1.79);
+        IsoChrg.setRange("SR",0.0,1.694);
     else :
-        IsoChrg.setRange("SR",0.0,2.67);
+        IsoChrg.setRange("SR",0.0,2.089);
 
     promptRooHist = RooDataHist("promptRooHist","promptaRooHist",RooArgList(IsoChrg),promptHisto)
     promptPdf = RooHistPdf("promptPdf","promptPdf",RooArgSet(IsoChrg),promptRooHist)
@@ -150,19 +150,19 @@ def main() :
     ###########################################################
     # - - - - - - - - - - grab histo inputs - - - - - - - - - #
     ###########################################################
-    inputFile = TFile(inputDir+"/plotPurityProperties_photonLoose.root","READ")
+    inputFile = TFile("purityInputs.root","READ")
     prompt_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_GJets".format(EEorEB,binLabel))
     ### ADD HACK BECAUSE THERE AREN'T ENOUGH EVENTS IN THE
     ### MC ALT MHT_500 BIN....
     if binLabel == "MHT_500" :
-        nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_data".format(EEorEB,"MHT_350"))
+        nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_Data".format(EEorEB,"MHT_350"))
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,"MHT_350"))
         nonPromptMCALT_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,"MHT_350"))
     else : 
-        nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_data".format(EEorEB,binLabel))
+        nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_Data".format(EEorEB,binLabel))
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
         nonPromptMCALT_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
-    data_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_data".format(EEorEB,binLabel))
+    data_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_Data".format(EEorEB,binLabel))
 
      ####################################################
      # - - - - - - - - - run fits - - - - - - - - - - - #

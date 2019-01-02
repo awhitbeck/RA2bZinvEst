@@ -16,44 +16,49 @@
 
 using namespace std;
 
-static const int MAX_EVENTS=999999999;
+static const int MAX_EVENTS=99999999;
 
-int main(int argc, char** argv){
+void process(int region, string backgroundSample, string dataSample){
 
-    gROOT->ProcessLine(".L tdrstyle.C");
-    gROOT->ProcessLine("setTDRStyle()");
+    vector<int> trigger_indices = {140,141};
 
-    if(argc != 2 ) return 1;
-  
-    int regInt = atoi(argv[1]);
-    skimSamples::region reg = static_cast<skimSamples::region>(regInt);
-    skimSamples skims(reg);
+    skimSamples::region reg = static_cast<skimSamples::region>(region);
+
+    vector<TString> backgroundSamples;
+    if( backgroundSample != "" )
+      backgroundSamples.push_back(TString(backgroundSample));
+    vector<TString> signalSamples;
+    vector<TString> dataSamples;
+    if( dataSample != "" )
+      dataSamples.push_back(TString(dataSample));
+
+    skimSamples skims(reg,backgroundSamples,signalSamples,dataSamples);
     typedef plot<RA2bTree> plot;
     cout << skims.skimType << endl;
     for( int i = 0 ; i < skims.ntuples.size() ; i++){
         cout << "sample name: " << skims.sampleName[i] << endl;
     }
-  
-    plot MHTplot(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[regInt]+"_baseline","H_{T}^{miss} [GeV]",64,200.,1800.);
-    plot HTplot(*fillHT<RA2bTree>,"HT_"+skims.regionNames[regInt]+"_baseline","H_{T} [GeV]",50,300,2800.);
-    plot NJetsplot(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[regInt]+"_baseline","N_{jet}",14,1.5,15.5);
-    plot BTagsplot(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[regInt]+"_baseline","N_{b-jet}",6,-0.5,5.5);
-    plot Binsplot(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[regInt]+"_baseline","Search Bin",174,0.5,174.5);
-    plot Bins46plot(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[regInt]+"_baseline","Search Bin",46,0.5,46.5);
-    plot Bins59plot(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[regInt]+"_baseline","Search Bin",59,0.5,59.5);
-    plot BinsNJet2plot(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[regInt]+"_baseline","Search Bin",30,0.5,30.5);
 
-    plot DeltaPhi1plot(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[regInt]+"_baseline","#Delta#Phi_{1}",20,0.,3.1415);
-    plot DeltaPhi2plot(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[regInt]+"_baseline","#Delta#Phi_{2}",20,0.,3.1415);
-    plot DeltaPhi3plot(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[regInt]+"_baseline","#Delta#Phi_{3}",20,0.,3.1415);
-    plot DeltaPhi4plot(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[regInt]+"_baseline","#Delta#Phi_{4}",20,0.,3.1415);
+    plot MHTplot(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[region]+"_baseline","H_{T}^{miss} [GeV]",64,200.,1800.);
+    plot HTplot(*fillHT<RA2bTree>,"HT_"+skims.regionNames[region]+"_baseline","H_{T} [GeV]",50,300,2800.);
+    plot NJetsplot(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[region]+"_baseline","N_{jet}",14,1.5,15.5);
+    plot BTagsplot(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[region]+"_baseline","N_{b-jet}",6,-0.5,5.5);
+    plot Binsplot(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[region]+"_baseline","Search Bin",174,0.5,174.5);
+    plot Bins46plot(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[region]+"_baseline","Search Bin",46,0.5,46.5);
+    plot Bins59plot(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[region]+"_baseline","Search Bin",59,0.5,59.5);
+    plot BinsNJet2plot(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[region]+"_baseline","Search Bin",30,0.5,30.5);
 
-    plot PhotonPtplot(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline","p_{T,#gamma} [GeV]",50,200,1400);
-    plot PhotonEtaplot(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline","#eta_{#gamma}",60,-3.,3.);
+    plot DeltaPhi1plot(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[region]+"_baseline","#Delta#Phi_{1}",20,0.,3.1415);
+    plot DeltaPhi2plot(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[region]+"_baseline","#Delta#Phi_{2}",20,0.,3.1415);
+    plot DeltaPhi3plot(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[region]+"_baseline","#Delta#Phi_{3}",20,0.,3.1415);
+    plot DeltaPhi4plot(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[region]+"_baseline","#Delta#Phi_{4}",20,0.,3.1415);
 
-    plot PhotonMinDeltaR(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline","min#Delta R(jet,#gamma)",40,0,4);
+    plot PhotonPtplot(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[region]+"_baseline","p_{T,#gamma} [GeV]",50,200,1400);
+    plot PhotonEtaplot(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[region]+"_baseline","#eta_{#gamma}",60,-3.,3.);
 
-    plot verticesplot(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline","n_{vtx}",40,0,80);
+    plot PhotonMinDeltaR(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[region]+"_baseline","min#Delta R(jet,#gamma)",40,0,4);
+
+    plot verticesplot(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[region]+"_baseline","n_{vtx}",40,0,80);
 
     vector<plot> plotsAllEvents;
     plotsAllEvents.push_back(MHTplot);
@@ -73,26 +78,26 @@ int main(int argc, char** argv){
     plotsAllEvents.push_back(PhotonMinDeltaR);
     plotsAllEvents.push_back(verticesplot);
 
-    plot MHTplotEB(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[regInt]+"_baseline_EB","H_{T}^{miss} [GeV]",64,200.,1800.);
-    plot HTplotEB(*fillHT<RA2bTree>,"HT_"+skims.regionNames[regInt]+"_baseline_EB","H_{T} [GeV]",50,300,2800.);
-    plot NJetsplotEB(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[regInt]+"_baseline_EB","N_{jet}",14,1.5,15.5);
-    plot BTagsplotEB(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[regInt]+"_baseline_EB","N_{b-jet}",6,-0.5,5.5);
-    plot BinsplotEB(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[regInt]+"_baseline_EB","Search Bin",174,0.5,174.5);
-    plot Bins46plotEB(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[regInt]+"_baseline_EB","Search Bin",46,0.5,46.5);
-    plot Bins59plotEB(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[regInt]+"_baseline_EB","Search Bin",59,0.5,59.5);
-    plot BinsNJet2plotEB(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[regInt]+"_baseline_EB","Search Bin",30,0.5,30.5);
+    plot MHTplotEB(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[region]+"_baseline_EB","H_{T}^{miss} [GeV]",64,200.,1800.);
+    plot HTplotEB(*fillHT<RA2bTree>,"HT_"+skims.regionNames[region]+"_baseline_EB","H_{T} [GeV]",50,300,2800.);
+    plot NJetsplotEB(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[region]+"_baseline_EB","N_{jet}",14,1.5,15.5);
+    plot BTagsplotEB(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[region]+"_baseline_EB","N_{b-jet}",6,-0.5,5.5);
+    plot BinsplotEB(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[region]+"_baseline_EB","Search Bin",174,0.5,174.5);
+    plot Bins46plotEB(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[region]+"_baseline_EB","Search Bin",46,0.5,46.5);
+    plot Bins59plotEB(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[region]+"_baseline_EB","Search Bin",59,0.5,59.5);
+    plot BinsNJet2plotEB(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[region]+"_baseline_EB","Search Bin",30,0.5,30.5);
 
-    plot DeltaPhi1plotEB(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[regInt]+"_baseline_EB","#Delta#Phi_{1}",20,0.,3.1415);
-    plot DeltaPhi2plotEB(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[regInt]+"_baseline_EB","#Delta#Phi_{2}",20,0.,3.1415);
-    plot DeltaPhi3plotEB(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[regInt]+"_baseline_EB","#Delta#Phi_{3}",20,0.,3.1415);
-    plot DeltaPhi4plotEB(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[regInt]+"_baseline_EB","#Delta#Phi_{4}",20,0.,3.1415);
+    plot DeltaPhi1plotEB(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[region]+"_baseline_EB","#Delta#Phi_{1}",20,0.,3.1415);
+    plot DeltaPhi2plotEB(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[region]+"_baseline_EB","#Delta#Phi_{2}",20,0.,3.1415);
+    plot DeltaPhi3plotEB(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[region]+"_baseline_EB","#Delta#Phi_{3}",20,0.,3.1415);
+    plot DeltaPhi4plotEB(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[region]+"_baseline_EB","#Delta#Phi_{4}",20,0.,3.1415);
 
-    plot PhotonPtplotEB(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline_EB","p_{T,#gamma} [GeV]",50,200,1400);
-    plot PhotonEtaplotEB(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline_EB","#eta_{#gamma}",60,-3.,3.);
+    plot PhotonPtplotEB(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[region]+"_baseline_EB","p_{T,#gamma} [GeV]",50,200,1400);
+    plot PhotonEtaplotEB(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[region]+"_baseline_EB","#eta_{#gamma}",60,-3.,3.);
 
-    plot PhotonMinDeltaREB(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EB","min#Delta R(jet,#gamma)",40,0,4);
+    plot PhotonMinDeltaREB(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[region]+"_baseline_EB","min#Delta R(jet,#gamma)",40,0,4);
   
-    plot verticesplotEB(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EB","n_{vtx}",40,0,80);
+    plot verticesplotEB(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[region]+"_baseline_EB","n_{vtx}",40,0,80);
 
     vector<plot> plotsEBevents;
     plotsEBevents.push_back(MHTplotEB);
@@ -112,26 +117,26 @@ int main(int argc, char** argv){
     plotsEBevents.push_back(PhotonMinDeltaREB);
     plotsEBevents.push_back(verticesplotEB);
 
-    plot MHTplotEE(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[regInt]+"_baseline_EE","H_{T}^{miss} [GeV]",64,200.,1800.);
-    plot HTplotEE(*fillHT<RA2bTree>,"HT_"+skims.regionNames[regInt]+"_baseline_EE","H_{T} [GeV]",50,300,2800.);
-    plot NJetsplotEE(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[regInt]+"_baseline_EE","N_{jet}",14,1.5,15.5);
-    plot BTagsplotEE(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[regInt]+"_baseline_EE","N_{b-jet}",6,-0.5,5.5);
-    plot BinsplotEE(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[regInt]+"_baseline_EE","Search Bin",174,0.5,174.5);
-    plot Bins46plotEE(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[regInt]+"_baseline_EE","Search Bin",46,0.5,46.5);
-    plot Bins59plotEE(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[regInt]+"_baseline_EE","Search Bin",59,0.5,59.5);
-    plot BinsNJet2plotEE(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[regInt]+"_baseline_EE","Search Bin",30,0.5,30.5);
+    plot MHTplotEE(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[region]+"_baseline_EE","H_{T}^{miss} [GeV]",64,200.,1800.);
+    plot HTplotEE(*fillHT<RA2bTree>,"HT_"+skims.regionNames[region]+"_baseline_EE","H_{T} [GeV]",50,300,2800.);
+    plot NJetsplotEE(*fillNJets<RA2bTree>,"NJets_"+skims.regionNames[region]+"_baseline_EE","N_{jet}",14,1.5,15.5);
+    plot BTagsplotEE(*fillBTags<RA2bTree>,"BTags_"+skims.regionNames[region]+"_baseline_EE","N_{b-jet}",6,-0.5,5.5);
+    plot BinsplotEE(*fillRA2b174Bins<RA2bTree>,"AnalysisBins_"+skims.regionNames[region]+"_baseline_EE","Search Bin",174,0.5,174.5);
+    plot Bins46plotEE(*fillRA2b46Bins<RA2bTree>,"AnalysisBins_BTag0_"+skims.regionNames[region]+"_baseline_EE","Search Bin",46,0.5,46.5);
+    plot Bins59plotEE(*fillRA2b59Bins<RA2bTree>,"AnalysisBins_BTag0plusQCDCR_"+skims.regionNames[region]+"_baseline_EE","Search Bin",59,0.5,59.5);
+    plot BinsNJet2plotEE(*fillRA2bNJet2Bins<RA2bTree>,"AnalysisBins_NJet2_"+skims.regionNames[region]+"_baseline_EE","Search Bin",30,0.5,30.5);
 
-    plot DeltaPhi1plotEE(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[regInt]+"_baseline_EE","#Delta#Phi_{1}",20,0.,3.1415);
-    plot DeltaPhi2plotEE(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[regInt]+"_baseline_EE","#Delta#Phi_{2}",20,0.,3.1415);
-    plot DeltaPhi3plotEE(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[regInt]+"_baseline_EE","#Delta#Phi_{3}",20,0.,3.1415);
-    plot DeltaPhi4plotEE(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[regInt]+"_baseline_EE","#Delta#Phi_{4}",20,0.,3.1415);
+    plot DeltaPhi1plotEE(*fillDeltaPhi1<RA2bTree>,"DeltaPhi1_"+skims.regionNames[region]+"_baseline_EE","#Delta#Phi_{1}",20,0.,3.1415);
+    plot DeltaPhi2plotEE(*fillDeltaPhi2<RA2bTree>,"DeltaPhi2_"+skims.regionNames[region]+"_baseline_EE","#Delta#Phi_{2}",20,0.,3.1415);
+    plot DeltaPhi3plotEE(*fillDeltaPhi3<RA2bTree>,"DeltaPhi3_"+skims.regionNames[region]+"_baseline_EE","#Delta#Phi_{3}",20,0.,3.1415);
+    plot DeltaPhi4plotEE(*fillDeltaPhi4<RA2bTree>,"DeltaPhi4_"+skims.regionNames[region]+"_baseline_EE","#Delta#Phi_{4}",20,0.,3.1415);
 
-    plot PhotonPtplotEE(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline_EE","p_{T,#gamma} [GeV]",50,200,1400);
-    plot PhotonEtaplotEE(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline_EE","#eta_{#gamma}",60,-3.,3.);
+    plot PhotonPtplotEE(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[region]+"_baseline_EE","p_{T,#gamma} [GeV]",50,200,1400);
+    plot PhotonEtaplotEE(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[region]+"_baseline_EE","#eta_{#gamma}",60,-3.,3.);
 
-    plot PhotonMinDeltaREE(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EE","min#Delta R(jet,#gamma)",40,0,4);
+    plot PhotonMinDeltaREE(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[region]+"_baseline_EE","min#Delta R(jet,#gamma)",40,0,4);
 
-    plot verticesplotEE(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EE","n_{vtx}",40,0,80);
+    plot verticesplotEE(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[region]+"_baseline_EE","n_{vtx}",40,0,80);
 
     vector<plot> plotsEEevents;
     plotsEEevents.push_back(MHTplotEE);
@@ -154,111 +159,127 @@ int main(int argc, char** argv){
     // background MC samples
     for( int iSample = 0 ; iSample < skims.ntuples.size() ; iSample++){
 
-        RA2bTree* ntuple = skims.ntuples[iSample];
+      TFile* outputFile = new TFile("plotObs_"+skims.regionNames[region]+"_baseline_"+skims.sampleName[iSample]+".root","UPDATE");
 
-        for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
-            plotsAllEvents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
-            plotsAllEvents[iPlot].setFillColor(ntuple,skims.fillColor[iSample]);
-        }
-        for( int iPlot = 0 ; iPlot < plotsEBevents.size() ; iPlot++){
-            plotsEBevents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
-            plotsEBevents[iPlot].setFillColor(ntuple,skims.fillColor[iSample]);
-        }
-        for( int iPlot = 0 ; iPlot < plotsEEevents.size() ; iPlot++){
-            plotsEEevents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
-            plotsEEevents[iPlot].setFillColor(ntuple,skims.fillColor[iSample]);
-        }
+      RA2bTree* ntuple = skims.ntuples[iSample];
 
-        int numEvents = ntuple->fChain->GetEntries();
-        ntupleBranchStatus<RA2bTree>(ntuple);
-        double weight = 1.0;
-        for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
+      for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
+	plotsAllEvents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
+	plotsEBevents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
+	plotsEEevents[iPlot].addNtuple(ntuple,skims.sampleName[iSample]);
+      }
 
-            //cout << "sample: " << skims.sampleName[iSample] << endl;
-            ntuple->GetEntry(iEvt);
-            if( iEvt % 1000000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
+      int numEvents = ntuple->fChain->GetEntries();
+      ntupleBranchStatus<RA2bTree>(ntuple);
+      double weight = 1.0;
+      for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
 
-            if( ( reg == skimSamples::kSignal || reg == skimSamples::kPhoton || reg == skimSamples::kDYe || reg == skimSamples::kDYm ) && !RA2bBaselineCut(ntuple) ) continue;
-            if( ( reg == skimSamples::kLDP || reg == skimSamples::kPhotonLDP || reg == skimSamples::kDYeLDP || reg == skimSamples::kDYmLDP ) && !RA2bLDPBaselineCut(ntuple) ) continue;
+	//cout << "sample: " << skims.sampleName[iSample] << endl;
+	ntuple->GetEntry(iEvt);
+	if( iEvt % 1000000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
 
-            if( skims.regionNames[regInt] == "photonLDP" || skims.regionNames[regInt] == "photon" ){
-                if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
-                if( skims.sampleName[iSample] == "GJets" && ( !isPromptPhoton(ntuple) || ntuple->madMinPhotonDeltaR < 0.4 ) ) continue;
-                if( ntuple->Photons->size() != 1 ) continue;
-                if( ntuple->Photons->at(0).Pt() < 200. ) continue;
-            }
+	if( ( reg == skimSamples::kSignal || reg == skimSamples::kPhoton || reg == skimSamples::kDYe || reg == skimSamples::kDYm ) && !RA2bBaselineCut(ntuple) ) continue;
+	if( ( reg == skimSamples::kLDP || reg == skimSamples::kPhotonLDP || reg == skimSamples::kDYeLDP || reg == skimSamples::kDYmLDP ) && !RA2bLDPBaselineCut(ntuple) ) continue;
+
+	if( skims.regionNames[region] == "photonLDP" || skims.regionNames[region] == "photon" || skims.regionNames[region] == "photonLoose" ){
+	  if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
+	  if( skims.sampleName[iSample] == "GJets" && ( !isPromptPhoton(ntuple) || ntuple->madMinPhotonDeltaR < 0.4 ) ) continue;
+	  if( ntuple->Photons->size() != 1 ) continue;
+	  if( ntuple->Photons->at(0).Pt() < 200. ) continue;
+	  if( !ntuple->Photons_fullID->at(0) ) continue;
+	  //if( fillRecoPhotonDeltaR(ntuple) < 0.5 ) continue;
+	}
+
+	// ----------- weights -----------------
+	weight = lumi*ntuple->Weight;//*customPUweights(ntuple);
+	//if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP ) 
+	//weight *= photonTriggerWeight(ntuple);
+	//if( skims.sampleName[iSample] == "GJets" ){
+	  //cout << "before: " << weight << endl;
+	  //weight *= GJets0p4Weights(ntuple);//*dRweights(ntuple);
+	  //cout << "after: " << weight << endl;                    
+	//}
+	// -------------------------------------
  
-            for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++ ){
-                weight = lumi*ntuple->Weight*customPUweights(ntuple);
-                if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP ) 
-                    weight *= photonTriggerWeight(ntuple);
-                if( skims.sampleName[iSample] == "GJets" ){
-                    //cout << "before: " << weight << endl;
-                    weight *= GJets0p4Weights(ntuple)*dRweights(ntuple);
-                    //cout << "after: " << weight << endl;                    
-                }
-                plotsAllEvents[iPlot].fill(ntuple,weight);
-                if( ntuple->Photons_isEB->at(0) ){
-                    plotsEBevents[iPlot].fill(ntuple,weight);
-                }else{
-                    plotsEEevents[iPlot].fill(ntuple,weight);
-                }
-            }
+	for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++ ){
+	  plotsAllEvents[iPlot].fill(ntuple,weight);
+	  if( ntuple->Photons_isEB->at(0) ){
+	    plotsEBevents[iPlot].fill(ntuple,weight);
+	  }else{
+	    plotsEEevents[iPlot].fill(ntuple,weight);
+	  }
+	}// end loop over plots
+      }// end loop over number of events
 
-        }
-    }
+      for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
+	plotsAllEvents[iPlot].Write(ntuple);
+	plotsEBevents[iPlot].Write(ntuple);
+	plotsEEevents[iPlot].Write(ntuple);
+      }
 
+      outputFile->Close();
+    }// end loop over samples
+
+    
     // Data samples
-    RA2bTree* ntuple = skims.dataNtuple;
-    for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
-        plotsAllEvents[iPlot].addDataNtuple(ntuple,"data");
-        plotsEBevents[iPlot].addDataNtuple(ntuple,"data");
-        plotsEEevents[iPlot].addDataNtuple(ntuple,"data");
-    }
+    for( int iSample = 0 ; iSample < skims.dataNtuple.size() ; iSample++){
+      
+      TFile* outputFile = new TFile("plotObs_"+skims.regionNames[region]+"_baseline_"+skims.dataSampleName[iSample]+".root","UPDATE");
+      RA2bTree* ntuple = skims.dataNtuple[iSample];
+      for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
+        plotsAllEvents[iPlot].addDataNtuple(ntuple,skims.dataSampleName[iSample]);
+        plotsEBevents[iPlot].addDataNtuple(ntuple,skims.dataSampleName[iSample]);
+        plotsEEevents[iPlot].addDataNtuple(ntuple,skims.dataSampleName[iSample]);
+      }// end loop over plots
   
-    int numEvents = ntuple->fChain->GetEntries();
-    ntupleBranchStatus<RA2bTree>(ntuple);
-    for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
+      int numEvents = ntuple->fChain->GetEntries();
+      ntupleBranchStatus<RA2bTree>(ntuple);
+      for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         ntuple->GetEntry(iEvt);
-        if( iEvt % 1000000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
+        if( iEvt % 1000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
 
         if( ( reg == skimSamples::kSignal || reg == skimSamples::kPhoton || reg == skimSamples::kDYe || reg == skimSamples::kDYm ) && !RA2bBaselineCut(ntuple) ) continue;
         if( ( reg == skimSamples::kLDP || reg == skimSamples::kPhotonLDP || reg == skimSamples::kDYeLDP || reg == skimSamples::kDYmLDP ) && !RA2bLDPBaselineCut(ntuple) ) continue;
     
-        if( ( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP ) && ntuple->Photons->at(0).Pt()<200. ) continue;
+        if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP || reg == skimSamples::kPhotonLoose ){
+	  if( ntuple->Photons->at(0).Pt()<200. ) continue;
+	  if( !ntuple->Photons_fullID->at(0) ) continue;
+	  //if( fillRecoPhotonDeltaR(ntuple) < 0.5 ) continue;
+	}
 
-        if( ntuple->TriggerPass->size() < 53 || !ntuple->TriggerPass->at(52) ) continue;
+	bool pass_trigger=false;
+	for( unsigned int itrig = 0 ; itrig < trigger_indices.size() ; itrig++ )
+	  pass_trigger|=(ntuple->TriggerPass->at(trigger_indices[itrig])==1);
+	if( !pass_trigger ) continue;
 
         for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
-            plotsAllEvents[iPlot].fillData(ntuple);
-            if( ntuple->Photons_isEB->at(0) )
-                plotsEBevents[iPlot].fillData(ntuple);
-            else
-                plotsEEevents[iPlot].fillData(ntuple);
-        }
+	  plotsAllEvents[iPlot].fillData(ntuple);
+	  if( ntuple->Photons_isEB->at(0) )
+	    plotsEBevents[iPlot].fillData(ntuple);
+	  else
+	    plotsEEevents[iPlot].fillData(ntuple);
+        }// end loop over plots
+      }// end loop over number of events
+      for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
+	plotsAllEvents[iPlot].WriteData();
+	plotsEBevents[iPlot].WriteData();
+	plotsEEevents[iPlot].WriteData();
+      }// end loop over plots
+
+      outputFile->Close();
+    }// end loop over samples
+
+}
+
+int main(int argc, char** argv){
+
+    gROOT->ProcessLine(".L tdrstyle.C");
+    gROOT->ProcessLine("setTDRStyle()");
+
+    if(argc != 4 ){
+      cerr << "please provide a region index, a background sample name, and a data sample name" << endl;
     }
 
-    TFile* outputFile = new TFile("plotObs_"+skims.regionNames[regInt]+"_baseline.root","UPDATE");
-
-    for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
-        TCanvas* can = new TCanvas("can","can",500,500);
-        can->SetTopMargin(0.05);
-        plotsAllEvents[iPlot].Write();
-        plotsAllEvents[iPlot].Draw(can,skims.ntuples,skims.signalNtuples,"../plots/plotObs_baseline_plots");
-    }
-    for( int iPlot = 0 ; iPlot < plotsEEevents.size() ; iPlot++){
-        TCanvas* can = new TCanvas("can","can",500,500);
-        can->SetTopMargin(0.05);
-        plotsEEevents[iPlot].Write();
-        plotsEEevents[iPlot].Draw(can,skims.ntuples,skims.signalNtuples,"../plots/plotObs_baseline_plots");
-    }
-    for( int iPlot = 0 ; iPlot < plotsEBevents.size() ; iPlot++){
-        TCanvas* can = new TCanvas("can","can",500,500);
-        can->SetTopMargin(0.05);
-        plotsEBevents[iPlot].Write();
-        plotsEBevents[iPlot].Draw(can,skims.ntuples,skims.signalNtuples,"../plots/plotObs_baseline_plots");
-    }
-  
-    outputFile->Close();
+    process(atoi(argv[1]),argv[2],argv[3]);
 
 }

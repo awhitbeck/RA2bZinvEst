@@ -83,45 +83,45 @@ public :
    Bool_t          JetID;
    Bool_t          JetIDAK8;
    vector<TLorentzVector> *Jets;
-   vector<double>  *Jets_bDiscriminatorCSV;
-   vector<double>  *Jets_bDiscriminatorMVA;
-   vector<double>  *Jets_chargedEmEnergyFraction;
-   vector<double>  *Jets_chargedHadronEnergyFraction;
-   vector<int>     *Jets_chargedHadronMultiplicity;
-   vector<int>     *Jets_chargedMultiplicity;
-   vector<int>     *Jets_electronMultiplicity;
-   vector<int>     *Jets_hadronFlavor;
-   vector<bool>    *Jets_HTMask;
+/*    vector<double>  *Jets_bDiscriminatorCSV; */
+/*    vector<double>  *Jets_bDiscriminatorMVA; */
+/*    vector<double>  *Jets_chargedEmEnergyFraction; */
+/*    vector<double>  *Jets_chargedHadronEnergyFraction; */
+/*    vector<int>     *Jets_chargedHadronMultiplicity; */
+/*    vector<int>     *Jets_chargedMultiplicity; */
+/*    vector<int>     *Jets_electronMultiplicity; */
+/*    vector<int>     *Jets_hadronFlavor; */
+/*    vector<bool>    *Jets_HTMask; */
    vector<bool>    *Jets_ID;
-   vector<double>  *Jets_jecFactor;
-   vector<double>  *Jets_jecUnc;
-   vector<bool>    *Jets_LeptonMask;
-   vector<bool>    *Jets_MHTMask;
-   vector<bool>    *Jets_MHTOrigMask;
-   vector<double>  *Jets_muonEnergyFraction;
-   vector<int>     *Jets_muonMultiplicity;
-   vector<double>  *Jets_neutralEmEnergyFraction;
-   vector<double>  *Jets_neutralHadronEnergyFraction;
-   vector<int>     *Jets_neutralHadronMultiplicity;
-   vector<int>     *Jets_neutralMultiplicity;
-   vector<int>     *Jets_partonFlavor;
-   vector<double>  *Jets_photonEnergyFraction;
-   vector<int>     *Jets_photonMultiplicity;
-   vector<double>  *Jets_qgAxis2;
-   vector<double>  *Jets_qgLikelihood;
-   vector<int>     *Jets_qgMult;
-   vector<double>  *Jets_qgPtD;
-   vector<TLorentzVector> *JetsAK8;
-   vector<double>  *JetsAK8_bDiscriminatorSubjet1CSV;
-   vector<double>  *JetsAK8_bDiscriminatorSubjet2CSV;
-   vector<double>  *JetsAK8_doubleBDiscriminator;
-   vector<bool>    *JetsAK8_ID;
-   vector<double>  *JetsAK8_NsubjettinessTau1;
-   vector<double>  *JetsAK8_NsubjettinessTau2;
-   vector<double>  *JetsAK8_NsubjettinessTau3;
-   vector<int>     *JetsAK8_NumBhadrons;
-   vector<int>     *JetsAK8_NumChadrons;
-   vector<double>  *JetsAK8_prunedMass;
+/*    vector<double>  *Jets_jecFactor; */
+/*    vector<double>  *Jets_jecUnc; */
+/*    vector<bool>    *Jets_LeptonMask; */
+/*    vector<bool>    *Jets_MHTMask; */
+/*    vector<bool>    *Jets_MHTOrigMask; */
+/*    vector<double>  *Jets_muonEnergyFraction; */
+/*    vector<int>     *Jets_muonMultiplicity; */
+/*    vector<double>  *Jets_neutralEmEnergyFraction; */
+/*    vector<double>  *Jets_neutralHadronEnergyFraction; */
+/*    vector<int>     *Jets_neutralHadronMultiplicity; */
+/*    vector<int>     *Jets_neutralMultiplicity; */
+/*    vector<int>     *Jets_partonFlavor; */
+/*    vector<double>  *Jets_photonEnergyFraction; */
+/*    vector<int>     *Jets_photonMultiplicity; */
+/*    vector<double>  *Jets_qgAxis2; */
+/*    vector<double>  *Jets_qgLikelihood; */
+/*    vector<int>     *Jets_qgMult; */
+/*    vector<double>  *Jets_qgPtD; */
+/*    vector<TLorentzVector> *JetsAK8; */
+/*    vector<double>  *JetsAK8_bDiscriminatorSubjet1CSV; */
+/*    vector<double>  *JetsAK8_bDiscriminatorSubjet2CSV; */
+/*    vector<double>  *JetsAK8_doubleBDiscriminator; */
+/*    vector<bool>    *JetsAK8_ID; */
+/*    vector<double>  *JetsAK8_NsubjettinessTau1; */
+/*    vector<double>  *JetsAK8_NsubjettinessTau2; */
+/*    vector<double>  *JetsAK8_NsubjettinessTau3; */
+/*    vector<int>     *JetsAK8_NumBhadrons; */
+/*    vector<int>     *JetsAK8_NumChadrons; */
+/*    vector<double>  *JetsAK8_prunedMass; */
    Double_t        MET;
    Double_t        METPhi;
    Double_t        MHT;
@@ -163,11 +163,11 @@ public :
    vector<double>  *Photons_pfNeutralIsoRhoCorr;
    vector<double>  *Photons_sigmaIetaIeta;
    Double_t        PrescaleWeightHT;
-   vector<TLorentzVector> *SoftJets;
-   vector<double>  *SoftJets_bDiscriminatorCSV;
-   vector<bool>    *SoftJets_ID;
-   vector<double>  *SoftJets_jecFactor;
-   vector<double>  *SoftJets_jecUnc;
+/*    vector<TLorentzVector> *SoftJets; */
+/*    vector<double>  *SoftJets_bDiscriminatorCSV; */
+/*    vector<bool>    *SoftJets_ID; */
+/*    vector<double>  *SoftJets_jecFactor; */
+/*    vector<double>  *SoftJets_jecUnc; */
    vector<TLorentzVector> *TAPElectronTracks;
    vector<double>  *TAPElectronTracks_activity;
    vector<int>     *TAPElectronTracks_charge;
@@ -250,45 +250,45 @@ public :
    TBranch        *b_JetID;   //!
    TBranch        *b_JetIDAK8;   //!
    TBranch        *b_Jets;   //!
-   TBranch        *b_Jets_bDiscriminatorCSV;   //!
-   TBranch        *b_Jets_bDiscriminatorMVA;   //!
-   TBranch        *b_Jets_chargedEmEnergyFraction;   //!
-   TBranch        *b_Jets_chargedHadronEnergyFraction;   //!
-   TBranch        *b_Jets_chargedHadronMultiplicity;   //!
-   TBranch        *b_Jets_chargedMultiplicity;   //!
-   TBranch        *b_Jets_electronMultiplicity;   //!
-   TBranch        *b_Jets_hadronFlavor;   //!
-   TBranch        *b_Jets_HTMask;   //!
+/*    TBranch        *b_Jets_bDiscriminatorCSV;   //! */
+/*    TBranch        *b_Jets_bDiscriminatorMVA;   //! */
+/*    TBranch        *b_Jets_chargedEmEnergyFraction;   //! */
+/*    TBranch        *b_Jets_chargedHadronEnergyFraction;   //! */
+/*    TBranch        *b_Jets_chargedHadronMultiplicity;   //! */
+/*    TBranch        *b_Jets_chargedMultiplicity;   //! */
+/*    TBranch        *b_Jets_electronMultiplicity;   //! */
+/*    TBranch        *b_Jets_hadronFlavor;   //! */
+/*    TBranch        *b_Jets_HTMask;   //! */
    TBranch        *b_Jets_ID;   //!
-   TBranch        *b_Jets_jecFactor;   //!
-   TBranch        *b_Jets_jecUnc;   //!
-   TBranch        *b_Jets_LeptonMask;   //!
-   TBranch        *b_Jets_MHTMask;   //!
-   TBranch        *b_Jets_MHTOrigMask;   //!
-   TBranch        *b_Jets_muonEnergyFraction;   //!
-   TBranch        *b_Jets_muonMultiplicity;   //!
-   TBranch        *b_Jets_neutralEmEnergyFraction;   //!
-   TBranch        *b_Jets_neutralHadronEnergyFraction;   //!
-   TBranch        *b_Jets_neutralHadronMultiplicity;   //!
-   TBranch        *b_Jets_neutralMultiplicity;   //!
-   TBranch        *b_Jets_partonFlavor;   //!
-   TBranch        *b_Jets_photonEnergyFraction;   //!
-   TBranch        *b_Jets_photonMultiplicity;   //!
-   TBranch        *b_Jets_qgAxis2;   //!
-   TBranch        *b_Jets_qgLikelihood;   //!
-   TBranch        *b_Jets_qgMult;   //!
-   TBranch        *b_Jets_qgPtD;   //!
-   TBranch        *b_JetsAK8;   //!
-   TBranch        *b_JetsAK8_bDiscriminatorSubjet1CSV;   //!
-   TBranch        *b_JetsAK8_bDiscriminatorSubjet2CSV;   //!
-   TBranch        *b_JetsAK8_doubleBDiscriminator;   //!
-   TBranch        *b_JetsAK8_ID;   //!
-   TBranch        *b_JetsAK8_NsubjettinessTau1;   //!
-   TBranch        *b_JetsAK8_NsubjettinessTau2;   //!
-   TBranch        *b_JetsAK8_NsubjettinessTau3;   //!
-   TBranch        *b_JetsAK8_NumBhadrons;   //!
-   TBranch        *b_JetsAK8_NumChadrons;   //!
-   TBranch        *b_JetsAK8_prunedMass;   //!
+/*    TBranch        *b_Jets_jecFactor;   //! */
+/*    TBranch        *b_Jets_jecUnc;   //! */
+/*    TBranch        *b_Jets_LeptonMask;   //! */
+/*    TBranch        *b_Jets_MHTMask;   //! */
+/*    TBranch        *b_Jets_MHTOrigMask;   //! */
+/*    TBranch        *b_Jets_muonEnergyFraction;   //! */
+/*    TBranch        *b_Jets_muonMultiplicity;   //! */
+/*    TBranch        *b_Jets_neutralEmEnergyFraction;   //! */
+/*    TBranch        *b_Jets_neutralHadronEnergyFraction;   //! */
+/*    TBranch        *b_Jets_neutralHadronMultiplicity;   //! */
+/*    TBranch        *b_Jets_neutralMultiplicity;   //! */
+/*    TBranch        *b_Jets_partonFlavor;   //! */
+/*    TBranch        *b_Jets_photonEnergyFraction;   //! */
+/*    TBranch        *b_Jets_photonMultiplicity;   //! */
+/*    TBranch        *b_Jets_qgAxis2;   //! */
+/*    TBranch        *b_Jets_qgLikelihood;   //! */
+/*    TBranch        *b_Jets_qgMult;   //! */
+/*    TBranch        *b_Jets_qgPtD;   //! */
+/*    TBranch        *b_JetsAK8;   //! */
+/*    TBranch        *b_JetsAK8_bDiscriminatorSubjet1CSV;   //! */
+/*    TBranch        *b_JetsAK8_bDiscriminatorSubjet2CSV;   //! */
+/*    TBranch        *b_JetsAK8_doubleBDiscriminator;   //! */
+/*    TBranch        *b_JetsAK8_ID;   //! */
+/*    TBranch        *b_JetsAK8_NsubjettinessTau1;   //! */
+/*    TBranch        *b_JetsAK8_NsubjettinessTau2;   //! */
+/*    TBranch        *b_JetsAK8_NsubjettinessTau3;   //! */
+/*    TBranch        *b_JetsAK8_NumBhadrons;   //! */
+/*    TBranch        *b_JetsAK8_NumChadrons;   //! */
+/*    TBranch        *b_JetsAK8_prunedMass;   //! */
    TBranch        *b_MET;   //!
    TBranch        *b_METPhi;   //!
    TBranch        *b_MHT;   //!
@@ -330,11 +330,11 @@ public :
    TBranch        *b_Photons_pfNeutralIsoRhoCorr;   //!
    TBranch        *b_Photons_sigmaIetaIeta;   //!
    TBranch        *b_PrescaleWeightHT;   //!
-   TBranch        *b_SoftJets;   //!
-   TBranch        *b_SoftJets_bDiscriminatorCSV;   //!
-   TBranch        *b_SoftJets_ID;   //!
-   TBranch        *b_SoftJets_jecFactor;   //!
-   TBranch        *b_SoftJets_jecUnc;   //!
+/*    TBranch        *b_SoftJets;   //! */
+/*    TBranch        *b_SoftJets_bDiscriminatorCSV;   //! */
+/*    TBranch        *b_SoftJets_ID;   //! */
+/*    TBranch        *b_SoftJets_jecFactor;   //! */
+/*    TBranch        *b_SoftJets_jecUnc;   //! */
    TBranch        *b_TAPElectronTracks;   //!
    TBranch        *b_TAPElectronTracks_activity;   //!
    TBranch        *b_TAPElectronTracks_charge;   //!
@@ -436,45 +436,45 @@ void RA2bTree::Init(TTree *tree)
    ElectronsNoIso_MTW = 0;
    ElectronsNoIso_tightID = 0;
    Jets = 0;
-   Jets_bDiscriminatorCSV = 0;
-   Jets_bDiscriminatorMVA = 0;
-   Jets_chargedEmEnergyFraction = 0;
-   Jets_chargedHadronEnergyFraction = 0;
-   Jets_chargedHadronMultiplicity = 0;
-   Jets_chargedMultiplicity = 0;
-   Jets_electronMultiplicity = 0;
-   Jets_hadronFlavor = 0;
-   Jets_HTMask = 0;
+/*    Jets_bDiscriminatorCSV = 0; */
+/*    Jets_bDiscriminatorMVA = 0; */
+/*    Jets_chargedEmEnergyFraction = 0; */
+/*    Jets_chargedHadronEnergyFraction = 0; */
+/*    Jets_chargedHadronMultiplicity = 0; */
+/*    Jets_chargedMultiplicity = 0; */
+/*    Jets_electronMultiplicity = 0; */
+/*    Jets_hadronFlavor = 0; */
+/*    Jets_HTMask = 0; */
    Jets_ID = 0;
-   Jets_jecFactor = 0;
-   Jets_jecUnc = 0;
-   Jets_LeptonMask = 0;
-   Jets_MHTMask = 0;
-   Jets_MHTOrigMask = 0;
-   Jets_muonEnergyFraction = 0;
-   Jets_muonMultiplicity = 0;
-   Jets_neutralEmEnergyFraction = 0;
-   Jets_neutralHadronEnergyFraction = 0;
-   Jets_neutralHadronMultiplicity = 0;
-   Jets_neutralMultiplicity = 0;
-   Jets_partonFlavor = 0;
-   Jets_photonEnergyFraction = 0;
-   Jets_photonMultiplicity = 0;
-   Jets_qgAxis2 = 0;
-   Jets_qgLikelihood = 0;
-   Jets_qgMult = 0;
-   Jets_qgPtD = 0;
-   JetsAK8 = 0;
-   JetsAK8_bDiscriminatorSubjet1CSV = 0;
-   JetsAK8_bDiscriminatorSubjet2CSV = 0;
-   JetsAK8_doubleBDiscriminator = 0;
-   JetsAK8_ID = 0;
-   JetsAK8_NsubjettinessTau1 = 0;
-   JetsAK8_NsubjettinessTau2 = 0;
-   JetsAK8_NsubjettinessTau3 = 0;
-   JetsAK8_NumBhadrons = 0;
-   JetsAK8_NumChadrons = 0;
-   JetsAK8_prunedMass = 0;
+/*    Jets_jecFactor = 0; */
+/*    Jets_jecUnc = 0; */
+/*    Jets_LeptonMask = 0; */
+/*    Jets_MHTMask = 0; */
+/*    Jets_MHTOrigMask = 0; */
+/*    Jets_muonEnergyFraction = 0; */
+/*    Jets_muonMultiplicity = 0; */
+/*    Jets_neutralEmEnergyFraction = 0; */
+/*    Jets_neutralHadronEnergyFraction = 0; */
+/*    Jets_neutralHadronMultiplicity = 0; */
+/*    Jets_neutralMultiplicity = 0; */
+/*    Jets_partonFlavor = 0; */
+/*    Jets_photonEnergyFraction = 0; */
+/*    Jets_photonMultiplicity = 0; */
+/*    Jets_qgAxis2 = 0; */
+/*    Jets_qgLikelihood = 0; */
+/*    Jets_qgMult = 0; */
+/*    Jets_qgPtD = 0; */
+/*    JetsAK8 = 0; */
+/*    JetsAK8_bDiscriminatorSubjet1CSV = 0; */
+/*    JetsAK8_bDiscriminatorSubjet2CSV = 0; */
+/*    JetsAK8_doubleBDiscriminator = 0; */
+/*    JetsAK8_ID = 0; */
+/*    JetsAK8_NsubjettinessTau1 = 0; */
+/*    JetsAK8_NsubjettinessTau2 = 0; */
+/*    JetsAK8_NsubjettinessTau3 = 0; */
+/*    JetsAK8_NumBhadrons = 0; */
+/*    JetsAK8_NumChadrons = 0; */
+/*    JetsAK8_prunedMass = 0; */
    Muons = 0;
    Muons_charge = 0;
    Muons_MT2Activity = 0;
@@ -502,11 +502,11 @@ void RA2bTree::Init(TTree *tree)
    Photons_pfNeutralIso = 0;
    Photons_pfNeutralIsoRhoCorr = 0;
    Photons_sigmaIetaIeta = 0;
-   SoftJets = 0;
-   SoftJets_bDiscriminatorCSV = 0;
-   SoftJets_ID = 0;
-   SoftJets_jecFactor = 0;
-   SoftJets_jecUnc = 0;
+/*    SoftJets = 0; */
+/*    SoftJets_bDiscriminatorCSV = 0; */
+/*    SoftJets_ID = 0; */
+/*    SoftJets_jecFactor = 0; */
+/*    SoftJets_jecUnc = 0; */
    TAPElectronTracks = 0;
    TAPElectronTracks_activity = 0;
    TAPElectronTracks_charge = 0;
@@ -591,45 +591,45 @@ void RA2bTree::Init(TTree *tree)
    fChain->SetBranchAddress("JetID", &JetID, &b_JetID);
    fChain->SetBranchAddress("JetIDAK8", &JetIDAK8, &b_JetIDAK8);
    fChain->SetBranchAddress("Jets", &Jets, &b_Jets);
-   fChain->SetBranchAddress("Jets_bDiscriminatorCSV", &Jets_bDiscriminatorCSV, &b_Jets_bDiscriminatorCSV);
-   fChain->SetBranchAddress("Jets_bDiscriminatorMVA", &Jets_bDiscriminatorMVA, &b_Jets_bDiscriminatorMVA);
-   fChain->SetBranchAddress("Jets_chargedEmEnergyFraction", &Jets_chargedEmEnergyFraction, &b_Jets_chargedEmEnergyFraction);
-   fChain->SetBranchAddress("Jets_chargedHadronEnergyFraction", &Jets_chargedHadronEnergyFraction, &b_Jets_chargedHadronEnergyFraction);
-   fChain->SetBranchAddress("Jets_chargedHadronMultiplicity", &Jets_chargedHadronMultiplicity, &b_Jets_chargedHadronMultiplicity);
-   fChain->SetBranchAddress("Jets_chargedMultiplicity", &Jets_chargedMultiplicity, &b_Jets_chargedMultiplicity);
-   fChain->SetBranchAddress("Jets_electronMultiplicity", &Jets_electronMultiplicity, &b_Jets_electronMultiplicity);
-   fChain->SetBranchAddress("Jets_hadronFlavor", &Jets_hadronFlavor, &b_Jets_hadronFlavor);
-   fChain->SetBranchAddress("Jets_HTMask", &Jets_HTMask, &b_Jets_HTMask);
+/*    fChain->SetBranchAddress("Jets_bDiscriminatorCSV", &Jets_bDiscriminatorCSV, &b_Jets_bDiscriminatorCSV); */
+/*    fChain->SetBranchAddress("Jets_bDiscriminatorMVA", &Jets_bDiscriminatorMVA, &b_Jets_bDiscriminatorMVA); */
+/*    fChain->SetBranchAddress("Jets_chargedEmEnergyFraction", &Jets_chargedEmEnergyFraction, &b_Jets_chargedEmEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_chargedHadronEnergyFraction", &Jets_chargedHadronEnergyFraction, &b_Jets_chargedHadronEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_chargedHadronMultiplicity", &Jets_chargedHadronMultiplicity, &b_Jets_chargedHadronMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_chargedMultiplicity", &Jets_chargedMultiplicity, &b_Jets_chargedMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_electronMultiplicity", &Jets_electronMultiplicity, &b_Jets_electronMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_hadronFlavor", &Jets_hadronFlavor, &b_Jets_hadronFlavor); */
+/*    fChain->SetBranchAddress("Jets_HTMask", &Jets_HTMask, &b_Jets_HTMask); */
    fChain->SetBranchAddress("Jets_ID", &Jets_ID, &b_Jets_ID);
-   fChain->SetBranchAddress("Jets_jecFactor", &Jets_jecFactor, &b_Jets_jecFactor);
-   fChain->SetBranchAddress("Jets_jecUnc", &Jets_jecUnc, &b_Jets_jecUnc);
-   fChain->SetBranchAddress("Jets_LeptonMask", &Jets_LeptonMask, &b_Jets_LeptonMask);
-   fChain->SetBranchAddress("Jets_MHTMask", &Jets_MHTMask, &b_Jets_MHTMask);
-   fChain->SetBranchAddress("Jets_MHTOrigMask", &Jets_MHTOrigMask, &b_Jets_MHTOrigMask);
-   fChain->SetBranchAddress("Jets_muonEnergyFraction", &Jets_muonEnergyFraction, &b_Jets_muonEnergyFraction);
-   fChain->SetBranchAddress("Jets_muonMultiplicity", &Jets_muonMultiplicity, &b_Jets_muonMultiplicity);
-   fChain->SetBranchAddress("Jets_neutralEmEnergyFraction", &Jets_neutralEmEnergyFraction, &b_Jets_neutralEmEnergyFraction);
-   fChain->SetBranchAddress("Jets_neutralHadronEnergyFraction", &Jets_neutralHadronEnergyFraction, &b_Jets_neutralHadronEnergyFraction);
-   fChain->SetBranchAddress("Jets_neutralHadronMultiplicity", &Jets_neutralHadronMultiplicity, &b_Jets_neutralHadronMultiplicity);
-   fChain->SetBranchAddress("Jets_neutralMultiplicity", &Jets_neutralMultiplicity, &b_Jets_neutralMultiplicity);
-   fChain->SetBranchAddress("Jets_partonFlavor", &Jets_partonFlavor, &b_Jets_partonFlavor);
-   fChain->SetBranchAddress("Jets_photonEnergyFraction", &Jets_photonEnergyFraction, &b_Jets_photonEnergyFraction);
-   fChain->SetBranchAddress("Jets_photonMultiplicity", &Jets_photonMultiplicity, &b_Jets_photonMultiplicity);
-   fChain->SetBranchAddress("Jets_qgAxis2", &Jets_qgAxis2, &b_Jets_qgAxis2);
-   fChain->SetBranchAddress("Jets_qgLikelihood", &Jets_qgLikelihood, &b_Jets_qgLikelihood);
-   fChain->SetBranchAddress("Jets_qgMult", &Jets_qgMult, &b_Jets_qgMult);
-   fChain->SetBranchAddress("Jets_qgPtD", &Jets_qgPtD, &b_Jets_qgPtD);
-   fChain->SetBranchAddress("JetsAK8", &JetsAK8, &b_JetsAK8);
-   fChain->SetBranchAddress("JetsAK8_bDiscriminatorSubjet1CSV", &JetsAK8_bDiscriminatorSubjet1CSV, &b_JetsAK8_bDiscriminatorSubjet1CSV);
-   fChain->SetBranchAddress("JetsAK8_bDiscriminatorSubjet2CSV", &JetsAK8_bDiscriminatorSubjet2CSV, &b_JetsAK8_bDiscriminatorSubjet2CSV);
-   fChain->SetBranchAddress("JetsAK8_doubleBDiscriminator", &JetsAK8_doubleBDiscriminator, &b_JetsAK8_doubleBDiscriminator);
-   fChain->SetBranchAddress("JetsAK8_ID", &JetsAK8_ID, &b_JetsAK8_ID);
-   fChain->SetBranchAddress("JetsAK8_NsubjettinessTau1", &JetsAK8_NsubjettinessTau1, &b_JetsAK8_NsubjettinessTau1);
-   fChain->SetBranchAddress("JetsAK8_NsubjettinessTau2", &JetsAK8_NsubjettinessTau2, &b_JetsAK8_NsubjettinessTau2);
-   fChain->SetBranchAddress("JetsAK8_NsubjettinessTau3", &JetsAK8_NsubjettinessTau3, &b_JetsAK8_NsubjettinessTau3);
-   fChain->SetBranchAddress("JetsAK8_NumBhadrons", &JetsAK8_NumBhadrons, &b_JetsAK8_NumBhadrons);
-   fChain->SetBranchAddress("JetsAK8_NumChadrons", &JetsAK8_NumChadrons, &b_JetsAK8_NumChadrons);
-   fChain->SetBranchAddress("JetsAK8_prunedMass", &JetsAK8_prunedMass, &b_JetsAK8_prunedMass);
+/*    fChain->SetBranchAddress("Jets_jecFactor", &Jets_jecFactor, &b_Jets_jecFactor); */
+/*    fChain->SetBranchAddress("Jets_jecUnc", &Jets_jecUnc, &b_Jets_jecUnc); */
+/*    fChain->SetBranchAddress("Jets_LeptonMask", &Jets_LeptonMask, &b_Jets_LeptonMask); */
+/*    fChain->SetBranchAddress("Jets_MHTMask", &Jets_MHTMask, &b_Jets_MHTMask); */
+/*    fChain->SetBranchAddress("Jets_MHTOrigMask", &Jets_MHTOrigMask, &b_Jets_MHTOrigMask); */
+/*    fChain->SetBranchAddress("Jets_muonEnergyFraction", &Jets_muonEnergyFraction, &b_Jets_muonEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_muonMultiplicity", &Jets_muonMultiplicity, &b_Jets_muonMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_neutralEmEnergyFraction", &Jets_neutralEmEnergyFraction, &b_Jets_neutralEmEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_neutralHadronEnergyFraction", &Jets_neutralHadronEnergyFraction, &b_Jets_neutralHadronEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_neutralHadronMultiplicity", &Jets_neutralHadronMultiplicity, &b_Jets_neutralHadronMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_neutralMultiplicity", &Jets_neutralMultiplicity, &b_Jets_neutralMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_partonFlavor", &Jets_partonFlavor, &b_Jets_partonFlavor); */
+/*    fChain->SetBranchAddress("Jets_photonEnergyFraction", &Jets_photonEnergyFraction, &b_Jets_photonEnergyFraction); */
+/*    fChain->SetBranchAddress("Jets_photonMultiplicity", &Jets_photonMultiplicity, &b_Jets_photonMultiplicity); */
+/*    fChain->SetBranchAddress("Jets_qgAxis2", &Jets_qgAxis2, &b_Jets_qgAxis2); */
+/*    fChain->SetBranchAddress("Jets_qgLikelihood", &Jets_qgLikelihood, &b_Jets_qgLikelihood); */
+/*    fChain->SetBranchAddress("Jets_qgMult", &Jets_qgMult, &b_Jets_qgMult); */
+/*    fChain->SetBranchAddress("Jets_qgPtD", &Jets_qgPtD, &b_Jets_qgPtD); */
+/*    fChain->SetBranchAddress("JetsAK8", &JetsAK8, &b_JetsAK8); */
+/*    fChain->SetBranchAddress("JetsAK8_bDiscriminatorSubjet1CSV", &JetsAK8_bDiscriminatorSubjet1CSV, &b_JetsAK8_bDiscriminatorSubjet1CSV); */
+/*    fChain->SetBranchAddress("JetsAK8_bDiscriminatorSubjet2CSV", &JetsAK8_bDiscriminatorSubjet2CSV, &b_JetsAK8_bDiscriminatorSubjet2CSV); */
+/*    fChain->SetBranchAddress("JetsAK8_doubleBDiscriminator", &JetsAK8_doubleBDiscriminator, &b_JetsAK8_doubleBDiscriminator); */
+/*    fChain->SetBranchAddress("JetsAK8_ID", &JetsAK8_ID, &b_JetsAK8_ID); */
+/*    fChain->SetBranchAddress("JetsAK8_NsubjettinessTau1", &JetsAK8_NsubjettinessTau1, &b_JetsAK8_NsubjettinessTau1); */
+/*    fChain->SetBranchAddress("JetsAK8_NsubjettinessTau2", &JetsAK8_NsubjettinessTau2, &b_JetsAK8_NsubjettinessTau2); */
+/*    fChain->SetBranchAddress("JetsAK8_NsubjettinessTau3", &JetsAK8_NsubjettinessTau3, &b_JetsAK8_NsubjettinessTau3); */
+/*    fChain->SetBranchAddress("JetsAK8_NumBhadrons", &JetsAK8_NumBhadrons, &b_JetsAK8_NumBhadrons); */
+/*    fChain->SetBranchAddress("JetsAK8_NumChadrons", &JetsAK8_NumChadrons, &b_JetsAK8_NumChadrons); */
+/*    fChain->SetBranchAddress("JetsAK8_prunedMass", &JetsAK8_prunedMass, &b_JetsAK8_prunedMass); */
    fChain->SetBranchAddress("MET", &MET, &b_MET);
    fChain->SetBranchAddress("METPhi", &METPhi, &b_METPhi);
    fChain->SetBranchAddress("MHT", &MHT, &b_MHT);
@@ -671,11 +671,11 @@ void RA2bTree::Init(TTree *tree)
    fChain->SetBranchAddress("Photons_pfNeutralIsoRhoCorr", &Photons_pfNeutralIsoRhoCorr, &b_Photons_pfNeutralIsoRhoCorr);
    fChain->SetBranchAddress("Photons_sigmaIetaIeta", &Photons_sigmaIetaIeta, &b_Photons_sigmaIetaIeta);
    fChain->SetBranchAddress("PrescaleWeightHT", &PrescaleWeightHT, &b_PrescaleWeightHT);
-   fChain->SetBranchAddress("SoftJets", &SoftJets, &b_SoftJets);
-   fChain->SetBranchAddress("SoftJets_bDiscriminatorCSV", &SoftJets_bDiscriminatorCSV, &b_SoftJets_bDiscriminatorCSV);
-   fChain->SetBranchAddress("SoftJets_ID", &SoftJets_ID, &b_SoftJets_ID);
-   fChain->SetBranchAddress("SoftJets_jecFactor", &SoftJets_jecFactor, &b_SoftJets_jecFactor);
-   fChain->SetBranchAddress("SoftJets_jecUnc", &SoftJets_jecUnc, &b_SoftJets_jecUnc);
+/*    fChain->SetBranchAddress("SoftJets", &SoftJets, &b_SoftJets); */
+/*    fChain->SetBranchAddress("SoftJets_bDiscriminatorCSV", &SoftJets_bDiscriminatorCSV, &b_SoftJets_bDiscriminatorCSV); */
+/*    fChain->SetBranchAddress("SoftJets_ID", &SoftJets_ID, &b_SoftJets_ID); */
+/*    fChain->SetBranchAddress("SoftJets_jecFactor", &SoftJets_jecFactor, &b_SoftJets_jecFactor); */
+/*    fChain->SetBranchAddress("SoftJets_jecUnc", &SoftJets_jecUnc, &b_SoftJets_jecUnc); */
    fChain->SetBranchAddress("TAPElectronTracks", &TAPElectronTracks, &b_TAPElectronTracks);
    fChain->SetBranchAddress("TAPElectronTracks_activity", &TAPElectronTracks_activity, &b_TAPElectronTracks_activity);
    fChain->SetBranchAddress("TAPElectronTracks_charge", &TAPElectronTracks_charge, &b_TAPElectronTracks_charge);
