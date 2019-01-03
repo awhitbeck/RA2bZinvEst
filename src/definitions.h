@@ -60,7 +60,7 @@ template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("iso*Tracks",1);
   ntuple->fChain->SetBranchStatus("Jets",1);
   ntuple->fChain->SetBranchStatus("DeltaPhi*",1);
-  ntuple->fChain->SetBranchStatus("HT",1);
+  ntuple->fChain->SetBranchStatus("HT*",1);
   ntuple->fChain->SetBranchStatus("NJets",1);
   ntuple->fChain->SetBranchStatus("BTags*",1);
   ntuple->fChain->SetBranchStatus("MHT",1);
@@ -72,6 +72,7 @@ template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("GenParticles*",1);
   ntuple->fChain->SetBranchStatus("madHT",1);
   ntuple->fChain->SetBranchStatus("*Filter",1);
+  ntuple->fChain->SetBranchStatus("PFCaloMETRatio",1);
   ntuple->fChain->SetBranchStatus("TrueNumInteractions",1);
   ntuple->fChain->SetBranchStatus("NVtx",1);
   ntuple->fChain->SetBranchStatus("JetID",1);
@@ -85,6 +86,18 @@ template<typename ntupleType> bool cutFlow_none(ntupleType* ntuple){
     return true;
 }
 
+template<typename ntupleType> bool cutFlow_HT300(ntupleType* ntuple){
+    return ntuple->HT>300.;
+}
+
+template<typename ntupleType> bool cutFlow_MHT300(ntupleType* ntuple){
+    return ntuple->MHT>300.;
+}
+
+template<typename ntupleType> bool cutFlow_NJets2plus(ntupleType* ntuple){
+    return ntuple->NJets>=2;
+}
+
 template<typename ntupleType> bool cutFlow_leptonVeto(ntupleType* ntuple){
   return (ntuple->NMuons==0 &&
 	  ntuple->NElectrons==0 &&
@@ -94,9 +107,10 @@ template<typename ntupleType> bool cutFlow_leptonVeto(ntupleType* ntuple){
 }
 
 template<typename ntupleType> bool cutFlow_onePhoton(ntupleType* ntuple){
-    return ntuple->Photons->size()==1
-        && isPromptPhoton(ntuple)
-        && ntuple->Photons_fullID->at(0)==1;
+  return ( ntuple->Photons->size()==1
+	   && isPromptPhoton(ntuple)
+	   && ntuple->Photons_fullID->at(0)==1
+	   && ntuple->Photons_hasPixelSeed->at(0)==0 );
 }
 
 template<typename ntupleType> bool cutFlow_photonPt200(ntupleType* ntuple){
