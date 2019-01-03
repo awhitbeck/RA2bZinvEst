@@ -30,8 +30,7 @@ int main(int argc, char** argv){
     vector<TString> sampleNames;
 
     TString skimType;
-    skimType="/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_signal/";
-    
+    skimType=BASE_DIR+"tree_signal/";
     vector<TString> ZJetsFileNames;
     ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2017.root");
     ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2017.root");
@@ -47,7 +46,7 @@ int main(int argc, char** argv){
     //samples.push_back(new RA2bTree(ZJets));
     //sampleNames.push_back("ZJets");
 
-    skimType="/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/";
+    skimType=BASE_DIR+"tree_GJet_CleanVars/";
 
     vector<TString> GJetsFileNames;
     GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
