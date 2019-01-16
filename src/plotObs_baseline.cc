@@ -178,20 +178,16 @@ void process(int region, string backgroundSample, string dataSample){
 	ntuple->GetEntry(iEvt);
 	if( iEvt % 1000000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
 
-	if( ( reg == skimSamples::kSignal || reg == skimSamples::kPhoton || reg == skimSamples::kDYe || reg == skimSamples::kDYm ) && !RA2bBaselineCut(ntuple) ) continue;
-	if( ( reg == skimSamples::kLDP || reg == skimSamples::kPhotonLDP || reg == skimSamples::kDYeLDP || reg == skimSamples::kDYmLDP ) && !RA2bLDPBaselineCut(ntuple) ) continue;
+	if( ( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLoose ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
+	if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
 
 	if( skims.regionNames[region] == "photonLDP" || skims.regionNames[region] == "photon" || skims.regionNames[region] == "photonLoose" ){
 	  if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
 	  if( skims.sampleName[iSample] == "GJets" && ( !isPromptPhoton(ntuple) || ntuple->madMinPhotonDeltaR < 0.4 ) ) continue;
-	  if( ntuple->Photons->size() != 1 ) continue;
-	  if( ntuple->Photons->at(0).Pt() < 200. ) continue;
-	  if( !ntuple->Photons_fullID->at(0) ) continue;
-	  //if( fillRecoPhotonDeltaR(ntuple) < 0.5 ) continue;
 	}
 
 	// ----------- weights -----------------
-	weight = lumi*ntuple->Weight;//*customPUweights(ntuple);
+	weight = lumi*ntuple->Weight;
 	//if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP ) 
 	//weight *= photonTriggerWeight(ntuple);
 	//if( skims.sampleName[iSample] == "GJets" ){
@@ -200,7 +196,7 @@ void process(int region, string backgroundSample, string dataSample){
 	  //cout << "after: " << weight << endl;                    
 	//}
 	// -------------------------------------
- 
+
 	for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++ ){
 	  plotsAllEvents[iPlot].fill(ntuple,weight);
 	  if( ntuple->Photons_isEB->at(0) ){
@@ -216,7 +212,7 @@ void process(int region, string backgroundSample, string dataSample){
 	plotsEBevents[iPlot].Write(ntuple);
 	plotsEEevents[iPlot].Write(ntuple);
       }
-
+      
       outputFile->Close();
     }// end loop over samples
 
@@ -236,16 +232,11 @@ void process(int region, string backgroundSample, string dataSample){
       ntupleBranchStatus<RA2bTree>(ntuple);
       for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         ntuple->GetEntry(iEvt);
-        if( iEvt % 1000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
+        if( iEvt % 1000000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
 
-        if( ( reg == skimSamples::kSignal || reg == skimSamples::kPhoton || reg == skimSamples::kDYe || reg == skimSamples::kDYm ) && !RA2bBaselineCut(ntuple) ) continue;
-        if( ( reg == skimSamples::kLDP || reg == skimSamples::kPhotonLDP || reg == skimSamples::kDYeLDP || reg == skimSamples::kDYmLDP ) && !RA2bLDPBaselineCut(ntuple) ) continue;
+        if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
     
-        if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP || reg == skimSamples::kPhotonLoose ){
-	  if( ntuple->Photons->at(0).Pt()<200. ) continue;
-	  if( !ntuple->Photons_fullID->at(0) ) continue;
-	  //if( fillRecoPhotonDeltaR(ntuple) < 0.5 ) continue;
-	}
+        if( ( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLoose ) and !RA2bBaselinePhotonCut(ntuple) ) continue;
 
 	bool pass_trigger=false;
 	for( unsigned int itrig = 0 ; itrig < trigger_indices.size() ; itrig++ )
