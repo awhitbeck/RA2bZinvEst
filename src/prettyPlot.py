@@ -5,12 +5,13 @@ r.gROOT.SetBatch(True)
 r.gROOT.ProcessLine(".L ~/tdrstyle.C")
 r.gROOT.ProcessLine("setTDRStyle()")
 
+input_file_name = "plotPurityProperties_photonLoose.root"
+#input_file_name = "plotObs_photon_baseline.root"
+#input_file_name = "plotObs_photonLoose_baseline.root"
+input_file = r.TFile(input_file_name,"READ")    
+
 def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
-
-    input_file_name = "plotPurityProperties_photonLoose.root"
-    #input_file_name = "plotObs_photonLoose_baseline.root"
-    input_file = r.TFile(input_file_name,"READ")    
-
+    
     samples=[["QCD_1000to1500",
               "QCD_1500to2000",
               "QCD_2000toInf",
@@ -43,12 +44,13 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
         for j,sample_name in enumerate(sample_names): 
             if len(samples_histo) <= i : 
                 samples_histo.append(input_file.Get(plot_var+"_"+sample_name))
-                if samples_histo[-1]==None : 
+                if samples_histo[-1]==None :
                     print "looking for:",plot_var+"_"+sample_name
                     print input_file.ls(plot_var+"_"+sample_name)
-                    #input_file.ls("*"+sample_name)
                     input_file.ls()
-                    #assert(samples_histo[-1]!=None)
+                    assert(samples_histo[-1]!=None)
+                elif samples_histo[-1].Integral() < 0.0001 :
+                    print "oops.",plot_var+"_"+sample_name,"is empty"
                 samples_histo[-1].SetLineColor(samples_line_color[i])
                 samples_histo[-1].SetFillColor(samples_fill_color[i])
                 samples_histo[-1].SetName(plot_var+"_"+samples_labels[i])
@@ -72,7 +74,7 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
     for i,h in enumerate(samples_histo) : 
         stack.Add(h)
         if i == 0 : 
-            sum = r.TH1F(h)
+            sum = r.TH1D(h)
             sum.SetName(plot_var+"_sum")
         else : 
             sum.Add(h)
@@ -126,12 +128,12 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
     LUMItext.Draw()
 
     botPad.cd()
-    ratio = r.TH1F(sum)
+    ratio = r.TH1D(data_histo[0])
     ratio.SetMarkerStyle(8)
     ratio.SetName(plot_var+"_ratio")
-    ratio.Divide(data_histo[0])
+    ratio.Divide(sum)
     ratio.GetYaxis().SetRangeUser(0,2)
-    ratio.GetYaxis().SetTitle("Exp/Obs")
+    ratio.GetYaxis().SetTitle("Obs/Exp")
     ratio.GetXaxis().SetTitle(data_histo[0].GetTitle())
     ratio.GetYaxis().SetLabelFont(43);
     ratio.GetYaxis().SetLabelSize(24);
@@ -148,124 +150,38 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
 
     ratio.Draw()
 
-    can.SaveAs(plot_var+".png")
+    can.SaveAs("../plots/"+plot_var+".png")
     topPad.SetLogy()
-    can.SaveAs(plot_var+"_LogY.png")
+    can.SaveAs("../plots/"+plot_var+"_LogY.png")
 
     output_file.cd()
     for h in samples_histo :
-        r.TH1F(h).Write()
+        r.TH1D(h).Write()
     data_histo[0].Write()
-
-    input_file.Close()
 
 #output_file = r.TFile("baselineInputs.root","RECREATE")
 output_file = r.TFile("purityInputs.root","RECREATE")
 
-# vars=[("MHT_photonLoose_baseline","H_{T}^{miss} [GeV]"),
-#       ("MHT_photonLoose_baseline_EB","H_{T}^{miss} [GeV]"),
-#       ("MHT_photonLoose_baseline_EE","H_{T}^{miss} [GeV]"),
-#       ("HT_photonLoose_baseline","H_{T} [GeV]"),
-#       ("HT_photonLoose_baseline_EB","H_{T} [GeV]"),
-#       ("HT_photonLoose_baseline_EE","H_{T} [GeV]"),
-#       ("NJets_photonLoose_baseline","N_{jets}"),
-#       ("NJets_photonLoose_baseline_EB","N_{jets}"),
-#       ("NJets_photonLoose_baseline_EB","N_{jets}"),
-#       ("NJets_photonLoose_baseline_EE","N_{jets}"),
-#       ("BTags_photonLoose_baseline","N_{b-jets}"),
-#       ("BTags_photonLoose_baseline_EB","N_{b-jets}"),
-#       ("BTags_photonLoose_baseline_EE","N_{b-jets}"),
-#       ("AnalysisBins_photonLoose_baseline","i^{th} Bin"),
-#       ("AnalysisBins_photonLoose_baseline_EB","i^{th} Bin"),
-#       ("AnalysisBins_photonLoose_baseline_EE","i^{th} Bin"),
-#       ("AnalysisBins_BTag0_photonLoose_baseline","i^{th} Bin"),
-#       ("AnalysisBins_BTag0_photonLoose_baseline_EB","i^{th} Bin"),
-#       ("AnalysisBins_BTag0_photonLoose_baseline_EE","i^{th} Bin"),
-#       ("AnalysisBins_BTag0plusQCDCR_photonLoose_baseline","i^{th} Bin"),
-#       ("AnalysisBins_BTag0plusQCDCR_photonLoose_baseline_EB","i^{th} Bin"),
-#       ("AnalysisBins_BTag0plusQCDCR_photonLoose_baseline_EE","i^{th} Bin"),
-#       ("AnalysisBins_NJet2_photonLoose_baseline","i^{th} Bin"),
-#       ("AnalysisBins_NJet2_photonLoose_baseline_EB","i^{th} Bin"),
-#       ("AnalysisBins_NJet2_photonLoose_baseline_EE","i^{th} Bin"),
-#       ("DeltaPhi1_photonLoose_baseline","#Delta#Phi_{1}"),
-#       ("DeltaPhi1_photonLoose_baseline_EB","#Delta#Phi_{1}"),
-#       ("DeltaPhi1_photonLoose_baseline_EE","#Delta#Phi_{1}"),
-#       ("DeltaPhi2_photonLoose_baseline","#Delta#Phi_{2}"),
-#       ("DeltaPhi2_photonLoose_baseline_EB","#Delta#Phi_{2}"),
-#       ("DeltaPhi2_photonLoose_baseline_EE","#Delta#Phi_{2}"),
-#       ("DeltaPhi3_photonLoose_baseline","#Delta#Phi_{3}"),
-#       ("DeltaPhi3_photonLoose_baseline_EB","#Delta#Phi_{3}"),
-#       ("DeltaPhi3_photonLoose_baseline_EE","#Delta#Phi_{3}"),
-#       ("DeltaPhi4_photonLoose_baseline","#Delta#Phi_{4}"),
-#       ("DeltaPhi4_photonLoose_baseline_EB","#Delta#Phi_{4}"),
-#       ("DeltaPhi4_photonLoose_baseline_EE","#Delta#Phi_{4}"),
-#       ("PhotonPt_photonLoose_baseline","p_{T,#gamma} [GeV]"),
-#       ("PhotonPt_photonLoose_baseline_EB","p_{T,#gamma} [GeV]"),
-#       ("PhotonPt_photonLoose_baseline_EE","p_{T,#gamma} [GeV]"),
-#       ("PhotonEta_photonLoose_baseline","#eta_{#gamma}"),
-#       ("PhotonEta_photonLoose_baseline_EB","#eta_{#gamma}"),
-#       ("PhotonEta_photonLoose_baseline_EE","#eta_{#gamma}"),
-#       ("PhotonMinDeltaR_photonLoose_baseline","#Delta R_{#gamma,j}^{min}"),
-#       ("PhotonMinDeltaR_photonLoose_baseline_EB","#Delta R_{#gamma,j}^{min}"),
-#       ("PhotonMinDeltaR_photonLoose_baseline_EE","#Delta R_{#gamma,j}^{min}"),
-#       ("NumVertices_photonLoose_baseline","N_{vtx}"),
-#       ("NumVertices_photonLoose_baseline_EB","N_{vtx}"),
-#       ("NumVertices_photonLoose_baseline_EE","N_{vtx}")]
+vars = []
+list = input_file.GetListOfKeys()
+next = r.TIter(list);
+key = next()
+while(key != None ) :
+    obj = key.ReadObj();
+    if obj.InheritsFrom("TH1") :
+        name = r.TString(obj.GetName())
+        if name.Contains("_QCD_300to500") : 
+            #print name
+            #print "integral:",obj.Integral()
+            vars.append(name.ReplaceAll("_QCD_300to500","").Data())
+    else :
+        print obj.Print()
+    key = next()
 
-vars = ["photonIsoChrgHighSieie_EB_photonLoose",
-        "photonIsoChrgHighSieie_EE_photonLoose",
-        "photonIsoChrgLowSieie_EB_photonLoose",
-        "photonIsoChrgLowSieie_EE_photonLoose",
-        "photonSieie_EB_photonLoose",
-        "photonSieie_EE_photonLoose",
-        "photonIsoChrg_EB_photonLoose",
-        "photonIsoChrg_EE_photonLoose",
-        "photonSieie_EB_photonLoose",
-        "photonSieie_EE_photonLoose",
-        "photonIsoChrg_EB_photonLoose",
-        "photonIsoChrg_EE_photonLoose",
-        "photonIsoGam_EB_photonLoose",
-        "photonIsoGam_EE_photonLoose",
-        "photonIsoNeu_EB_photonLoose",
-        "photonIsoNeu_EE_photonLoose",
-        "photonHoverE_EB_photonLoose",
-        "photonHoverE_EE_photonLoose",
-        "photonIsoChrgHighSieie_EB_photonLoose",
-        "photonIsoChrgHighSieie_EE_photonLoose",
-        "photonIsoChrgLowSieie_EB_photonLoose",
-        "photonIsoChrgLowSieie_EE_photonLoose",
-        "MHT_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_200_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_200_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_200_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_200_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_225_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_225_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_225_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_225_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_250_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_250_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_250_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_250_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_300_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_300_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_300_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_300_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_350_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_350_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_350_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_350_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_500_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_500_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_500_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_500_photonLoose",
-        "photonIsoChrgHighSieie_EB_MHT_2000_photonLoose",
-        "photonIsoChrgHighSieie_EE_MHT_2000_photonLoose",
-        "photonIsoChrgLowSieie_EB_MHT_2000_photonLoose",
-        "photonIsoChrgLowSieie_EE_MHT_2000_photonLoose"        
-        ]
-
+print vars
 for var in vars : 
-    temp = plot(var)
+    plot(var)
 
+    
 output_file.Close()
+input_file.Close()
