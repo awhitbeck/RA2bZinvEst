@@ -1,14 +1,16 @@
+from os import environ
 from ROOT import *
 from math import sqrt
 gROOT.ProcessLine(".L ~/tdrstyle.C")
 gROOT.ProcessLine("setTDRStyle()")
 from optparse import OptionParser
-
 parser = OptionParser()
 parser.add_option("-r", "--region", dest="region", default="signal",
                   help="region -- signal, ldp, hdp -- only")
 parser.add_option("-d", "--dir", dest="hash", default="",
                   help="hash code corresponding to your git commit or the directory on eos where your outputs were stored")
+parser.add_option("-u", "--user", dest="user", default=environ.get('USER'),
+                  help="cmslpc username for input files, default taken from env")
 (options, args) = parser.parse_args()
 assert( options.region == "signal" or options.region == "ldp" or options.region == "hdp" )
 assert( options.hash != "" )
@@ -26,34 +28,47 @@ outputFileName=""
 
 if region == "signal" :
     nBins = 46
-    MChistoFileName = "~/eos/RA2bZinvEst/{0}/plotObs_photon_baseline.root".format(hash)
+    
+    #MChistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/plotObs_photon_baseline.root".format(hash)
+    #MChistoFileName = "/uscms/homes/t/tmishra/CMSSW_9_4_0/src/RA2bZinvEst/src/EtaCutRootFiles/plotObs_photon_baseline.root".format(hash)
+    #MChistoFileName = "/uscms/homes/t/tmishra/CMSSW_9_4_0/src/RA2bZinvEst/src/RootFiles/plotObs_photon_baseline.root".format(hash)
+    MChistoFileName = "plotObs_photon_baseline.root".format(hash)
     MChistoTag = "AnalysisBins_BTag0_photon_baseline"
-    RzgHistoFileName = "~/eos/RA2bZinvEst/{0}/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    #RzgHistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    #RzgHistoFileName = "/uscms/homes/t/tmishra/CMSSW_9_4_0/src/RA2bZinvEst/src/EtaCutRootFiles/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    #RzgHistoFileName = "/uscms/homes/t/tmishra/CMSSW_9_4_0/src/RA2bZinvEst/src/RootFiles/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo.root".format(hash)
     RzgHistoTag = "AnalysisBins_BTag0_RzGamma_signal"
-    trigWeightFileName = "~/eos/RA2bZinvEst/{0}/triggerUnc_signal_histo.root".format(hash)
+    trigWeightFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/triggerUnc_signal_histo.root".format(hash)
     trigWeightTag = "AnalysisBins_BTag0_signal"
-    fragmentationFileName = "../data/fragmentation.11022017_signal.txt"
-    purityFileName = "../data/photonPurity_signal.txt"
-    outputFileName = "gJets_signal.dat"
+    fragmentationFileName = "fragmentation_2017.txt"
+    purityFileName = "photonPurity_2017.txt"
+    #purityFileName = "../data/photonPurity_signal_modified_etaCut.txt"
+    #purityFileName = "../data/photonPurity_signal_modified.txt"
+    outputFileName = "gJets_signal_2017.dat"
 
 elif region == "ldp" : 
     nBins = 59
-    MChistoFileName = "~/eos/RA2bZinvEst/{0}/plotObs_photonLDP_baseline.root".format(hash)
+    #MChistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/plotObs_photonLDP_baseline.root".format(hash)
+    MChistoFileName = "plotObs_photonLDP_baseline.root".format(hash)
     MChistoTag = "AnalysisBins_BTag0plusQCDCR_photonLDP_baseline"
-    RzgHistoFileName = "~/eos/RA2bZinvEst/{0}/RzGamma_PUweightOnly_LDP_histo.root".format(hash)
+    #RzgHistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/RzGamma_PUweightOnly_LDP_histo.root".format(hash)
+    RzgHistoFileName = "RzGamma_PUweightOnly_LDP_histo.root".format(hash)
     RzgHistoTag = "AnalysisBins_BTag0plusQCDCR_RzGamma_LDP"
-    trigWeightFileName = "~/eos/RA2bZinvEst/{0}/triggerUnc_LDP_histo.root".format(hash)
+    trigWeightFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/triggerUnc_LDP_histo.root".format(hash)
     trigWeightTag = "AnalysisBins_BTag0plusQCDCR_RzGamma_LDP"
     fragmentationFileName = "../data/fragmentation.11022017_ldp.txt"
     purityFileName = "../data/photonPurity_QCD_CR.txt"
     outputFileName = "gJets_ldp.dat"
 elif region == "hdp" :
     nBins = 59
-    MChistoFileName = "~/eos/RA2bZinvEst/{0}/plotObs_photon_baseline.root".format(hash)
+    #MChistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/plotObs_photon_baseline.root".format(hash)
+    MChistoFileName = "plotObs_photon_baseline.root".format(hash)
     MChistoTag = "AnalysisBins_BTag0plusQCDCR_photon_baseline"
-    RzgHistoFileName = "~/eos/RA2bZinvEst/{0}/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    #RzgHistoFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/RzGamma_PUweightOnly_signal_histo.root".format(hash)
+    RzgHistoFileName = "RzGamma_PUweightOnly_signal_histo.root".format(hash)
     RzgHistoTag = "AnalysisBins_BTag0plusQCDCR_RzGamma_signal"
-    trigWeightFileName = "~/eos/RA2bZinvEst/{0}/triggerUnc_signal_histo.root".format(hash)
+    trigWeightFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/triggerUnc_signal_histo.root".format(hash)
     trigWeightTag = "AnalysisBins_BTag0plusQCDCR_RzGamma_signal"
     fragmentationFileName = "../data/fragmentation.11022017_hdp.txt"
     purityFileName = "../data/photonPurity_QCD_CR.txt"
@@ -98,8 +113,8 @@ print "ZJets:",RzGamma.GetBinContent(1)*36300./24500.
 RzGamma.SetNameTitle("RzGamma","RzGamma")
 RzGamma.Divide(GJetsHisto_Rzg)
 print "GJets:",GJetsHisto_Rzg.GetBinContent(1)*36300./24500.
-print "GJets/ZJets:",RzGamma.GetBinContent(1)
-RzGamma.Scale(1./1.23)
+print "ZJets/GJets:",RzGamma.GetBinContent(1)
+#RzGamma.Scale(1./1.23)
 print "RzG:",RzGamma.GetBinContent(1)
 
 if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
@@ -217,8 +232,8 @@ outputDict["ZgR"] = []
 outputDict["REr1"] = []
 outputDict["f"]=fragFrac
 outputDict["fsysErr"]=[0.005]*nBins
-outputDict["ferrUp"]=[err/cv for cv,err in zip(fragFrac,fragFracErrUp)]
-outputDict["ferrDn"]=[err/cv for cv,err in zip(fragFrac,fragFracErrDn)]
+#outputDict["ferrUp"]=[err/cv for cv,err in zip(fragFrac,fragFracErrUp)]
+#outputDict["ferrDn"]=[err/cv for cv,err in zip(fragFrac,fragFracErrDn)]
 outputDict["purity"]=[]
 outputDict["pErr"]=[]
 outputDict["DR"]=[]
@@ -229,9 +244,16 @@ outputDict["YstatUp"]=[]
 outputDict["YstatLow"]=[]
 outputDict["YsysUp"]=[]
 outputDict["YsysLow"]=[]
+outputDict["ZJetsHisto_Rzg"]=[]
+outputDict["GJetsHisto_Rzg"]=[]
 
 poisZeroErr=1.67
 for i in range(nBins) :
+    
+    outputDict["ZJetsHisto_Rzg"].append(ZJetsHisto_Rzg.GetBinContent(i+1))
+    outputDict["GJetsHisto_Rzg"].append(GJetsHisto_Rzg.GetBinContent(i+1))
+
+
     outputDict["binIndex"].append(i+1)
     outputDict["nMCEBt"].append(GJetsEBHisto.GetBinContent(i+1)*scaleFactor[i])
     outputDict["nMCECt"].append(GJetsEEHisto.GetBinContent(i+1)*scaleFactor[i])
@@ -242,6 +264,10 @@ for i in range(nBins) :
         outputDict["nMCerr"].append(sqrt(GJetsHisto.GetBinError(i+1)*GJetsHisto.GetBinError(i+1)/outputDict["nMCGJ"][i]/outputDict["nMCGJ"][i]+scaleFactorErr[i]*scaleFactorErr[i]/scaleFactor[i]/scaleFactor[i]))
     outputDict["Nobs"].append(dataHisto.GetBinContent(i+1))
     outputDict["nEB"].append(dataEBHisto.GetBinContent(i+1))
+ #   outputDict["Nobs"].append(GJetsHisto.GetBinContent(i+1))
+ #   outputDict["nEB"].append(GJetsEBHisto.GetBinContent(i+1))
+ #   outputDict["nEC"].append(GJetsEEHisto.GetBinContent(i+1))
+
     outputDict["pEB"].append(purityEBAll[i])
     outputDict["pEBerr"].append(purityEBerrAll[i]/outputDict["pEB"][i])
     outputDict["nEC"].append(dataEEHisto.GetBinContent(i+1))    
@@ -267,27 +293,35 @@ for i in range(nBins) :
     outputDict["DRup"].append(0.000)
     outputDict["DRlow"].append(0.000)
     
-    outputDict["Yield"].append(outputDict["ZgR"][i]/outputDict["trigW"][i]/outputDict["SF"][i]*outputDict["f"][i]*(outputDict["nEB"][i]*outputDict["pEB"][i]+outputDict["nEC"][i]*outputDict["pEC"][i]))
-    if( outputDict["nEB"][i] == 0 and outputDict["nEC"][i] != 0 ):
-        outputDict["YstatUp"].append(sqrt(poisZeroErr*poisZeroErr+outputDict["nEC"][i])/outputDict["Yield"][i])
-        outputDict["YstatLow"].append(sqrt(poisZeroErr*poisZeroErr+outputDict["nEC"][i])/outputDict["Yield"][i])
-    elif( outputDict["nEC"][i] == 0 and outputDict["nEB"][i] != 0 ):
-        outputDict["YstatUp"].append(sqrt(outputDict["nEB"][i]+poisZeroErr*poisZeroErr)/outputDict["Yield"][i])
-        outputDict["YstatLow"].append(sqrt(outputDict["nEB"][i]+poisZeroErr*poisZeroErr)/outputDict["Yield"][i])
-    elif( outputDict["nEC"][i] == 0 and outputDict["nEB"][i] == 0 ):
-        outputDict["YstatUp"].append(sqrt(2*poisZeroErr*poisZeroErr*outputDict["ZgR"][i]*outputDict["ZgR"][i]))
-        outputDict["YstatLow"].append(sqrt(2*poisZeroErr*poisZeroErr*outputDict["ZgR"][i]*outputDict["ZgR"][i]))
-    else : 
-        outputDict["YstatUp"].append(sqrt(outputDict["nEB"][i]+outputDict["nEC"][i])/outputDict["Yield"][i])
-        outputDict["YstatLow"].append(sqrt(outputDict["nEB"][i]+outputDict["nEC"][i])/outputDict["Yield"][i])
-        
-    outputDict["YsysUp"].append(sqrt(outputDict["REr1"][i]*outputDict["REr1"][i]+outputDict["pErr"][i]*outputDict["pErr"][i]+outputDict["ferrUp"][i]*outputDict["ferrUp"][i]+outputDict["trigWerr"][i]*outputDict["trigWerr"][i]+outputDict["trigWsysErr"][i]*outputDict["trigWsysErr"][i]+outputDict["fsysErr"][i]*outputDict["fsysErr"][i]+outputDict["SFerr"][i]*outputDict["SFerr"][i]))
-    outputDict["YsysLow"].append(sqrt(outputDict["REr1"][i]*outputDict["REr1"][i]+outputDict["pErr"][i]*outputDict["pErr"][i]+outputDict["ferrDn"][i]*outputDict["ferrDn"][i]+outputDict["trigWerr"][i]*outputDict["trigWerr"][i]+outputDict["trigWsysErr"][i]*outputDict["trigWsysErr"][i]+outputDict["fsysErr"][i]*outputDict["fsysErr"][i]+outputDict["SFerr"][i]*outputDict["SFerr"][i]))
+    outputDict["Yield"].append(outputDict["ZgR"][i]*outputDict["f"][i]*(outputDict["nEB"][i]*outputDict["pEB"][i]+outputDict["nEC"][i]*outputDict["pEC"][i]))
+#   outputDict["Yield"].append(outputDict["ZgR"][i]*(outputDict["nEB"][i]+outputDict["nEC"][i]))   # YieldRaw
 
-columnNames=["binIndex","nMCGJ","nMCerr","nMCEBt","nMCECt","Nobs","nEB","pEB","pEBerr","nEC","pEC","pECerr","trigW","trigWsysErr","trigWerr","SF","SFerr","ZgR","REr1","f","fsysErr","ferrUp","ferrDn","purity","pErr","DR","DRup","DRlow","Yield","YstatUp","YstatLow","YsysUp","YsysLow"]
+    #outputDict["Yield"].append(sqrt((outputDict["REr1"][i]*outputDict["REr1"][i]) + (1/outputDict["Nobs"][i])+ (outputDict["pErr"][i]*outputDict["pErr"][i])))
+
+  #  if( outputDict["nEB"][i] == 0 and outputDict["nEC"][i] != 0 ):
+ #       outputDict["YstatUp"].append(sqrt(poisZeroErr*poisZeroErr+outputDict["nEC"][i])/outputDict["Yield"][i])
+ #       outputDict["YstatLow"].append(sqrt(poisZeroErr*poisZeroErr+outputDict["nEC"][i])/outputDict["Yield"][i])
+ #   elif( outputDict["nEC"][i] == 0 and outputDict["nEB"][i] != 0 ):
+ #       outputDict["YstatUp"].append(sqrt(outputDict["nEB"][i]+poisZeroErr*poisZeroErr)/outputDict["Yield"][i])
+ #       outputDict["YstatLow"].append(sqrt(outputDict["nEB"][i]+poisZeroErr*poisZeroErr)/outputDict["Yield"][i])
+ #   elif( outputDict["nEC"][i] == 0 and outputDict["nEB"][i] == 0 ):
+ #       outputDict["YstatUp"].append(sqrt(2*poisZeroErr*poisZeroErr*outputDict["ZgR"][i]*outputDict["ZgR"][i]))
+ #       outputDict["YstatLow"].append(sqrt(2*poisZeroErr*poisZeroErr*outputDict["ZgR"][i]*outputDict["ZgR"][i]))
+  #  else : 
+     #   outputDict["YstatUp"].append(sqrt(outputDict["nEB"][i]+outputDict["nEC"][i])/outputDict["Yield"][i])
+     #   outputDict["YstatLow"].append(sqrt(outputDict["nEB"][i]+outputDict["nEC"][i])/outputDict["Yield"][i])
+        
+ #   outputDict["YsysUp"].append(sqrt(outputDict["REr1"][i]*outputDict["REr1"][i]+outputDict["pErr"][i]*outputDict["pErr"][i]+outputDict["ferrUp"][i]*outputDict["ferrUp"][i]+outputDict["trigWerr"][i]*outputDict["trigWerr"][i]+outputDict["trigWsysErr"][i]*outputDict["trigWsysErr"][i]+outputDict["fsysErr"][i]*outputDict["fsysErr"][i]+outputDict["SFerr"][i]*outputDict["SFerr"][i]))
+  #  outputDict["YsysLow"].append(sqrt(outputDict["REr1"][i]*outputDict["REr1"][i]+outputDict["pErr"][i]*outputDict["pErr"][i]+outputDict["ferrDn"][i]*outputDict["ferrDn"][i]+outputDict["trigWerr"][i]*outputDict["trigWerr"][i]+outputDict["trigWsysErr"][i]*outputDict["trigWsysErr"][i]+outputDict["fsysErr"][i]*outputDict["fsysErr"][i]+outputDict["SFerr"][i]*outputDict["SFerr"][i]))
+
+columnNames=["binIndex","nMCGJ","nMCerr","nMCEBt","nMCECt","Nobs","nEB","pEB","pEBerr","nEC","pEC","pECerr","trigW","trigWsysErr","trigWerr","SF","SFerr","ZJetsHisto_Rzg","GJetsHisto_Rzg","ZgR","REr1","f","purity","pErr","DR","DRup","DRlow","Yield"]
+
 ## Final table
 outputFile = open(outputFileName,"w")
-formattingString=" {0} : {1}( {2})|{3} |{4} |{5} |{6}| {7}({8}) |{9}| {10}({11}) | {12}({13},{14}) | {15}({16}) |{17}({18}) |{19}({20},+{21}-{22}) |{23}({24})| {25}(+{26}-{27})| {28}(+{29}-{30},+{31}-{32})"
+
+
+
+formattingString=" {0} : {1}( {2})|{3} |{4} |{5} |{6}| {7}({8}) |{9}| {10}({11}) | {12}({13},{14}) | {15}({16}) | {17} | {18} | {19}({20}) |{21} |{22}({23})| {24}(+{25}-{26}) |{27}"
 outputFile.write(formattingString.format(*columnNames))
 outputFile.write("\n")
 for b in range(nBins):
@@ -304,6 +338,13 @@ for b in range(nBins):
             assert(0)
     outputFile.write(formattingString.format(*dataInBin))
     outputFile.write("\n")
+
+
+for col in columnNames:
+    outputFile.write("\n")
+    outputFile.write(col+"\n")
+    outputFile.write(str(outputDict[col]))
+    outputFile.write( "\n------------------------------------------------------")
 outputFile.close
 
 can = TCanvas("can","can",500,500)

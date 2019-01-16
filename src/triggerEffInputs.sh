@@ -15,6 +15,6 @@ ls
 
 FILE=`ls *.root`
 
-echo "copying ${FILE} to /store/user/awhitbe1/triggerEff/"
-xrdcp --force $FILE root://cmseos.fnal.gov///store/user/awhitbe1/triggerEff/$FILE
+echo "copying ${FILE} to /store/user/tmishra/triggerEff/"
+xrdcp --force $FILE root://cmseos.fnal.gov///store/user/tmishra/triggerEff/$FILE
 rm $FILE

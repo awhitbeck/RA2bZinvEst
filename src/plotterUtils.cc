@@ -13,7 +13,8 @@
 
 using namespace std;
 
-float lumi=35900.;
+//float lumi=35900.;
+float lumi=41525.897;
 
 template <typename ntupleType> class plot{
 
@@ -281,8 +282,10 @@ template <typename ntupleType> class plot{
     ratio->Divide(sum);
     //TGraphAsymmErrors* ratio = new TGraphAsymmErrors(sum,dataHist,"pois");
     ratio->SetMarkerStyle(8);
+    ratio->SetMarkerSize(0.5);
+    
     ratio->GetYaxis()->SetTitle("Data/MC");
-    ratio->GetYaxis()->SetRangeUser(0.2,2.0);
+    ratio->GetYaxis()->SetRangeUser(0.0,2.0);
     ratio->GetXaxis()->SetRangeUser(lower,upper);
     ratio->GetXaxis()->SetTitle(xlabel);
 

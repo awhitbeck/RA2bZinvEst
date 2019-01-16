@@ -2,7 +2,7 @@
 #include "TLorentzVector.h"
 #include "TH1F.h"
 #include "TFile.h"
-#include "TF1.h"
+
 // ==============================================
 // class for loading and retrieving GJets NLO 
 // weights
@@ -144,19 +144,10 @@ template<typename ntupleType> double customPUweights(ntupleType* ntuple){
     return puWeightHist->GetBinContent(puWeightHist->GetXaxis()->FindBin(min(ntuple->TrueNumInteractions,puWeightHist->GetBinLowEdge(puWeightHist->GetNbinsX()+1))));
 }
 
-
-
-
-
-
-// trigger   eff weight
-//
-//........................................................
-
-TFile *fnew = new TFile ("fnew.root","UPDATE");
+TFile *fnew = new TFile ("fnew.root");
 
      std::vector<TF1*> fTrigEff_;  // store EB, EC in a vector
-//     fTrigEff_.push_back((TF1*)fnew->Get("f_trig_eb"));
+     //fTrigEff_->push_back((TF1*)fnew->Get("f_trig_eb"));
 
 //TFile *ftrigger = new TFile("fnew.root");
 //TF1 * f_trig_eb =(TF1 *)ftrigger->Get("f_trig_eb");

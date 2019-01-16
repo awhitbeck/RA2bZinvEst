@@ -38,7 +38,7 @@ else:
 ################################################
 # - - - - - - - - - FITTER - - - - - - - - - - #
 ################################################
-f= open("Purity/Purity_17Data+16MC.txt","a")
+f= open("Purity_Output_prefiring.txt","a")
 def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) : 
 
     IsoChrg = RooRealVar("iso","Iso_{chrg} [GeV]",0,10.)
@@ -157,7 +157,8 @@ def main() :
     ###########################################################
     # - - - - - - - - - - grab histo inputs - - - - - - - - - #
     ###########################################################
-    inputFile = TFile(inputDir+"plotPurityProperties_photonLoose_17data_16MC.root","READ")
+
+    inputFile = TFile(inputDir+"/plotPurityProperties_photonLooseprefire.root","READ")
     prompt_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_GJets".format(EEorEB,binLabel))
     ### ADD HACK BECAUSE THERE AREN'T ENOUGH EVENTS IN THE
     ### MC ALT MHT_500 BIN....
@@ -169,7 +170,7 @@ def main() :
         nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_data".format(EEorEB,binLabel))
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
         nonPromptMCALT_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
-    data_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_data".format(EEorEB,binLabel))
+        data_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_data".format(EEorEB,binLabel))
 
      ####################################################
      # - - - - - - - - - run fits - - - - - - - - - - - #
@@ -182,4 +183,3 @@ def main() :
 
 if __name__ == "__main__":
     main()
-

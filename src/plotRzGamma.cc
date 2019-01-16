@@ -18,10 +18,9 @@
 #include "RA2bTree.cc"
 
 using namespace std;
-
 int main(int argc, char** argv){
 
-    bool DR0p4 = true;
+    bool DR0p4 = false;
 
     if( argc != 2 ){ 
         cout << "1 argument needed:" << endl;
@@ -96,13 +95,13 @@ int main(int argc, char** argv){
         skimType=BASE_DIR+"tree_LDP/";
 
     vector<TString> ZJetsFileNames;
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2017.root");
     TChain* ZJets = new TChain("tree");
     for( int i = 0 ; i < ZJetsFileNames.size() ; i++ ){
         ZJets->Add(skimType+"/"+ZJetsFileNames[i]);
@@ -117,15 +116,15 @@ int main(int argc, char** argv){
 
     vector<TString> GJetsFileNames;
     if( DR0p4 ){ 
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
     }else{
-        GJetsFileNames.push_back("tree_GJets_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
     }
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
@@ -134,8 +133,14 @@ int main(int argc, char** argv){
     samples.push_back(new RA2bTree(GJets));
     sampleNames.push_back("GJets");
 
+
+    int count_GJet = 0,count_ZJet = 0;
+    int count_GJet_init = 0,count_ZJet_init = 0;
+
     for( int iSample = 0 ; iSample < samples.size() ; iSample++){
 
+           if( sampleNames[iSample] == "GJets") count_GJet_init++;   
+           if( sampleNames[iSample] == "ZJets") count_ZJet_init++;   
         RA2bTree* ntuple = samples[iSample];
         for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++){
             plots[iPlot].addNtuple(ntuple,sampleNames[iSample]);
@@ -146,6 +151,9 @@ int main(int argc, char** argv){
         double weight = 1.0;
         for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
             ntuple->GetEntry(iEvt);
+           if( sampleNames[iSample] == "GJets") count_GJet_init++;
+           if( sampleNames[iSample] == "ZJets") count_ZJet_init++;
+
             if( iEvt % 1000000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->size() != 1 ) continue;      
             if( sampleNames[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
@@ -154,18 +162,30 @@ int main(int argc, char** argv){
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
             
-            weight = lumi*ntuple->Weight*customPUweights(ntuple);//*photonTriggerWeight(ntuple));
-            if( sampleNames[iSample] == "GJets" && DR0p4 ) 
-                weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
+           if( sampleNames[iSample] == "GJets") count_GJet++;   
+           if( sampleNames[iSample] == "ZJets") count_ZJet++;   
+          
+           for (int unsigned s = 0; s < ntuple->Jets->size();s++){
+            weight*=prefiring_weight_jet(ntuple,iEvt,s);
+           }
+
+                       
+            weight = lumi*ntuple->Weight; /*Trigger_weights(ntuple);customPUweights(ntuple)*/;//*photonTriggerWeight(ntuple));
+         //   if( sampleNames[iSample] == "GJets" && DR0p4 ) 
+         //       weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
 
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ){ 
-                    plots[iPlot].fill(ntuple,weight);
+                   weight*=prefiring_weight_photon(ntuple,iEvt);
+                   plots[iPlot].fill(ntuple,weight);
                 }else 
                     plots[iPlot].fill(ntuple,weight);
             }// end loop over iPlots
         }// end loop over events
     }// end loop over iSamples
+
+ cout<<"Before cuts : GJets :"<<count_GJet_init<<"   : ZJet :"<<count_ZJet_init<<endl;
+    cout<<"After cuts : GJets :"<<count_GJet<<"   : ZJet :"<<count_ZJet<<endl;
 
     TFile* outputFile;
     if( DR0p4 ) 

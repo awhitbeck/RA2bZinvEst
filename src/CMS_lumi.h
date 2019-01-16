@@ -20,7 +20,8 @@ float extraTextFont = 52;  // default is helvetica-italics
 
 // arxiv label
 bool writeArxivLabel;
-TString arxivLabel = "arXiv:1704.07781";
+//TString arxivLabel = "arXiv:1704.07781";
+TString arxivLabel = "";
 
 // text sizes and text offsets with respect to the top frame
 // in unit of the top margin size

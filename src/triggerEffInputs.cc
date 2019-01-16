@@ -187,18 +187,19 @@ int main(int argc, char** argv){
     vector<TString> sampleNames;
     TString skimType;
     if( region == 0 )
-        skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV11/tree_GJet_CleanVars/";
+        skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/";
     if( region == 1 )
-        skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV11/tree_GJetLDP_CleanVars/";
+        skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJetLDP_CleanVars/";
     TChain* JetHTdata = new TChain("tree");
-    JetHTdata->Add(skimType+"tree_JetHT_2016B.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016C.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016D.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016E.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016F.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016G.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016H2.root");
-    JetHTdata->Add(skimType+"tree_JetHT_2016H3.root");
+    JetHTdata->Add(skimType+"tree_JetHT_2017B.root");
+    JetHTdata->Add(skimType+"tree_JetHT_2017C.root");
+    JetHTdata->Add(skimType+"tree_JetHT_2017D.root");
+    JetHTdata->Add(skimType+"tree_JetHT_2017E.root");
+    JetHTdata->Add(skimType+"tree_JetHT_2017F.root");
+
+    //    JetHTdata->Add(skimType+"tree_JetHT_2017G.root");
+    //    JetHTdata->Add(skimType+"tree_JetHT_2017H2.root");
+    // JetHTdata->Add(skimType+"tree_JetHT_2017H3.root");
     samples.push_back(new RA2bTree(JetHTdata));
     sampleNames.push_back("JetHTdata");
 
@@ -275,7 +276,7 @@ int main(int argc, char** argv){
                     }
                 }
             
-                if( !ntuple->Photons_isEB->at(0) ){
+                if(!ntuple->Photons_isEB->at(0)) {
                     plotsReferenceEE[iPlot].fillData(ntuple);
                     plotsReference[iPlot].fillData(ntuple);
                     refPlotMHTversusHT[HTbin].fillData(ntuple);

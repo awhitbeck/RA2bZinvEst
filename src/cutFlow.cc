@@ -30,16 +30,16 @@ int main(int argc, char** argv){
     vector<TString> sampleNames;
 
     TString skimType;
-    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV12/tree_signal/";
+    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_signal/";
     
     vector<TString> ZJetsFileNames;
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2017.root");
     TChain* ZJets = new TChain("tree");
     for( int i = 0 ; i < ZJetsFileNames.size() ; i++ ){
         ZJets->Add(skimType+"/"+ZJetsFileNames[i]);
@@ -47,13 +47,13 @@ int main(int argc, char** argv){
     //samples.push_back(new RA2bTree(ZJets));
     //sampleNames.push_back("ZJets");
 
-    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV12/tree_GJet_CleanVars";
+    skimType="root://cmseos.fnal.gov//store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars";
 
     vector<TString> GJetsFileNames;
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
-    GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
+    GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+    GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
     
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
@@ -126,7 +126,7 @@ int main(int argc, char** argv){
         }
     }
 
-    TFile* outputFile = new TFile("cutFlow_synchTroy.root","RECREATE");
+    TFile* outputFile = new TFile("cutFlow_synchTroy_MC2017.root","RECREATE");
 
     for( int iCut = 0 ; iCut < cutFlow.size() ; iCut++ ){ 
         for( int iPlot = 0 ; iPlot < plots[iCut].size() ; iPlot++ ){ 

@@ -17,23 +17,23 @@ fragmentationFits:fragmentationFits.cc
 all:$(EXECS)
 
 cutFlow:
-	$(CC) -g $(CFLAGS) $(LIBS) $(INCLUDES) cutFlow.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) cutFlow.cc -o ../bin/$@
 fragmentationFits:
-	$(CC) -g $(CFLAGS) $(LIBS) $(INCLUDES) fragmentationFits.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) fragmentationFits.cc -o ../bin/$@
 photonNbExtrapolation:
-	$(CC) -g $(CFLAGS) $(LIBS) $(INCLUDES) photonNbExtrapolation.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) photonNbExtrapolation.cc -o ../bin/$@
 triggerUncertainties:
 	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) triggerUncertainties.cc -o ../bin/$@
 plotPurityProperties:
 	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) plotPurityProperties.cc -o ../bin/$@
 triggerEffInputs:
-	$(CC) -g $(CFLAGS) $(LIBS) $(INCLUDES) triggerEffInputs.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) triggerEffInputs.cc -o ../bin/$@
 plotRzGamma:
 	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) plotRzGamma.cc -o ../bin/$@
 plotObs_baseline:
-	$(CC) -pg $(CFLAGS) $(LIBS) $(INCLUDES) plotObs_baseline.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) plotObs_baseline.cc -o ../bin/$@
 plotObs_weightGJets:
-	$(CC) -g $(CFLAGS) $(LIBS) $(INCLUDES) plotObs_weightGJets.cc -o ../bin/$@
+	$(CC) $(CFLAGS) $(LIBS) $(INCLUDES) plotObs_weightGJets.cc -o ../bin/$@
 
 clean : 
 	rm ../bin/*

@@ -21,7 +21,7 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-  bool DR0p4 = true;
+  bool DR0p4 = false;
 
   if( argc != 2 ){ 
     cout << "1 argument needed:" << endl;
@@ -63,10 +63,10 @@ int main(int argc, char** argv){
     GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
     GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
   }else{
-    GJetsFileNames.push_back("tree_GJets_HT-100to200.root");
-    GJetsFileNames.push_back("tree_GJets_HT-200to400.root");
-    GJetsFileNames.push_back("tree_GJets_HT-400to600.root");
-    GJetsFileNames.push_back("tree_GJets_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root"); 
   }
   TChain* GJets = new TChain("tree");
   for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
