@@ -6,8 +6,8 @@
 #include <vector>
 #include <map>
 
-static const TString BASE_DIR_DATA = "/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/";
-static const TString BASE_DIR = "/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/";
+static const TString BASE_DIR_DATA = "/home/whitbeck/raid/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/";
+static const TString BASE_DIR = "/home/whitbeck/raid/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/";
 static const bool RE_MINIAOD = false;
 
 class skimSamples{
@@ -36,7 +36,7 @@ public :
             skimType="tree_LDP/";
         if( r == kPhoton )
             skimType="tree_GJet_CleanVars/";
-        if( r == kPhotonLDP )
+	if( r == kPhotonLDP )
             skimType="tree_GJetLDP_CleanVars/";
         if( r == kPhotonLoose )
             skimType="tree_GJetLoose_CleanVars/";
