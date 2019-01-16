@@ -48,7 +48,7 @@ void process(int region, string backgroundSample, string dataSample){
     vector<int> trigger_indices = {140,141};
     //vector<int> trigger_indices = {52};
 
-    double MHTbinning[7]={200.,225.,250.,300.,350.,500.,2000.};
+    double MHTbinning[7]={200.,225.,250.,300.,350.,600.,2000.};
     plot MHTplot(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[region],"MHT [GeV]",6,MHTbinning);
 
     vector<plot> projections;
@@ -148,19 +148,17 @@ void process(int region, string backgroundSample, string dataSample){
             ntuple->GetEntry(iEvt);
             if( iEvt % 1000000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
 
-            if( ntuple->Photons->size() == 0 || (ntuple->Photons->size() > 0 && ntuple->Photons->at(0).Pt()<100.)) continue;
+            //if( ntuple->Photons->size() == 0 || (ntuple->Photons->size() > 0 && ntuple->Photons->at(0).Pt()<100.)) continue;
 	    
 	    // for studying proton egamma objects in DY control region
 	    if( skims.regionNames[region] == "DYe" && !isDY(ntuple) ) continue;
-            if( skims.regionNames[region] == "photonLDPLoose" || skims.regionNames[region] == "photonLoose" ||
-                skims.regionNames[region] == "photonLDP" || skims.regionNames[region] == "photon" ){
-                if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
-                if( skims.sampleName[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
+            if( skims.regionNames[region] == "photonLDPLoose" || skims.regionNames[region] == "photonLoose" || skims.regionNames[region] == "photonLDP" || skims.regionNames[region] == "photon" ){
+	      if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
+	      if( skims.sampleName[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
             }
 
-            if( ((skims.regionNames[region] == "photonLDPLoose"||skims.regionNames[region] == "photonLDP")&&!RA2bLDPBaselineCut(ntuple)) ||
-                ((skims.regionNames[region] == "photonLoose"||skims.regionNames[region] == "photon")&&!RA2bBaselineWideCut(ntuple)) ) continue;
-
+            if( ((skims.regionNames[region] == "photonLDPLoose"||skims.regionNames[region] == "photonLDP")&&!RA2bLDPBaselinePhotonCut(ntuple)) ) continue;
+	    if( ((skims.regionNames[region] == "photonLoose"||skims.regionNames[region] == "photon")&&!RA2bBaselinePhotonWideCut(ntuple)) ) continue;
 	    
 
             for( int iProj = 0 ; iProj<projections.size() ; iProj++ ){
@@ -258,12 +256,12 @@ void process(int region, string backgroundSample, string dataSample){
           pass_trigger|=(ntuple->TriggerPass->at(trigger_indices[itrig])==1);
         if( !pass_trigger ) continue;
 
-        if( ntuple->Photons->size() == 0 || (ntuple->Photons->size() > 0 && ntuple->Photons->at(0).Pt()<100.) ) continue;
+        //if( ntuple->Photons->size() == 0 || (ntuple->Photons->size() > 0 && ntuple->Photons->at(0).Pt()<100.) ) continue;
 	
 	// for studying proton egamma objects in DY control region	
 	if( skims.regionNames[region] == "DYe" && !isDY(ntuple) ) continue;
-        if( ((skims.regionNames[region] == "photonLDPLoose"||skims.regionNames[region] == "photonLDP")&&!RA2bLDPBaselineCut(ntuple)) ||
-            ((skims.regionNames[region] == "photonLoose"||skims.regionNames[region] == "photon")&&!RA2bBaselineWideCut(ntuple)) ) continue;
+        if( ((skims.regionNames[region] == "photonLDPLoose"||skims.regionNames[region] == "photonLDP")&&!RA2bLDPBaselineCut(ntuple)) ) continue;
+	if( ((skims.regionNames[region] == "photonLoose"||skims.regionNames[region] == "photon")&&!RA2bBaselineWideCut(ntuple)) ) continue;
 
 	// ------------- fill data histograms --------------
         for( int iProj = 0 ; iProj<projections.size() ; iProj++ ){
