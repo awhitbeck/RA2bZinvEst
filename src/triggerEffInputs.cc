@@ -193,11 +193,7 @@ int main(int argc, char** argv){
 	    }
 	    //cout << "pass target trigger?: " << pass_tar_trigger << endl;
 
-            if( ntuple->Photons->size() == 0 ) continue;
-            if( ntuple->Photons->at(0).Pt() < 250. ) continue;
-            if( ! ntuple->Photons_fullID->at(0) ) continue;
-            if( ntuple->HT<300. || ntuple->MHT<250. ) continue;
-	    //cout << "event passing baseline" << endl;
+	    if( !RA2bBaselineWideCut(ntuple) ) continue;
 
             int HTbin = -1;
             for( int iHT = 0 ; iHT < HTbins-1 ; iHT++ ){
