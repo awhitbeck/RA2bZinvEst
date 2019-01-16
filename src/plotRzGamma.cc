@@ -19,7 +19,6 @@
 
 using namespace std;
 int main(int argc, char** argv){
-
     bool DR0p4 = false;
 
     if( argc != 2 ){ 
@@ -148,12 +147,12 @@ int main(int argc, char** argv){
         }
         int numEvents = ntuple->fChain->GetEntries();
         ntupleBranchStatus<RA2bTree>(ntuple);
-        double weight = 1.0;
+        double weight;
+     
+
         for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
             ntuple->GetEntry(iEvt);
-           if( sampleNames[iSample] == "GJets") count_GJet_init++;
-           if( sampleNames[iSample] == "ZJets") count_ZJet_init++;
-
+            weight = 1;
             if( iEvt % 1000000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->size() != 1 ) continue;      
             if( sampleNames[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
@@ -162,21 +161,29 @@ int main(int argc, char** argv){
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
             
-           if( sampleNames[iSample] == "GJets") count_GJet++;   
-           if( sampleNames[iSample] == "ZJets") count_ZJet++;   
-          
+            weight = lumi*ntuple->Weight; 
+
+           //.................. Trigger Eff weight  & prefiring weight  ..................................//
+
+           if ( sampleNames[iSample] == "GJets" ) weight*=Trigger_weights(ntuple,iEvt)*prefiring_weight_photon(ntuple,iEvt);  
+
+
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
            }
+           
+           //....... dRweights here ..................................................................................//
 
-                       
-            weight = lumi*ntuple->Weight; /*Trigger_weights(ntuple);customPUweights(ntuple)*/;//*photonTriggerWeight(ntuple));
-         //   if( sampleNames[iSample] == "GJets" && DR0p4 ) 
-         //       weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
+           if( sampleNames[iSample] == "GJets" ) {
+             weight *= dRweights(ntuple);}            
+
+                    
+          /*  weight = lumi*ntuple->Weight; Trigger_weights(ntuple);customPUweights(ntuple)*/;//*photonTriggerWeight(ntuple));
+          //   if( sampleNames[iSample] == "GJets" && DR0p4 ) 
+          //       weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
 
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ){ 
-                   weight*=prefiring_weight_photon(ntuple,iEvt);
                    plots[iPlot].fill(ntuple,weight);
                 }else 
                     plots[iPlot].fill(ntuple,weight);
@@ -184,14 +191,12 @@ int main(int argc, char** argv){
         }// end loop over events
     }// end loop over iSamples
 
- cout<<"Before cuts : GJets :"<<count_GJet_init<<"   : ZJet :"<<count_ZJet_init<<endl;
-    cout<<"After cuts : GJets :"<<count_GJet<<"   : ZJet :"<<count_ZJet<<endl;
 
     TFile* outputFile;
     if( DR0p4 ) 
         outputFile = new TFile("RzGamma_PUweightOnly_"+regionNames[region]+"_histo.root","RECREATE");
     else 
-        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo.root","RECREATE");
+        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo_2017.root","RECREATE");
 
     TCanvas* can = new TCanvas("can","can",500,500);
 
