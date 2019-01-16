@@ -60,18 +60,19 @@ template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("iso*Tracks",1);
   ntuple->fChain->SetBranchStatus("Jets",1);
   ntuple->fChain->SetBranchStatus("DeltaPhi*",1);
-  ntuple->fChain->SetBranchStatus("HT",1);
+  ntuple->fChain->SetBranchStatus("HT*",1);
   ntuple->fChain->SetBranchStatus("NJets",1);
   ntuple->fChain->SetBranchStatus("BTags*",1);
   ntuple->fChain->SetBranchStatus("MHT",1);
   ntuple->fChain->SetBranchStatus("Weight",1);
-  ntuple->fChain->SetBranchStatus("puWeight",1);
+  ntuple->fChain->SetBranchStatus("pu*",1);
   ntuple->fChain->SetBranchStatus("TriggerPass",1);
   ntuple->fChain->SetBranchStatus("Photons*",1);
   ntuple->fChain->SetBranchStatus("madMinPhotonDeltaR",1);
   ntuple->fChain->SetBranchStatus("GenParticles*",1);
   ntuple->fChain->SetBranchStatus("madHT",1);
   ntuple->fChain->SetBranchStatus("*Filter",1);
+  ntuple->fChain->SetBranchStatus("PFCaloMETRatio",1);
   ntuple->fChain->SetBranchStatus("TrueNumInteractions",1);
   ntuple->fChain->SetBranchStatus("NVtx",1);
   ntuple->fChain->SetBranchStatus("JetID",1);
@@ -85,6 +86,18 @@ template<typename ntupleType> bool cutFlow_none(ntupleType* ntuple){
     return true;
 }
 
+template<typename ntupleType> bool cutFlow_HT300(ntupleType* ntuple){
+    return ntuple->HT>300.;
+}
+
+template<typename ntupleType> bool cutFlow_MHT300(ntupleType* ntuple){
+    return ntuple->MHT>300.;
+}
+
+template<typename ntupleType> bool cutFlow_NJets2plus(ntupleType* ntuple){
+    return ntuple->NJets>=2;
+}
+
 template<typename ntupleType> bool cutFlow_leptonVeto(ntupleType* ntuple){
   return (ntuple->NMuons==0 &&
 	  ntuple->NElectrons==0 &&
@@ -94,9 +107,25 @@ template<typename ntupleType> bool cutFlow_leptonVeto(ntupleType* ntuple){
 }
 
 template<typename ntupleType> bool cutFlow_onePhoton(ntupleType* ntuple){
-    return ntuple->Photons->size()==1
-        && isPromptPhoton(ntuple)
-        && ntuple->Photons_fullID->at(0)==1;
+  return ( ntuple->Photons->size()==1
+	   && isPromptPhoton(ntuple)
+	   && ntuple->Photons_fullID->at(0)==1
+	   && ntuple->Photons_hasPixelSeed->at(0)==0 );
+}
+
+template<typename ntupleType> bool onePhoton(ntupleType* ntuple){
+  return ( ntuple->Photons->size()==1
+	   && ntuple->Photons_hasPixelSeed->at(0)==0 );
+}
+
+template<typename ntupleType> bool cutFlow_onePhoton_data(ntupleType* ntuple){
+  return ( ntuple->Photons->size()==1
+	   && ntuple->Photons_fullID->at(0)==1
+	   && ntuple->Photons_hasPixelSeed->at(0)==0 );
+}
+
+template<typename ntupleType> bool cutFlow_trigger(ntupleType* ntuple){
+  return ntuple->TriggerPass->at(140)==1 || ntuple->TriggerPass->at(141)==1 ;
 }
 
 template<typename ntupleType> bool cutFlow_photonPt200(ntupleType* ntuple){
@@ -778,8 +807,32 @@ template<typename ntupleType> bool RA2bBaselineCut(ntupleType* ntuple){
   return ( (NJets==2 && DeltaPhi1>0.5 && DeltaPhi2>0.5)
            || (NJets == 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3)
            || (NJets > 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3 && DeltaPhi4 > 0.3 ) )
-      && MHT>300. && HT>300.
-      && cutFlow_filters<ntupleType>(ntuple)
+    && MHT>300. && HT>300.
+    && cutFlow_leptonVeto(ntuple)
+    && cutFlow_filters(ntuple)
+      ;
+
+}
+
+template<typename ntupleType> bool RA2bBaselinePhotonCut(ntupleType* ntuple){
+
+  double DeltaPhi1 = ntuple->DeltaPhi1;
+  double DeltaPhi2 = ntuple->DeltaPhi2;
+  double DeltaPhi3 = ntuple->DeltaPhi3;
+  double DeltaPhi4 = ntuple->DeltaPhi4;
+
+  double HT = ntuple->HT;
+  double MHT = ntuple->MHT;
+  int NJets = ntuple->NJets;
+
+  return ( (NJets==2 && DeltaPhi1>0.5 && DeltaPhi2>0.5)
+           || (NJets == 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3)
+           || (NJets > 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3 && DeltaPhi4 > 0.3 ) )
+    && MHT>300. && HT>300.
+    && cutFlow_leptonVeto(ntuple)
+    && onePhoton(ntuple)
+    && cutFlow_photonPt200(ntuple)
+    && cutFlow_filters(ntuple)
       ;
 
 }
@@ -804,6 +857,50 @@ template<typename ntupleType> bool RA2bBaselineWideCut(ntupleType* ntuple){
 
 }
 
+template<typename ntupleType> bool RA2bBaselinePhotonWideCut(ntupleType* ntuple){
+
+  double DeltaPhi1 = ntuple->DeltaPhi1;
+  double DeltaPhi2 = ntuple->DeltaPhi2;
+  double DeltaPhi3 = ntuple->DeltaPhi3;
+  double DeltaPhi4 = ntuple->DeltaPhi4;
+
+  double HT = ntuple->HT;
+  double MHT = ntuple->MHT;
+  int NJets = ntuple->NJets;
+
+  return ( (NJets==2 && DeltaPhi1>0.5 && DeltaPhi2>0.5)
+           || (NJets == 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3)
+           || (NJets > 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3 && DeltaPhi4 > 0.3 ) )
+      && MHT>250. && HT>300.
+    && cutFlow_leptonVeto(ntuple)
+    && onePhoton(ntuple)
+    && cutFlow_photonPt200(ntuple)
+    && cutFlow_filters(ntuple)
+      ;
+
+}
+
+template<typename ntupleType> bool RA2bLDPBaselinePhotonCut(ntupleType* ntuple){
+
+  double DeltaPhi1 = ntuple->DeltaPhi1;
+  double DeltaPhi2 = ntuple->DeltaPhi2;
+  double DeltaPhi3 = ntuple->DeltaPhi3;
+  double DeltaPhi4 = ntuple->DeltaPhi4;
+
+  double HT = ntuple->HT;
+  double MHT = ntuple->MHT;
+  int NJets = ntuple->NJets;
+
+  return NJets >= 2 && MHT > 250. && HT > 300.
+      && (DeltaPhi1 < 0.5 || DeltaPhi2 < 0.5 || DeltaPhi3 < 0.3 || DeltaPhi4 < 0.3)
+    && cutFlow_leptonVeto(ntuple)
+    && onePhoton(ntuple)
+    && cutFlow_photonPt200(ntuple)
+    && cutFlow_filters(ntuple);
+      ;
+
+}
+
 template<typename ntupleType> bool RA2bLDPBaselineCut(ntupleType* ntuple){
 
   double DeltaPhi1 = ntuple->DeltaPhi1;
@@ -817,7 +914,8 @@ template<typename ntupleType> bool RA2bLDPBaselineCut(ntupleType* ntuple){
 
   return NJets >= 2 && MHT > 250. && HT > 300.
       && (DeltaPhi1 < 0.5 || DeltaPhi2 < 0.5 || DeltaPhi3 < 0.3 || DeltaPhi4 < 0.3)
-      && cutFlow_filters<ntupleType>(ntuple);
+    && cutFlow_leptonVeto(ntuple)
+    && cutFlow_filters(ntuple);
       ;
 
 }
