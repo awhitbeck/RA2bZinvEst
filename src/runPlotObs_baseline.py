@@ -3,28 +3,29 @@ import os
 
 #os.environ["DYLD_LIBRARY_PATH"] = "/Users/whitbeck/root_build/lib"
 
-backgroundSamples=[#"QCD_200to300",
-                   #"QCD_300to500",
-                   #"QCD_500to700",
-                   #"QCD_700to1000",
-                   #"QCD_1000to1500",
-                   #"QCD_1500to2000",
-                   #"QCD_2000toInf",
-                   #"GJets_100to200",
-                   #"GJets_200to400",
-                   #"GJets_400to600",
-                   #"GJets_600toInf"
+backgroundSamples=["QCD_200to300",
+                   "QCD_300to500",
+                   "QCD_500to700",
+                   "QCD_700to1000",
+                   "QCD_1000to1500",
+                   "QCD_1500to2000",
+                   "QCD_2000toInf",
+                   "GJets_100to200",
+                   "GJets_200to400",
+                   "GJets_400to600",
+                   "GJets_600toInf"
                    ]
 
 dataSamples=["SinglePhoton_2017B",
              "SinglePhoton_2017C",
              "SinglePhoton_2017D",
              "SinglePhoton_2017E",
-             "SinglePhoton_2017F"]
+             "SinglePhoton_2017F"
+             ]
 
 def runPlotPurityProperties(bkg,data):
-    print '../bin/plotObs_baseline 3 "{0}" "{1}"'.format(bkg,data)
-    os.system('../bin/plotObs_baseline 3 "{0}" "{1}"'.format(bkg,data))
+    print '../bin/plotObs_baseline 2 "{0}" "{1}"'.format(bkg,data)
+    os.system('../bin/plotObs_baseline 2 "{0}" "{1}"'.format(bkg,data))
 
 processes=[]
 for sample in backgroundSamples : 
@@ -39,6 +40,9 @@ for sample in dataSamples :
 
 for p in processes : 
     p.join()
+
+#os.system("hadd -f plotObs_photon_baseline.root plotObs_photon_baseline_*.root")
+#os.system("rm plotObs_photon_baseline_*.root")
     
     
 

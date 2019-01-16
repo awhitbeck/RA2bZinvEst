@@ -78,8 +78,8 @@ def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) :
     plot.GetXaxis().SetNdivisions(505)
     plot.Draw()
     ratioPad.cd()
-    
-    modelHisto = TH1F(promptHisto)
+
+    modelHisto = TH1D(promptHisto)
     modelHisto.Scale(dataHisto.Integral()*frac.getVal()/promptHisto.Integral())
     modelHisto.Add(nonPromptHisto,float(dataHisto.Integral()*(1.-frac.getVal())/nonPromptHisto.Integral()))
     
@@ -152,19 +152,28 @@ def main() :
     ###########################################################
     inputFile = TFile("purityInputs.root","READ")
     prompt_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_GJets".format(EEorEB,binLabel))
+    assert(prompt_hist != None)
+        
     ### ADD HACK BECAUSE THERE AREN'T ENOUGH EVENTS IN THE
     ### MC ALT MHT_500 BIN....
     if binLabel == "MHT_500" :
         nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_Data".format(EEorEB,"MHT_350"))
+        assert( nonPrompt_hist != None )
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,"MHT_350"))
+        assert( nonPromptMC_hist != None )
         nonPromptMCALT_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,"MHT_350"))
+        assert( nonPromptMCALT_hist != None )
     else : 
         nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_Data".format(EEorEB,binLabel))
+        assert( nonPrompt_hist != None )
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
+        assert( nonPromptMC_hist != None )
         nonPromptMCALT_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,binLabel))
+        assert( nonPromptMCALT_hist != None )
     data_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_Data".format(EEorEB,binLabel))
+    assert(data_hist!=None)
 
-     ####################################################
+    ####################################################
      # - - - - - - - - - run fits - - - - - - - - - - - #
      ####################################################
     runFit(prompt_hist,nonPromptMC_hist,data_hist,endcap,"ALT_")

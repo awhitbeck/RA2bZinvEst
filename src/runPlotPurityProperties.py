@@ -1,8 +1,6 @@
 from multiprocessing import Process
 import os
 
-os.environ["DYLD_LIBRARY_PATH"] = "/Users/whitbeck/root_build/lib"
-
 backgroundSamples=["QCD_200to300",
                    "QCD_300to500",
                    "QCD_500to700",
@@ -13,7 +11,8 @@ backgroundSamples=["QCD_200to300",
                    "GJets_100to200",
                    "GJets_200to400",
                    "GJets_400to600",
-                   "GJets_600toInf"]
+                   "GJets_600toInf"
+                    ]
 
 dataSamples=["SinglePhoton_2017B",
              "SinglePhoton_2017C",
@@ -38,7 +37,9 @@ for sample in dataSamples :
 
 for p in processes : 
     p.join()
-    
+
+#os.system("hadd -f plotPurityProperties_photonLoose.root plotPurityProperties_photonLoose_*.root")
+#os.system("rm plotPurityProperties_photonLoose_*.root")
     
 
 

@@ -9,15 +9,15 @@ inputDir=$1
 #/usr/bin/python photonPurityChargedIso.py -s "MHT225_250" -b "MHT_225" -d $inputDir
 /usr/bin/python photonPurityChargedIso.py -s "MHT250_300" -b "MHT_250" -d $inputDir
 /usr/bin/python photonPurityChargedIso.py -s "MHT300_350" -b "MHT_300" -d $inputDir
-/usr/bin/python photonPurityChargedIso.py -s "MHT350_500" -b "MHT_350" -d $inputDir
-/usr/bin/python photonPurityChargedIso.py -s "MHT500" -b "MHT_500" -d $inputDir
+/usr/bin/python photonPurityChargedIso.py -s "MHT350_600" -b "MHT_350" -d $inputDir
+/usr/bin/python photonPurityChargedIso.py -s "MHT600" -b "MHT_600" -d $inputDir
 
 #/usr/bin/python photonPurityChargedIso.py -e -s "MHT200_225" -b "MHT_200" -d $inputDir
 #/usr/bin/python photonPurityChargedIso.py -e -s "MHT225_250" -b "MHT_225" -d $inputDir
 /usr/bin/python photonPurityChargedIso.py -e -s "MHT250_300" -b "MHT_250" -d $inputDir
 /usr/bin/python photonPurityChargedIso.py -e -s "MHT300_350" -b "MHT_300" -d $inputDir
-/usr/bin/python photonPurityChargedIso.py -e -s "MHT350_500" -b "MHT_350" -d $inputDir
-/usr/bin/python photonPurityChargedIso.py -e -s "MHT500" -b "MHT_500" -d $inputDir
+/usr/bin/python photonPurityChargedIso.py -e -s "MHT350_600" -b "MHT_350" -d $inputDir
+/usr/bin/python photonPurityChargedIso.py -e -s "MHT600" -b "MHT_600" -d $inputDir
 
 # /usr/bin/python photonPurityChargedIso.py -s "HT250_300" -b "HT_250" -d $inputDir
 # /usr/bin/python photonPurityChargedIso.py -s "HT300_500" -b "HT_300" -d $inputDir
