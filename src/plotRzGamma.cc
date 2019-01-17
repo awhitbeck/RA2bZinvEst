@@ -131,15 +131,8 @@ int main(int argc, char** argv){
     }
     samples.push_back(new RA2bTree(GJets));
     sampleNames.push_back("GJets");
-
-
-    int count_GJet = 0,count_ZJet = 0;
-    int count_GJet_init = 0,count_ZJet_init = 0;
-
     for( int iSample = 0 ; iSample < samples.size() ; iSample++){
 
-           if( sampleNames[iSample] == "GJets") count_GJet_init++;   
-           if( sampleNames[iSample] == "ZJets") count_ZJet_init++;   
         RA2bTree* ntuple = samples[iSample];
         for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++){
             plots[iPlot].addNtuple(ntuple,sampleNames[iSample]);
@@ -148,12 +141,10 @@ int main(int argc, char** argv){
         int numEvents = ntuple->fChain->GetEntries();
         ntupleBranchStatus<RA2bTree>(ntuple);
         double weight;
-     
-
         for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
             ntuple->GetEntry(iEvt);
             weight = 1;
-            if( iEvt % 1000000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
+            if( iEvt % 1 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->size() != 1 ) continue;      
             if( sampleNames[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons_fullID->at(0)!=1 ) continue;
@@ -161,33 +152,30 @@ int main(int argc, char** argv){
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
             
+            if( sampleNames[iSample] == "GJets" && !RA2bBaselinePhotonCut(ntuple) ) continue;  
+           // if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
+                
             weight = lumi*ntuple->Weight; 
 
-           //.................. Trigger Eff weight  & prefiring weight  ..................................//
+           //............. Trigger Eff weight  & prefiring weight  ..................................//
 
-           if ( sampleNames[iSample] == "GJets" ) weight*=Trigger_weights(ntuple,iEvt)*prefiring_weight_photon(ntuple,iEvt);  
-
-
+           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt);  
+           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt);  
+         
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
            }
            
-           //....... dRweights here ..................................................................................//
+          //.... dRweights here ..............................................................//
 
-           if( sampleNames[iSample] == "GJets" ) {
-             weight *= dRweights(ntuple);}            
-
-                    
-          /*  weight = lumi*ntuple->Weight; Trigger_weights(ntuple);customPUweights(ntuple)*/;//*photonTriggerWeight(ntuple));
-          //   if( sampleNames[iSample] == "GJets" && DR0p4 ) 
-          //       weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
+           if( sampleNames[iSample] == "GJets" )  weight *= dRweights(ntuple);            
 
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ){ 
                    plots[iPlot].fill(ntuple,weight);
                 }else 
                     plots[iPlot].fill(ntuple,weight);
-            }// end loop over iPlots
+            }// end loop over iPlots  
         }// end loop over events
     }// end loop over iSamples
 
@@ -216,16 +204,12 @@ int main(int argc, char** argv){
         can->RedrawAxis();
         can->GetFrame()->Draw();
     
-        if( DR0p4 ){
+        if( DR0p4 )
             can->SaveAs("../plots/RzGamma_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
-            can->SaveAs("../plots/RzGamma_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".pdf");
-            can->SaveAs("../plots/RzGamma_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".eps");
-        }else{
+        else
             can->SaveAs("../plots/RzGamma_DR0p05_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
-            can->SaveAs("../plots/RzGamma_DR0p05_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".pdf");
-            can->SaveAs("../plots/RzGamma_DR0p05_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".eps");
-        }
-    }
+        
+   }
 
     outputFile->Close();
 }

@@ -204,7 +204,7 @@ int main(int argc, char** argv){
  
 
        //Triggr Eff weight 
-        weight*=Trigger_weights(ntuple,iEvt);
+        weight*=Trigger_weights_apply(ntuple,iEvt);
 
        // dRweights
 
@@ -236,7 +236,7 @@ int main(int argc, char** argv){
     ntupleBranchStatus<RA2bTree>(ntuple);
     for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         ntuple->GetEntry(iEvt);
-        if( iEvt % 1000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
+        if( iEvt % 1000000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
         if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
         if( ( reg == skimSamples::kPhoton ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
 

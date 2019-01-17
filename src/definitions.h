@@ -948,23 +948,25 @@ TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
   /*****************.>>>>>>>>>>>>>>>>>>>>   Photon Trigger Efficiency <<<<<<<<<<<<<<<***********/
   /*****................................................................................********/
  
-
   TFile *ftrigger = new TFile("fnew.root","READ");
-  std::vector<TF1*> *fTrigEff_;
-
-  double Trigger_weights(RA2bTree* ntuple, int iEvt){
-    ntuple->GetEntry(iEvt);
-    fTrigEff_->clear();
-    fTrigEff_->push_back((TF1*)ftrigger->Get("f_trig_eb"));
-    fTrigEff_->push_back((TF1*)ftrigger->Get("f_trig_ec"));
-    if( ntuple->Photons_isEB->at(0) ) {
-       cout<<  fTrigEff_->at(0)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
-       return  fTrigEff_->at(0)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
-     }
-    else {
-       return  fTrigEff_->at(1)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
-     }
+  std::vector<TF1*> fTrigEff_;
+  
+  double Trigger_weights_apply(RA2bTree* ntuple, int iEvt){
+  ntuple->GetEntry(iEvt);
+  fTrigEff_.clear();
+  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_eb"));
+  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_ec"));
+  
+  if( ntuple->Photons_isEB->at(0) && fTrigEff_.at(0) != nullptr ) 
+       return  fTrigEff_.at(0)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
+     
+  else if (!ntuple->Photons_isEB->at(0) && fTrigEff_.at(1) != nullptr ) 
+       return  fTrigEff_.at(1)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
+  else
+       return 1;
+   
   }
+  
 
 
 
