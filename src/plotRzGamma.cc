@@ -131,8 +131,9 @@ int main(int argc, char** argv){
     }
     samples.push_back(new RA2bTree(GJets));
     sampleNames.push_back("GJets");
-    for( int iSample = 0 ; iSample < samples.size() ; iSample++){
 
+    Trigger_weights();
+    for( int iSample = 0 ; iSample < samples.size() ; iSample++){
         RA2bTree* ntuple = samples[iSample];
         for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++){
             plots[iPlot].addNtuple(ntuple,sampleNames[iSample]);
@@ -153,15 +154,14 @@ int main(int argc, char** argv){
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
             
             if( sampleNames[iSample] == "GJets" && !RA2bBaselinePhotonCut(ntuple) ) continue;  
-           // if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
+            if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
                 
             weight = lumi*ntuple->Weight; 
 
            //............. Trigger Eff weight  & prefiring weight  ..................................//
 
-           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt);  
-           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt);  
-         
+           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt);  
+                
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
            }

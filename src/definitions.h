@@ -170,9 +170,8 @@ template<typename ntupleType> double customPUweights(ntupleType* ntuple){
     return puWeightHist->GetBinContent(puWeightHist->GetXaxis()->FindBin(min(ntuple->TrueNumInteractions,puWeightHist->GetBinLowEdge(puWeightHist->GetNbinsX()+1))));
 }
 template<typename ntupleType> double dRweights(ntupleType* ntuple){
-    double intercept=0.8457,slope=-0.0005284;
-  //  return 1./(min(ntuple->HT,900.)*slope+intercept);
-      return 1 / ((min(ntuple->MHT, 900.0) - 397.4)*( -0.0005284 *2/3) + 0.8457) ;
+    return 1. /( (min(ntuple->MHT, 900.0) - 397.4)*( -0.0005098 *2/3) + 0.8134 ) ;
+   
 }
 
 template<typename ntupleType> double GJets0p4Weights(ntupleType* ntuple){
@@ -948,14 +947,21 @@ TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
   /*****************.>>>>>>>>>>>>>>>>>>>>   Photon Trigger Efficiency <<<<<<<<<<<<<<<***********/
   /*****................................................................................********/
  
-  TFile *ftrigger = new TFile("fnew.root","READ");
+  TFile *ftrigger = new TFile("trigger_efficiency_PhotonPt.root","READ");
   std::vector<TF1*> fTrigEff_;
+  void Trigger_weights()
+	{
+          fTrigEff_.clear();
+	  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_eb"));
+	  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_ec"));
+
+	}
   
   double Trigger_weights_apply(RA2bTree* ntuple, int iEvt){
   ntuple->GetEntry(iEvt);
-  fTrigEff_.clear();
-  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_eb"));
-  fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_ec"));
+ // fTrigEff_.clear();
+ // fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_eb"));
+ // fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_ec"));
   
   if( ntuple->Photons_isEB->at(0) && fTrigEff_.at(0) != nullptr ) 
        return  fTrigEff_.at(0)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  

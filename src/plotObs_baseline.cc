@@ -132,7 +132,7 @@ int main(int argc, char** argv){
     plot PhotonMinDeltaREE(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EE","min#Delta R(jet,#gamma)",40,0,4);
 
     plot verticesplotEE(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EE","n_{vtx}",40,0,80);
-
+    Trigger_weights();
     vector<plot> plotsEEevents;
     plotsEEevents.push_back(MHTplotEE);
     plotsEEevents.push_back(HTplotEE);
@@ -175,7 +175,7 @@ int main(int argc, char** argv){
         for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         
         ntuple->GetEntry(iEvt);
-	if( iEvt % 1000000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
+	if( iEvt % 1000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
 
         if( ( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLoose ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
 	if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
@@ -196,7 +196,7 @@ int main(int argc, char** argv){
            }
            
         if( skims.sampleName[iSample] == "GJets" ){
-                   weight*=prefiring_weight_photon(ntuple,iEvt);
+                   weight*=prefiring_weight_photon(ntuple,iEvt)*dRweights(ntuple);;
          }
  
        //...............................................................................................  
@@ -208,8 +208,8 @@ int main(int argc, char** argv){
 
        // dRweights
 
-       if( skims.sampleName[iSample] == "GJets" ){
-         weight *= dRweights(ntuple); }
+     //  if( skims.sampleName[iSample] == "GJets" ){
+      //   weight *= dRweights(ntuple); }
 
          
         for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++ ){
@@ -236,7 +236,7 @@ int main(int argc, char** argv){
     ntupleBranchStatus<RA2bTree>(ntuple);
     for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         ntuple->GetEntry(iEvt);
-        if( iEvt % 1000000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
+        if( iEvt % 1000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
         if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
         if( ( reg == skimSamples::kPhoton ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
 
