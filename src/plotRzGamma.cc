@@ -132,7 +132,8 @@ int main(int argc, char** argv){
     samples.push_back(new RA2bTree(GJets));
     sampleNames.push_back("GJets");
 
-    Trigger_weights();
+    Trigger_weights();                      // Initiating trigger Weight Efficiency here
+
     for( int iSample = 0 ; iSample < samples.size() ; iSample++){
         RA2bTree* ntuple = samples[iSample];
         for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++){
@@ -145,35 +146,29 @@ int main(int argc, char** argv){
         for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
             ntuple->GetEntry(iEvt);
             weight = 1;
-            if( iEvt % 1 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
+            if( iEvt % 10000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->size() != 1 ) continue;      
             if( sampleNames[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons_fullID->at(0)!=1 ) continue;
             if( sampleNames[iSample] == "GJets" && !( ntuple->madMinPhotonDeltaR>0.4 ) ) continue;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
-            
-            if( sampleNames[iSample] == "GJets" && !RA2bBaselinePhotonCut(ntuple) ) continue;  
-            if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
-                
-            weight = lumi*ntuple->Weight; 
-
-           //............. Trigger Eff weight  & prefiring weight  ..................................//
-
-           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt);  
-                
+         
+            if( region == 0 )     
+	            if( sampleNames[iSample] == "GJets" && !RA2bBaselinePhotonCut(ntuple) ) continue;  
+       	    if( region == 1 )
+		    if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
+           // weight applied here      
+           weight = lumi*ntuple->Weight; 
+           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
            }
            
-          //.... dRweights here ..............................................................//
-
-           if( sampleNames[iSample] == "GJets" )  weight *= dRweights(ntuple);            
-
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
-                if( sampleNames[iSample] == "GJets" ){ 
+                if( sampleNames[iSample] == "GJets" ) 
                    plots[iPlot].fill(ntuple,weight);
-                }else 
+                else 
                     plots[iPlot].fill(ntuple,weight);
             }// end loop over iPlots  
         }// end loop over events

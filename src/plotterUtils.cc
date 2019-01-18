@@ -340,14 +340,8 @@ template <typename ntupleType> class plot{
     topPad->cd();
     gPad->SetLogy(false);
     can->SaveAs(dir+"/"+label+".png");
-    can->SaveAs(dir+"/"+label+".eps");
-    can->SaveAs(dir+"/"+label+".pdf");
     gPad->SetLogy(true);
     can->SaveAs(dir+"/"+label+"_LogY.png");
-    can->SaveAs(dir+"/"+label+"_LogY.eps");
-    can->SaveAs(dir+"/"+label+"_LogY.pdf");
-
-
   }
 
   TString label;

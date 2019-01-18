@@ -132,7 +132,7 @@ int main(int argc, char** argv){
     plot PhotonMinDeltaREE(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EE","min#Delta R(jet,#gamma)",40,0,4);
 
     plot verticesplotEE(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EE","n_{vtx}",40,0,80);
-    Trigger_weights();
+    Trigger_weights();               // Initiating trigger Efficiency Function
     vector<plot> plotsEEevents;
     plotsEEevents.push_back(MHTplotEE);
     plotsEEevents.push_back(HTplotEE);
@@ -175,52 +175,29 @@ int main(int argc, char** argv){
         for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         
         ntuple->GetEntry(iEvt);
-	if( iEvt % 1000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
+	if( iEvt % 10000 == 0 ) cout << skims.sampleName[iSample] << ": " << iEvt << "/" << numEvents << endl;
 
         if( ( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLoose ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
 	if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
 
 	if( skims.regionNames[regInt] == "photonLDP" || skims.regionNames[regInt] == "photon" ){
-	  if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
-	  if( skims.sampleName[iSample] == "GJets" && ( !isPromptPhoton(ntuple) || ntuple->madMinPhotonDeltaR < 0.4 ) ) continue;
+        if( skims.sampleName[iSample] == "QCD" && isPromptPhoton(ntuple) ) continue;
+        if( skims.sampleName[iSample] == "GJets" && ( !isPromptPhoton(ntuple) || ntuple->madMinPhotonDeltaR < 0.4 ) ) continue;
         }
 
-
-
-        weight = lumi*ntuple->Weight;
+        // weights applied here 
+        weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt);
  
-        // prefiring weight here ..................................................................
-
-         for (int unsigned s = 0; s < ntuple->Jets->size();s++){
+        if( skims.sampleName[iSample] == "GJets" )weight*=prefiring_weight_photon(ntuple,iEvt)*dRweights(ntuple);;
+        for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
-           }
-           
-        if( skims.sampleName[iSample] == "GJets" ){
-                   weight*=prefiring_weight_photon(ntuple,iEvt)*dRweights(ntuple);;
-         }
- 
-       //...............................................................................................  
-       //*..............................................................................................*/
- 
-
-       //Triggr Eff weight 
-        weight*=Trigger_weights_apply(ntuple,iEvt);
-
-       // dRweights
-
-     //  if( skims.sampleName[iSample] == "GJets" ){
-      //   weight *= dRweights(ntuple); }
-
+        }
          
         for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++ ){
-        plotsAllEvents[iPlot].fill(ntuple,weight);
-        if( ntuple->Photons_isEB->at(0) ){
-        plotsEBevents[iPlot].fill(ntuple,weight);
-        }else{
-        plotsEEevents[iPlot].fill(ntuple,weight);
+	        plotsAllEvents[iPlot].fill(ntuple,weight);
+	        if( ntuple->Photons_isEB->at(0) ) plotsEBevents[iPlot].fill(ntuple,weight);
+	        else                              plotsEEevents[iPlot].fill(ntuple,weight);
         }
- 
-      }
     }
 }
 
@@ -236,7 +213,7 @@ int main(int argc, char** argv){
     ntupleBranchStatus<RA2bTree>(ntuple);
     for( int iEvt = 0 ; iEvt < min(MAX_EVENTS,numEvents) ; iEvt++ ){
         ntuple->GetEntry(iEvt);
-        if( iEvt % 1000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
+        if( iEvt % 10000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
         if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
         if( ( reg == skimSamples::kPhoton ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
 
@@ -247,7 +224,6 @@ int main(int argc, char** argv){
 	for( unsigned int itrig = 0 ; itrig < trigger_indices.size() ; itrig++ )
 	  pass_trigger|=(ntuple->TriggerPass->at(trigger_indices[itrig])==1);
 	if( !pass_trigger ) continue;
-       //.........................................................................................................*/
         
 
         for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){

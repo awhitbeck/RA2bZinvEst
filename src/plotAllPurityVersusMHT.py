@@ -116,6 +116,4 @@ LUMItext.SetTextFont(51)
 LUMItext.SetTextSize(0.045)
 LUMItext.Draw()
 
-can.SaveAs("photonPurity_ALL_MHT.pdf")
 can.SaveAs("photonPurity_ALL_MHT.png")
-can.SaveAs("photonPurity_ALL_MHT.eps")

@@ -215,9 +215,7 @@ LUMItext.SetTextFont(51)
 LUMItext.SetTextSize(0.045)
 LUMItext.Draw()
 
-#can.SaveAs("../plots/purityResults/photonPurity_ALL_MHT.pdf")
 can.SaveAs("../plots/purityResults/photonPurity_ALL_MHT.png")
-#can.SaveAs("../plots/purityResults/photonPurity_ALL_MHT.eps")
 
 # - - - - - - - - 
 canAvg = TCanvas("canAvg","canAvg",500,500)
@@ -237,6 +235,4 @@ CMStext.Draw()
 SIMtext.Draw()
 LUMItext.Draw()
 
-#canAvg.SaveAs("../plots/purityResults/photonPurity_MHT.pdf")
 canAvg.SaveAs("../plots/purityResults/photonPurity_MHT.png")
-#canAvg.SaveAs("../plots/purityResults/photonPurity_MHT.eps")

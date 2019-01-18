@@ -347,15 +347,11 @@ int main(int argc, char** argv){
         can->Update();
         can->RedrawAxis();
         can->GetFrame()->Draw();
-        if( region == 0 ){
+        if( region == 0 )
             can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+".png");
-            can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+".eps");
-            can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+".pdf");
-        }else{
+        else
             can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+"_LDP.png");
-            can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+"_LDP.eps");
-            can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+"_LDP.pdf");
-        }
+        
 
         cout << " - - - - - - - - - - - - - - - - - - - - - - " << endl;
         cout << plotsTarget[iPlot].dataHist->GetName() << endl;

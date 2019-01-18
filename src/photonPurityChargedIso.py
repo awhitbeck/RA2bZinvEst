@@ -144,14 +144,9 @@ def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) :
     lumiText.Draw()
 
     can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}.png".format(tag,EEorEB,saveTag))
-    can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}.eps".format(tag,EEorEB,saveTag))
-    can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}.pdf".format(tag,EEorEB,saveTag))
-
     fitPad.SetLogy()
 
     can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}_LogY.png".format(tag,EEorEB,saveTag))
-    can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}_LogY.eps".format(tag,EEorEB,saveTag))
-    can.SaveAs("../plots/purityFits/purityFits_{0}{1}_{2}_LogY.pdf".format(tag,EEorEB,saveTag))
 
 def main() :
     ###########################################################
