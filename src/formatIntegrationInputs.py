@@ -101,7 +101,6 @@ RzGamma.SetNameTitle("RzGamma","RzGamma")
 RzGamma.Divide(GJetsHisto_Rzg)
 print "GJets:",GJetsHisto_Rzg.GetBinContent(1)
 print "GJets/ZJets:",RzGamma.GetBinContent(1)
-#RzGamma.Scale(1./1.23)
 print "RzG:",RzGamma.GetBinContent(1)
 
 if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
@@ -218,7 +217,7 @@ for i in range(nBins) :
    
     if ( i >= 30 and i < 38 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-10))
-        outputDict["REr1"].append(RzGamma.GetBinError(i+1-10)/outputDict["ZgR"][i])
+        outputDict["REr1"].append(RzGamma.GetBinError(i+1-10)/outputDict["ZgR"][i+1-10])
     elif ( i >= 38 and i < 46 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-18))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1-18)/outputDict["ZgR"][i+1-18])
@@ -246,10 +245,10 @@ for i in range(nBins) :
    
  #   outputDict["YsysLow"].append(sqrt(outputDict["REr1"][i]*outputDict["REr1"][i]+outputDict["pErr"][i]*outputDict["pErr"][i]+outputDict["ferrDn"][i]*outputDict["ferrDn"][i]+outputDict["fsysErr"][i]*outputDict["fsysErr"][i]))
 
-columnNames=["binIndex","nMCGJ","nMCerr","nMCEBt","nMCECt","Nobs","nEB","pEB","pEBerr","nEC","pEC","pECerr","ZgR","REr1","f","purity","pErr","DR","DRup","DRlow","Yield"]
+columnNames=["binIndex","nMCGJ","nMCerr","nMCEBt","nMCECt","Nobs","nEB","pEB","pEBerr","nEC","pEC","pECerr","ZgR","REr1","f","purity","pErr","DR","Yield"]
 ## Final table
 outputFile = open(outputFileName,"w")
-formattingString=" {0} : {1}( {2})|{3} |{4} |{5} |{6}| {7}({8}) |{9}| {10}({11}) | {12}({13} |{14} |{15}({16})| {17}(+{18}-{19})| {20})"
+formattingString=" {0} : {1}( {2})|{3} |{4} |{5} |{6}| {7}({8}) |{9}| {10}({11}) | {12}({13} |{14} |{15}({16})| {17}| {18})"
 outputFile.write(formattingString.format(*columnNames))
 outputFile.write("\n")
 for b in range(nBins):
@@ -288,7 +287,7 @@ for i in range(nBins):
    # RzgCorr.SetBinError(i+1,)
 
 RzgCorr.SetMarkerStyle(8)
-RzgCorr.GetYaxis().SetRangeUser(0.01,100000.)
+RzgCorr.GetYaxis().SetRangeUser(0.1,100000.)
 RzgCorr.GetYaxis().SetTitle("Prediction")
 RzgCorr.GetXaxis().SetTitle("i^{th} Bin")
 #RzgCorr.setLog ( 'y', True )
@@ -311,8 +310,8 @@ SIMtext.SetTextSize(0.045)
 LUMItext = TText(38,1.01,"13 TeV")
 LUMItext.SetTextFont(51)
 LUMItext.SetTextSize(0.045)
-fitPad.cd()
-LUMItext.Draw()
+#fitPad.cd()
+#LUMItext.Draw()
 
 
 can.SaveAs("prediction.png")
