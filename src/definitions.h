@@ -170,8 +170,7 @@ template<typename ntupleType> double customPUweights(ntupleType* ntuple){
     return puWeightHist->GetBinContent(puWeightHist->GetXaxis()->FindBin(min(ntuple->TrueNumInteractions,puWeightHist->GetBinLowEdge(puWeightHist->GetNbinsX()+1))));
 }
 template<typename ntupleType> double dRweights(ntupleType* ntuple){
-    return 1. /( (min(ntuple->MHT, 900.0) - 397.4)*( -0.0005098 *2/3) + 0.8134 ) ;
-   
+    return 1. /( (min(ntuple->MHT, 900.0) - 397.7)*( -0.00058276 *2/3) + 0.8401 ); 
 }
 
 template<typename ntupleType> double GJets0p4Weights(ntupleType* ntuple){
