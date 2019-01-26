@@ -126,8 +126,7 @@ public :
         fileNames["HTMHT_2016E"] = "tree_HTMHT_2016E.root";
         fileNames["HTMHT_2016F"] = "tree_HTMHT_2016F.root";
         fileNames["HTMHT_2016G"] = "tree_HTMHT_2016G.root";
-        fileNames["HTMHT_2016H2"] = "tree_HTMHT_2016H2.root";
-        fileNames["HTMHT_2016H3"] = "tree_HTMHT_2016H3.root";
+        fileNames["HTMHT_2016H"] = "tree_HTMHT_2016H.root";
 
         fileNames["SingleElectron_2016C"] = "tree_SingleElectron_2016C.root";
         fileNames["SingleElectron_2016D"] = "tree_SingleElectron_2016D.root";
@@ -142,8 +141,7 @@ public :
         fileNames["SingleMuon_2016E"] = "tree_SingleMuon_2016E.root";
         fileNames["SingleMuon_2016F"] = "tree_SingleMuon_2016F.root";
         fileNames["SingleMuon_2016G"] = "tree_SingleMuon_2016G.root";
-        fileNames["SingleMuon_2016H2"] = "tree_SingleMuon_2016H2.root";
-        fileNames["SingleMuon_2016H3"] = "tree_SingleMuon_2016H3.root";
+        fileNames["SingleMuon_2016H"] = "tree_SingleMuon_2016H.root";
 
  	fileNames["SinglePhoton_2016B"] = "tree_SinglePhoton_2016B.root";
  	fileNames["SinglePhoton_2016C"] = "tree_SinglePhoton_2016C.root";
@@ -151,14 +149,18 @@ public :
  	fileNames["SinglePhoton_2016E"] = "tree_SinglePhoton_2016E.root";
  	fileNames["SinglePhoton_2016F"] = "tree_SinglePhoton_2016F.root";
  	fileNames["SinglePhoton_2016G"] = "tree_SinglePhoton_2016G.root";
- 	fileNames["SinglePhoton_2016H2"] = "tree_SinglePhoton_2016H2.root";
- 	fileNames["SinglePhoton_2016H3"] = "tree_SinglePhoton_2016H3.root";
+ 	fileNames["SinglePhoton_2016H"] = "tree_SinglePhoton_2016H.root";
 
  	fileNames["SinglePhoton_2017B"] = "tree_SinglePhoton_2017B.root";
  	fileNames["SinglePhoton_2017C"] = "tree_SinglePhoton_2017C.root";
  	fileNames["SinglePhoton_2017D"] = "tree_SinglePhoton_2017D.root";
  	fileNames["SinglePhoton_2017E"] = "tree_SinglePhoton_2017E.root";
  	fileNames["SinglePhoton_2017F"] = "tree_SinglePhoton_2017F.root";
+
+ 	fileNames["SinglePhoton_2018A"] = "tree_EGamma_2018A.root";
+	fileNames["SinglePhoton_2018B"] = "tree_EGamma_2018B.root";
+ 	fileNames["SinglePhoton_2018C"] = "tree_EGamma_2018C.root";
+ 	fileNames["SinglePhoton_2018D"] = "tree_EGamma_2018D.root";
 
 	for( auto name : backgrounds ){
 

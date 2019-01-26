@@ -5,6 +5,8 @@ r.gROOT.SetBatch(True)
 r.gROOT.ProcessLine(".L ~/tdrstyle.C")
 r.gROOT.ProcessLine("setTDRStyle()")
 
+plot_dir="plotPurityProperties_plots"
+
 input_file_name = "plotPurityProperties_photonLoose.root"
 #input_file_name = "plotObs_photon_baseline.root"
 #input_file_name = "plotObs_photonLoose_baseline.root"
@@ -25,11 +27,10 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
               "GJets_400to600",
               "GJets_600toInf"]]
     
-    data_samples=["SinglePhoton_2017B",
-                  "SinglePhoton_2017C",
-                  "SinglePhoton_2017D",
-                  "SinglePhoton_2017E",
-                  "SinglePhoton_2017F"]
+    data_samples=["SinglePhoton_2018A",
+                  "SinglePhoton_2018B",
+                  "SinglePhoton_2018C",
+                  "SinglePhoton_2018D"]
 
     samples_labels = ["QCD","GJets"]
     samples_fill_color = [r.kGray,r.kGreen]
@@ -150,9 +151,9 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
 
     ratio.Draw()
 
-    can.SaveAs("../plots/"+plot_var+".png")
+    can.SaveAs("../plots/"+plot_dir+"/"+plot_var+".png")
     topPad.SetLogy()
-    can.SaveAs("../plots/"+plot_var+"_LogY.png")
+    can.SaveAs("../plots/"+plot_dir+"/"+plot_var+"_LogY.png")
 
     output_file.cd()
     for h in samples_histo :
@@ -171,8 +172,6 @@ while(key != None ) :
     if obj.InheritsFrom("TH1") :
         name = r.TString(obj.GetName())
         if name.Contains("_QCD_300to500") : 
-            #print name
-            #print "integral:",obj.Integral()
             vars.append(name.ReplaceAll("_QCD_300to500","").Data())
     else :
         print obj.Print()
