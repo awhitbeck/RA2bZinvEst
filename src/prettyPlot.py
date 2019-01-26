@@ -5,6 +5,8 @@ r.gROOT.SetBatch(True)
 r.gROOT.ProcessLine(".L ~/tdrstyle.C")
 r.gROOT.ProcessLine("setTDRStyle()")
 
+plot_dir="plotPurityProperties_plots"
+
 input_file_name = "plotPurityProperties_photonLoose.root"
 #input_file_name = "plotObs_photon_baseline.root"
 #input_file_name = "plotObs_photonLoose_baseline.root"
@@ -150,9 +152,9 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
 
     ratio.Draw()
 
-    can.SaveAs("../plots/"+plot_var+".png")
+    can.SaveAs("../plots/"+plot_dir+"/"+plot_var+".png")
     topPad.SetLogy()
-    can.SaveAs("../plots/"+plot_var+"_LogY.png")
+    can.SaveAs("../plots/"+plot_dir+"/"+plot_var+"_LogY.png")
 
     output_file.cd()
     for h in samples_histo :
