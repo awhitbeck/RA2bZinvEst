@@ -40,9 +40,9 @@ def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) :
 
     IsoChrg = RooRealVar("iso","Iso_{chrg} [GeV]",0,10.)
     if isEndcap : 
-        IsoChrg.setRange("SR",0.0,1.694);
+        IsoChrg.setRange("SR",0.0,1.295);
     else :
-        IsoChrg.setRange("SR",0.0,2.089);
+        IsoChrg.setRange("SR",0.0,1.011);
 
     promptRooHist = RooDataHist("promptRooHist","promptaRooHist",RooArgList(IsoChrg),promptHisto)
     promptPdf = RooHistPdf("promptPdf","promptPdf",RooArgSet(IsoChrg),promptRooHist)
@@ -155,8 +155,8 @@ def main() :
     assert(prompt_hist != None)
         
     ### ADD HACK BECAUSE THERE AREN'T ENOUGH EVENTS IN THE
-    ### MC ALT MHT_500 BIN....
-    if binLabel == "MHT_500" :
+    ### MC ALT MHT_600 BIN....
+    if binLabel == "MHT_600" :
         nonPrompt_hist = inputFile.Get("photonIsoChrgHighSieie_{0}_{1}_photonLoose_Data".format(EEorEB,"MHT_350"))
         assert( nonPrompt_hist != None )
         nonPromptMC_hist = inputFile.Get("photonIsoChrgLowSieie_{0}_{1}_photonLoose_QCD".format(EEorEB,"MHT_350"))

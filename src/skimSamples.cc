@@ -1,4 +1,4 @@
-#include "TChain.h"
+include "TChain.h"
 #include "RA2bTree.cc"
 #include "TString.h"
 
@@ -54,71 +54,71 @@ public :
         ///////////////////////////////////////////////////////////////////////
         // - - - - - - - - - - BACKGROUND INPUTS - - - - - - - - - - - - - - //
         ///////////////////////////////////////////////////////////////////////
-        fileNames["ZJets_100to200"]   = "tree_ZJetsToNuNu_HT-100to200_MC2017.root";
-        fileNames["ZJets_200to400"]   = "tree_ZJetsToNuNu_HT-200to400_MC2017.root";
-        fileNames["ZJets_400to600"]   = "tree_ZJetsToNuNu_HT-400to600_MC2017.root";
-        fileNames["ZJets_600to800"]   = "tree_ZJetsToNuNu_HT-600to800_MC2017.root";
-        fileNames["ZJets_800to1200"]  = "tree_ZJetsToNuNu_HT-800to1200_MC2017.root";
-        fileNames["ZJets_1200to2500"] = "tree_ZJetsToNuNu_HT-1200to2500_MC2017.root";
-        fileNames["ZJets_2500toInf"]  = "tree_ZJetsToNuNu_HT-2500toInf_MC2017.root";
+        fileNames["ZJets_100to200"]   = "tree_ZJetsToNuNu_HT-100to200_MC2016.root";
+        fileNames["ZJets_200to400"]   = "tree_ZJetsToNuNu_HT-200to400_MC2016.root";
+        fileNames["ZJets_400to600"]   = "tree_ZJetsToNuNu_HT-400to600_MC2016.root";
+        fileNames["ZJets_600to800"]   = "tree_ZJetsToNuNu_HT-600to800_MC2016.root";
+        fileNames["ZJets_800to1200"]  = "tree_ZJetsToNuNu_HT-800to1200_MC2016.root";
+        fileNames["ZJets_1200to2500"] = "tree_ZJetsToNuNu_HT-1200to2500_MC2016.root";
+        fileNames["ZJets_2500toInf"]  = "tree_ZJetsToNuNu_HT-2500toInf_MC2016.root";
 
-        fileNames["QCD_200to300"]    = "tree_QCD_HT-200to300_MC2017.root";
-        fileNames["QCD_300to500"]    = "tree_QCD_HT-300to500_MC2017.root";
-        fileNames["QCD_500to700"]    = "tree_QCD_HT-500to700_MC2017.root";
-        fileNames["QCD_700to1000"]   = "tree_QCD_HT-700to1000_MC2017.root";
-        fileNames["QCD_1000to1500"]  = "tree_QCD_HT-1000to1500_MC2017.root";
-        fileNames["QCD_1500to2000"]  = "tree_QCD_HT-1500to2000_MC2017.root";
-        fileNames["QCD_2000toInf"]   = "tree_QCD_HT-2000toInf_MC2017.root";
+        fileNames["QCD_200to300"]    = "tree_QCD_HT-200to300_MC2016.root";
+        fileNames["QCD_300to500"]    = "tree_QCD_HT-300to500_MC2016.root";
+        fileNames["QCD_500to700"]    = "tree_QCD_HT-500to700_MC2016.root";
+        fileNames["QCD_700to1000"]   = "tree_QCD_HT-700to1000_MC2016.root";
+        fileNames["QCD_1000to1500"]  = "tree_QCD_HT-1000to1500_MC2016.root";
+        fileNames["QCD_1500to2000"]  = "tree_QCD_HT-1500to2000_MC2016.root";
+        fileNames["QCD_2000toInf"]   = "tree_QCD_HT-2000toInf_MC2016.root";
 
-        fileNames["WJets_100to200"]   = "tree_WJetsToLNu_HT-100to200_MC2017.root";
-        fileNames["WJets_200to400"]   = "tree_WJetsToLNu_HT-200to400_MC2017.root";
-        fileNames["WJets_400to600"]   = "tree_WJetsToLNu_HT-400to600_MC2017.root";
-        fileNames["WJets_600to800"]   = "tree_WJetsToLNu_HT-600to800_MC2017.root";
-        fileNames["WJets_800to1200"]  = "tree_WJetsToLNu_HT-800to1200_MC2017.root";
-        fileNames["WJets_1200to2500"] = "tree_WJetsToLNu_HT-1200to2500_MC2017.root";
-        fileNames["WJets_2500toInf"]  = "tree_WJetsToLNu_HT-2500toInf_MC2017.root";
+        fileNames["WJets_100to200"]   = "tree_WJetsToLNu_HT-100to200_MC2016.root";
+        fileNames["WJets_200to400"]   = "tree_WJetsToLNu_HT-200to400_MC2016.root";
+        fileNames["WJets_400to600"]   = "tree_WJetsToLNu_HT-400to600_MC2016.root";
+        fileNames["WJets_600to800"]   = "tree_WJetsToLNu_HT-600to800_MC2016.root";
+        fileNames["WJets_800to1200"]  = "tree_WJetsToLNu_HT-800to1200_MC2016.root";
+        fileNames["WJets_1200to2500"] = "tree_WJetsToLNu_HT-1200to2500_MC2016.root";
+        fileNames["WJets_2500toInf"]  = "tree_WJetsToLNu_HT-2500toInf_MC2016.root";
 
-        fileNames["TT_600to800"] = "tree_TTJets_HT-600to800_MC2017.root";
-        fileNames["TT_800to1200"] = "tree_TTJets_HT-800to1200_MC2017.root";
-        fileNames["TT_1200to2500"] = "tree_TTJets_HT-1200to2500_MC2017.root";
-        fileNames["TT_2500toInf"] = "tree_TTJets_HT-2500toInf_MC2017.root";
+        fileNames["TT_600to800"] = "tree_TTJets_HT-600to800_MC2016.root";
+        fileNames["TT_800to1200"] = "tree_TTJets_HT-800to1200_MC2016.root";
+        fileNames["TT_1200to2500"] = "tree_TTJets_HT-1200to2500_MC2016.root";
+        fileNames["TT_2500toInf"] = "tree_TTJets_HT-2500toInf_MC2016.root";
 
 
-        fileNames["DY_100to200"] = "tree_DYJetsToLL_M-50_HT-100to200_MC2017.root";
-        fileNames["DY_200to400"] = "tree_DYJetsToLL_M-50_HT-200to400_MC2017.root";
-        fileNames["DY_400to600"] = "tree_DYJetsToLL_M-50_HT-400to600_MC2017.root";
-        fileNames["DY_600toInf"] = "tree_DYJetsToLL_M-50_HT-600toInf_MC2017.root";
+        fileNames["DY_100to200"] = "tree_DYJetsToLL_M-50_HT-100to200_MC2016.root";
+        fileNames["DY_200to400"] = "tree_DYJetsToLL_M-50_HT-200to400_MC2016.root";
+        fileNames["DY_400to600"] = "tree_DYJetsToLL_M-50_HT-400to600_MC2016.root";
+        fileNames["DY_600toInf"] = "tree_DYJetsToLL_M-50_HT-600toInf_MC2016.root";
 
-        fileNames["GJets0p4_100to200"] = "tree_GJets_DR-0p4_HT-100to200_MC2017.root";
-        fileNames["GJets0p4_200to400"] = "tree_GJets_DR-0p4_HT-200to400_MC2017.root";
-        fileNames["GJets0p4_400to600"] = "tree_GJets_DR-0p4_HT-400to600_MC2017.root";
-        fileNames["GJets0p4_600toInf"] = "tree_GJets_DR-0p4_HT-600toInf_MC2017.root";
+        fileNames["GJets0p4_100to200"] = "tree_GJets_DR-0p4_HT-100to200_MC2016.root";
+        fileNames["GJets0p4_200to400"] = "tree_GJets_DR-0p4_HT-200to400_MC2016.root";
+        fileNames["GJets0p4_400to600"] = "tree_GJets_DR-0p4_HT-400to600_MC2016.root";
+        fileNames["GJets0p4_600toInf"] = "tree_GJets_DR-0p4_HT-600toInf_MC2016.root";
 	
-        fileNames["GJets_100to200"] = "tree_GJets_HT-100to200_MC2017.root";
-        fileNames["GJets_200to400"] = "tree_GJets_HT-200to400_MC2017.root";
-        fileNames["GJets_400to600"] = "tree_GJets_HT-400to600_MC2017.root";
-        fileNames["GJets_600toInf"] = "tree_GJets_HT-600toInf_MC2017.root";
+        fileNames["GJets_100to200"] = "tree_GJets_HT-100to200_MC2016.root";
+        fileNames["GJets_200to400"] = "tree_GJets_HT-200to400_MC2016.root";
+        fileNames["GJets_400to600"] = "tree_GJets_HT-400to600_MC2016.root";
+        fileNames["GJets_600toInf"] = "tree_GJets_HT-600toInf_MC2016.root";
 
-        fileNames["Other_WWTo1L1Nu2Q"] = "tree_WWTo1L1Nu2Q_MC2017.root";
-        fileNames["Other_WWTo2L2Nu"] = "tree_WWTo2L2Nu_MC2017.root";
-        fileNames["Other_WWZ"] = "tree_WWZ_MC2017.root";
-        fileNames["Other_WZTo1L1Nu2Q"] = "tree_WZTo1L1Nu2Q_MC2017.root";
-        fileNames["Other_WZTo1L3Nu"] = "tree_WZTo1L3Nu_MC2017.root";
-        fileNames["Other_WZZ"] = "tree_WZZ_MC2017.root";
-        fileNames["Other_ZZTo2L2Q"] = "tree_ZZTo2L2Q_MC2017.root";
-        fileNames["Other_ZZTo2Q2Nu"] = "tree_ZZTo2Q2Nu_MC2017.root";
-        fileNames["Other_ZZZ"] = "tree_ZZZ_MC2017.root";
-        fileNames["Other_TTTT"] = "tree_TTTT_MC2017.root";
-        fileNames["Other_TTWJetsToLNu"] = "tree_TTWJetsToLNu_MC2017.root";
-        fileNames["Other_TTWJetsToQQ"] = "tree_TTWJetsToQQ_MC2017.root";
-        fileNames["Other_TTGJets"] = "tree_TTGJets_MC2017.root";
-        fileNames["Other_TTZToLLNuNu"] = "tree_TTZToLLNuNu_MC2017.root";
-        fileNames["Other_TTZToQQ"] = "tree_TTZToQQ_MC2017.root";
-        fileNames["Other_ST_s"] = "tree_ST_s-channel_MC2017.root";
-        fileNames["Other_ST_t_antitop"] = "tree_ST_t-channel_antitop_MC2017.root";
-        fileNames["Other_ST_t_top"] = "tree_ST_t-channel_top_MC2017.root";
-        fileNames["Other_ST_tW_antitop"] = "tree_ST_tW_antitop_MC2017.root";
-        fileNames["Other_ST_tW_top"] = "tree_ST_tW_top_MC2017.root";
+        fileNames["Other_WWTo1L1Nu2Q"] = "tree_WWTo1L1Nu2Q_MC2016.root";
+        fileNames["Other_WWTo2L2Nu"] = "tree_WWTo2L2Nu_MC2016.root";
+        fileNames["Other_WWZ"] = "tree_WWZ_MC2016.root";
+        fileNames["Other_WZTo1L1Nu2Q"] = "tree_WZTo1L1Nu2Q_MC2016.root";
+        fileNames["Other_WZTo1L3Nu"] = "tree_WZTo1L3Nu_MC2016.root";
+        fileNames["Other_WZZ"] = "tree_WZZ_MC2016.root";
+        fileNames["Other_ZZTo2L2Q"] = "tree_ZZTo2L2Q_MC2016.root";
+        fileNames["Other_ZZTo2Q2Nu"] = "tree_ZZTo2Q2Nu_MC2016.root";
+        fileNames["Other_ZZZ"] = "tree_ZZZ_MC2016.root";
+        fileNames["Other_TTTT"] = "tree_TTTT_MC2016.root";
+        fileNames["Other_TTWJetsToLNu"] = "tree_TTWJetsToLNu_MC2016.root";
+        fileNames["Other_TTWJetsToQQ"] = "tree_TTWJetsToQQ_MC2016.root";
+        fileNames["Other_TTGJets"] = "tree_TTGJets_MC2016.root";
+        fileNames["Other_TTZToLLNuNu"] = "tree_TTZToLLNuNu_MC2016.root";
+        fileNames["Other_TTZToQQ"] = "tree_TTZToQQ_MC2016.root";
+        fileNames["Other_ST_s"] = "tree_ST_s-channel_MC2016.root";
+        fileNames["Other_ST_t_antitop"] = "tree_ST_t-channel_antitop_MC2016.root";
+        fileNames["Other_ST_t_top"] = "tree_ST_t-channel_top_MC2016.root";
+        fileNames["Other_ST_tW_antitop"] = "tree_ST_tW_antitop_MC2016.root";
+        fileNames["Other_ST_tW_top"] = "tree_ST_tW_top_MC2016.root";
 
         fileNames["HTMHT_2016B"] = "tree_HTMHT_2016B.root";
         fileNames["HTMHT_2016C"] = "tree_HTMHT_2016C.root";

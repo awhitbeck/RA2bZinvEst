@@ -8,16 +8,19 @@ backgroundSamples=["QCD_200to300",
                    "QCD_1000to1500",
                    "QCD_1500to2000",
                    "QCD_2000toInf",
-                   "GJets_100to200",
-                   "GJets_200to400",
-                   "GJets_400to600",
-                   "GJets_600toInf"
+                   "GJets0p4_100to200",
+                   "GJets0p4_200to400",
+                   "GJets0p4_400to600",
+                   "GJets0p4_600toInf"
                     ]
 
-dataSamples=["SinglePhoton_2018A",
-             "SinglePhoton_2018B",
-             "SinglePhoton_2018C",
-             "SinglePhoton_2018D"]
+dataSamples=["SinglePhoton_2016B",
+             "SinglePhoton_2016C",
+             "SinglePhoton_2016D",
+             "SinglePhoton_2016E",
+             "SinglePhoton_2016F",
+             "SinglePhoton_2016G",
+             "SinglePhoton_2016H"]
 
 def runPlotPurityProperties(bkg,data):
     print '../bin/plotPurityProperties 3 "{0}" "{1}"'.format(bkg,data)

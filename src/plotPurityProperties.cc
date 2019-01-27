@@ -167,14 +167,14 @@ void process(int region, string backgroundSample, string dataSample){
                 if( iBin <= 0 ) continue;
 
                 if( ntuple->Photons_isEB->at(0) ){
-                    if(ntuple->Photons_sigmaIetaIeta->at(0)>.0106){
+                    if(ntuple->Photons_sigmaIetaIeta->at(0)>0.01031){
                         chargeIsoEBHighSieieVersus[iProj][iBin-1].fill(ntuple);
                     }else{
                         chargeIsoEBLowSieieVersus[iProj][iBin-1].fill(ntuple);
                     }
                 }
                 else{
-                    if(ntuple->Photons_sigmaIetaIeta->at(0)>.0272){
+                    if(ntuple->Photons_sigmaIetaIeta->at(0)>0.03013){
                         chargeIsoEEHighSieieVersus[iProj][iBin-1].fill(ntuple);
                     }else{
                         chargeIsoEELowSieieVersus[iProj][iBin-1].fill(ntuple);
@@ -189,12 +189,12 @@ void process(int region, string backgroundSample, string dataSample){
                     plotsEE[iPlot].fill(ntuple);
             }
             if( ntuple->Photons_isEB->at(0) ){
-                if(ntuple->Photons_sigmaIetaIeta->at(0)>.0106)
+                if(ntuple->Photons_sigmaIetaIeta->at(0)>0.01031)
                     plotsEB[plotsEB.size()-2].fill(ntuple);
                 else
                     plotsEB[plotsEB.size()-1].fill(ntuple);
             }else{
-                if(ntuple->Photons_sigmaIetaIeta->at(0)>.0272)
+                if(ntuple->Photons_sigmaIetaIeta->at(0)>0.03013)
                     plotsEE[plotsEB.size()-2].fill(ntuple);
                 else
                     plotsEE[plotsEB.size()-1].fill(ntuple);
@@ -268,13 +268,13 @@ void process(int region, string backgroundSample, string dataSample){
 	  int iBin = projections[iProj].fillData(ntuple);
 	  if( iBin <= 0 ) continue;
 	  if( ntuple->Photons_isEB->at(0) ){
-	    if(ntuple->Photons_sigmaIetaIeta->at(0)>.0106){
+	    if(ntuple->Photons_sigmaIetaIeta->at(0)>0.01031){
 	      chargeIsoEBHighSieieVersus[iProj][iBin-1].fillData(ntuple);
 	    }else{
 	      chargeIsoEBLowSieieVersus[iProj][iBin-1].fillData(ntuple);
 	    }
 	  }else{
-	    if(ntuple->Photons_sigmaIetaIeta->at(0)>.0272){
+	    if(ntuple->Photons_sigmaIetaIeta->at(0)>0.03013){
 	      chargeIsoEEHighSieieVersus[iProj][iBin-1].fillData(ntuple);
 	    }else{
 	      chargeIsoEELowSieieVersus[iProj][iBin-1].fillData(ntuple);
@@ -290,13 +290,13 @@ void process(int region, string backgroundSample, string dataSample){
 	  }
 	}
         if( ntuple->Photons_isEB->at(0) ){
-	  if(ntuple->Photons_sigmaIetaIeta->at(0)>.0106){
+	  if(ntuple->Photons_sigmaIetaIeta->at(0)>0.01031){
 	    plotsEB[plotsEB.size()-2].fillData(ntuple);
 	  }else{
 	    plotsEB[plotsEB.size()-1].fillData(ntuple);
 	  }
 	}else{
-	  if(ntuple->Photons_sigmaIetaIeta->at(0)>.0272){
+	  if(ntuple->Photons_sigmaIetaIeta->at(0)>0.03013){
 	    plotsEE[plotsEB.size()-2].fillData(ntuple);
 	  }else{
 	    plotsEE[plotsEB.size()-1].fillData(ntuple);

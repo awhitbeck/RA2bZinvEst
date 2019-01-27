@@ -21,16 +21,19 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
               "QCD_300to500",
               "QCD_500to700",
               "QCD_700to1000"],
-             ["GJets_100to200",
-              "GJets_100to200",
-              "GJets_200to400",
-              "GJets_400to600",
-              "GJets_600toInf"]]
+             ["GJets0p4_100to200",
+              "GJets0p4_100to200",
+              "GJets0p4_200to400",
+              "GJets0p4_400to600",
+              "GJets0p4_600toInf"]]
     
-    data_samples=["SinglePhoton_2018A",
-                  "SinglePhoton_2018B",
-                  "SinglePhoton_2018C",
-                  "SinglePhoton_2018D"]
+    data_samples=["SinglePhoton_2016B",
+                  "SinglePhoton_2016C",
+                  "SinglePhoton_2016D",
+                  "SinglePhoton_2016E",
+                  "SinglePhoton_2016F",
+                  "SinglePhoton_2016G",
+                  "SinglePhoton_2016H"]
 
     samples_labels = ["QCD","GJets"]
     samples_fill_color = [r.kGray,r.kGreen]
