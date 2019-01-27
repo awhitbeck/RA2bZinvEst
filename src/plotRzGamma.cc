@@ -21,7 +21,7 @@ using namespace std;
 
 int main(int argc, char** argv){
 
-    bool DR0p4 = true;
+    bool DR0p4 = false;
 
     if( argc != 2 ){ 
         cout << "1 argument needed:" << endl;
@@ -96,13 +96,13 @@ int main(int argc, char** argv){
         skimType=BASE_DIR+"tree_LDP/";
 
     vector<TString> ZJetsFileNames;
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2017.root");
     TChain* ZJets = new TChain("tree");
     for( int i = 0 ; i < ZJetsFileNames.size() ; i++ ){
         ZJets->Add(skimType+"/"+ZJetsFileNames[i]);
@@ -117,15 +117,15 @@ int main(int argc, char** argv){
 
     vector<TString> GJetsFileNames;
     if( DR0p4 ){ 
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf_MC2017.root");
     }else{
-        GJetsFileNames.push_back("tree_GJets_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
     }
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
