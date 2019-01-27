@@ -40,9 +40,9 @@ def runFit( promptHisto,nonPromptHisto,dataHisto,isEndcap,tag) :
 
     IsoChrg = RooRealVar("iso","Iso_{chrg} [GeV]",0,10.)
     if isEndcap : 
-        IsoChrg.setRange("SR",0.0,1.295);
+        IsoChrg.setRange("SR",0.0,1.694);
     else :
-        IsoChrg.setRange("SR",0.0,1.011);
+        IsoChrg.setRange("SR",0.0,2.089);
 
     promptRooHist = RooDataHist("promptRooHist","promptaRooHist",RooArgList(IsoChrg),promptHisto)
     promptPdf = RooHistPdf("promptPdf","promptPdf",RooArgSet(IsoChrg),promptRooHist)
