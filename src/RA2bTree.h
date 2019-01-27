@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Dec 24 10:43:51 2018 by ROOT version 6.14/02
+// Sat Jan 26 23:21:37 2019 by ROOT version 6.06/07
 // from TTree tree/all observables, GJet_CleanVars
-// found on file: tree_GJets_HT-100to200_MC2017.root
+// found on file: /eos/uscms/store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_GJets_HT-100to200_MC2017.root
 //////////////////////////////////////////////////////////
 
 #ifndef RA2bTree_h
@@ -11,10 +11,18 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-#include "TLorentzVector.h"
+
 // Header file for the classes stored in the TTree if any.
 #include "vector"
-
+#include "vector"
+#include "vector"
+#include "vector"
+#include "vector"
+#include "vector"
+#include "vector"
+#include "vector"
+#include "vector"
+#include <TLorentzVector.h>
 class RA2bTree {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
@@ -386,6 +394,19 @@ public :
    Double_t        TrueNumInteractions;
    Double_t        Weight;
    vector<TLorentzVector> *ZCandidates;
+   Double_t        NonPrefiringProb;
+   Double_t        NonPrefiringProbUp;
+   Double_t        NonPrefiringProbDn;
+   Bool_t          METRatioFilter;
+   Bool_t          MuonJetFilter;
+   Bool_t          FakeJetFilter;
+   Bool_t          EcalNoiseJetFilter;
+   Bool_t          HTRatioFilter;
+   Bool_t          HTRatioTightFilter;
+   Bool_t          HTRatioDPhiFilter;
+   Bool_t          HTRatioDPhiTightFilter;
+   Bool_t          LowNeutralJetFilter;
+   Bool_t          LowNeutralJetTightFilter;
    UInt_t          RA2bin;
    vector<unsigned int> *RA2bins;
 
@@ -753,6 +774,19 @@ public :
    TBranch        *b_TrueNumInteractions;   //!
    TBranch        *b_Weight;   //!
    TBranch        *b_ZCandidates;   //!
+   TBranch        *b_prob;   //!
+   TBranch        *b_probup;   //!
+   TBranch        *b_probdn;   //!
+   TBranch        *b_METRatioFilter;   //!
+   TBranch        *b_MuonJetFilter;   //!
+   TBranch        *b_FakeJetFilter;   //!
+   TBranch        *b_EcalNoiseJetFilter;   //!
+   TBranch        *b_HTRatioFilter;   //!
+   TBranch        *b_HTRatioTightFilter;   //!
+   TBranch        *b_HTRatioDPhiFilter;   //!
+   TBranch        *b_HTRatioDPhiTightFilter;   //!
+   TBranch        *b_LowNeutralJetFilter;   //!
+   TBranch        *b_LowNeutralJetTightFilter;   //!
    TBranch        *b_RA2binBranch;   //!
    TBranch        *b_RA2bins;   //!
 
@@ -775,9 +809,9 @@ RA2bTree::RA2bTree(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("tree_GJets_HT-100to200_MC2017.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/eos/uscms/store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_GJets_HT-100to200_MC2017.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("tree_GJets_HT-100to200_MC2017.root");
+         f = new TFile("/eos/uscms/store/user/lpcsusyhad/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_GJets_HT-100to200_MC2017.root");
       }
       f->GetObject("tree",tree);
 
@@ -1415,6 +1449,19 @@ void RA2bTree::Init(TTree *tree)
    fChain->SetBranchAddress("TrueNumInteractions", &TrueNumInteractions, &b_TrueNumInteractions);
    fChain->SetBranchAddress("Weight", &Weight, &b_Weight);
    fChain->SetBranchAddress("ZCandidates", &ZCandidates, &b_ZCandidates);
+   fChain->SetBranchAddress("NonPrefiringProb", &NonPrefiringProb, &b_prob);
+   fChain->SetBranchAddress("NonPrefiringProbUp", &NonPrefiringProbUp, &b_probup);
+   fChain->SetBranchAddress("NonPrefiringProbDn", &NonPrefiringProbDn, &b_probdn);
+   fChain->SetBranchAddress("METRatioFilter", &METRatioFilter, &b_METRatioFilter);
+   fChain->SetBranchAddress("MuonJetFilter", &MuonJetFilter, &b_MuonJetFilter);
+   fChain->SetBranchAddress("FakeJetFilter", &FakeJetFilter, &b_FakeJetFilter);
+   fChain->SetBranchAddress("EcalNoiseJetFilter", &EcalNoiseJetFilter, &b_EcalNoiseJetFilter);
+   fChain->SetBranchAddress("HTRatioFilter", &HTRatioFilter, &b_HTRatioFilter);
+   fChain->SetBranchAddress("HTRatioTightFilter", &HTRatioTightFilter, &b_HTRatioTightFilter);
+   fChain->SetBranchAddress("HTRatioDPhiFilter", &HTRatioDPhiFilter, &b_HTRatioDPhiFilter);
+   fChain->SetBranchAddress("HTRatioDPhiTightFilter", &HTRatioDPhiTightFilter, &b_HTRatioDPhiTightFilter);
+   fChain->SetBranchAddress("LowNeutralJetFilter", &LowNeutralJetFilter, &b_LowNeutralJetFilter);
+   fChain->SetBranchAddress("LowNeutralJetTightFilter", &LowNeutralJetTightFilter, &b_LowNeutralJetTightFilter);
    fChain->SetBranchAddress("RA2bin", &RA2bin, &b_RA2binBranch);
    fChain->SetBranchAddress("RA2bins", &RA2bins, &b_RA2bins);
    Notify();

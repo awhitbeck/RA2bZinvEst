@@ -159,11 +159,13 @@ int main(int argc, char** argv){
        	    if( region == 1 )
 		    if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
            // weight applied here      
-           weight = lumi*ntuple->Weight; 
-           if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
+           weight = lumi*ntuple->Weight*ntuple->NonPrefiringProb; 
+           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
+         
+           /* if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
-           }
+           }*/
            
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ) 
