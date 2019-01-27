@@ -225,7 +225,6 @@ legAvg.AddEntry(nomEE,"EE","p")
 
 avgEB.Draw("Ap")
 avgEE.Draw("p")
-leg.Draw()
 
 CMStext.Draw()
 SIMtext.Draw()
