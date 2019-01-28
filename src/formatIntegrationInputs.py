@@ -14,10 +14,8 @@ parser.add_option("-u", "--user", dest="user", default=environ.get('USER'),
                   help="cmslpc username for input files, default taken from env")
 (options, args) = parser.parse_args()
 assert( options.region == "signal" or options.region == "ldp" or options.region == "hdp" )
-assert( options.hash != "" )
 
 region = options.region
-hash = options.hash
 nBins = 0
 MChistoFileName=""
 MChistoTag=""
@@ -30,15 +28,25 @@ outputFileName=""
 if region == "signal" :
     nBins = 46
     
-    MChistoFileName = "plotObs_photon_baseline_2017.root".format(hash)
+#    MChistoFileName = "plotObs_photon_baseline_2016.root"
+#    MChistoFileName = "plotObs_photon_baseline_2017.root"
+    MChistoFileName = "plotObs_photon_baseline_2018.root"
     MChistoTag = "AnalysisBins_BTag0_photon_baseline"
-    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2017.root".format(hash)
+
+#    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2016.root"
+#    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2017.root"
+    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2018.root"
     RzgHistoTag = "AnalysisBins_BTag0_RzGamma_signal"
-    # trigWeightFileName = "/eos/uscms/store/user/"+options.user+"/RA2bZinvEst/{0}/triggerUnc_signal_histo.root".format(hash)
-    # trigWeightTag = "AnalysisBins_BTag0_signal"
-    fragmentationFileName = "fragmentation_22Jan_2019.txt"
-    purityFileName = "photonPurity_2017.txt"
-    outputFileName = "gJets_signal.dat"
+   
+    fragmentationFileName = "fragmentation_28_jan.txt"
+ 
+ #   purityFileName = "../data/purity_2016.txt"
+ #   purityFileName = "../data/purity_2017.txt"
+    purityFileName = "../data/purity_2018.txt"
+ 
+  #  outputFileName = "gJets_signal_2016.dat"
+ #   outputFileName = "gJets_signal_2017.dat"
+    outputFileName = "gJets_signal_2018.dat"
 
 elif region == "ldp" : 
     nBins = 59
@@ -112,27 +120,6 @@ if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
 for i in range(RzGamma.GetNbinsX()):
     print RzGamma.GetBinContent(i+1)
 print "---------------------------------------"
-#print "================ TriggerWeights =============="
-#triggerWeight = [0.]*nBins
-#triggerWeightErr = [0.]*nBins
-
-#triggerInputFile = TFile(trigWeightFileName,"READ")
-#triggerWeightHisto = triggerInputFile.Get(trigWeightTag)
-#triggerWeightProf = triggerWeightHisto.ProfileX("triggerWeightProf",1,-1,"S")
- 
-#assert(triggerWeightProf.GetNbinsX()==nBins)
-#for iBin in range(nBins):
-#    triggerWeight[iBin] = triggerWeightProf.GetBinContent(iBin+1)
-#    if triggerWeight[iBin] == 0. : 
-#        triggerWeight[iBin] = 1.
-#    triggerWeightErr[iBin] = triggerWeightProf.GetBinError(iBin+1)
-
-#print "triggerWeight: " 
-#print triggerWeight
-#print "triggerWeightErr"
-#print triggerWeightErr
-#print "------------------------------------------------------"
-
 print "================ FRAGMENTATION FRACTION =============="
 fragFrac = [0.]*nBins
 fragFracErrUp = [0.]*nBins
@@ -159,7 +146,7 @@ print fragFracErrDn
 print "------------------------------------------------------"
 
 print "================= ID SCALE FACTORS ==================="
-scaleFactorFile = TFile("SFcorrections.Photons.root","READ")
+scaleFactorFile = TFile("../data/SFcorrections.Photons.root","READ")
 scaleFactor = [scaleFactorFile.Get("h_inc").GetBinContent(1)]*nBins
 scaleFactorErr = [scaleFactorFile.Get("h_inc").GetBinError(1)]*nBins
 print scaleFactor
@@ -260,15 +247,27 @@ for i in range(nBins) :
     if ( i >= 30 and i < 38 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-10))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1-10)/outputDict["ZgR"][i+1-10])
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00475132) + (dataEEHisto.GetBinContent(i+1-10)*0.00941128))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00475132) + (dataEEHisto.GetBinContent(i+1-10)*0.00941128))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        #2018
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        #2016
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
     elif ( i >= 38 and i < 46 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-18))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1-18)/outputDict["ZgR"][i+1-18])
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-18)*0.00475132) + (dataEEHisto.GetBinContent(i+1-18)*0.00941128))/(dataEBHisto.GetBinContent(i+1-18)+dataEEHisto.GetBinContent(i+1-18) ))
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-18)*0.00475132) + (dataEEHisto.GetBinContent(i+1-18)*0.00941128))/(dataEBHisto.GetBinContent(i+1-18)+dataEEHisto.GetBinContent(i+1-18) ))
+        #2018
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        #2016
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
     else:
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1)/outputDict["ZgR"][i])
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1)*0.00475132) + (dataEEHisto.GetBinContent(i+1)*0.00941128))/(dataEBHisto.GetBinContent(i+1)+dataEEHisto.GetBinContent(i+1) ))
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1)*0.00475132) + (dataEEHisto.GetBinContent(i+1)*0.00941128))/(dataEBHisto.GetBinContent(i+1)+dataEEHisto.GetBinContent(i+1) ))
+        #2018
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        #2016
+        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
 
 
     if( outputDict["nEB"][i] == 0 and outputDict["nEC"][i] == 0 ):
@@ -371,4 +370,4 @@ LUMItext.SetTextSize(0.045)
 #LUMItext.Draw()
 
 
-can.SaveAs("prediction.png")
+can.SaveAs("prediction_2018.png")
