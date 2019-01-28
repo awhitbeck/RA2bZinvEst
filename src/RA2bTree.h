@@ -1,19 +1,17 @@
 #ifndef RA2bTree_h
 #define RA2bTree_h
 
-#include <TChain.h>
-#include <TFile.h>
-#include <TLorentzVector.h>
+#include "TChain.h"
+#include "TLorentzVector.h"
+#include "TTree.h"
+#include "TFile.h"
 
-// Header file for the classes stored in the TTree if any.
-#include "vector"
+#include <vector>
 
 class RA2bTree {
 public :
-   TChain          *fChain;   //!pointer to the analyzed TTree or TChain
+   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
-
-// Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Declaration of leaf types
    UInt_t          RunNum;
@@ -379,6 +377,19 @@ public :
    Double_t        TrueNumInteractions;
    Double_t        Weight;
    vector<TLorentzVector> *ZCandidates;
+   Double_t        NonPrefiringProb;
+   Double_t        NonPrefiringProbUp;
+   Double_t        NonPrefiringProbDn;
+   Bool_t          METRatioFilter;
+   Bool_t          MuonJetFilter;
+   Bool_t          FakeJetFilter;
+   Bool_t          EcalNoiseJetFilter;
+   Bool_t          HTRatioFilter;
+   Bool_t          HTRatioTightFilter;
+   Bool_t          HTRatioDPhiFilter;
+   Bool_t          HTRatioDPhiTightFilter;
+   Bool_t          LowNeutralJetFilter;
+   Bool_t          LowNeutralJetTightFilter;
    UInt_t          RA2bin;
    vector<unsigned int> *RA2bins;
 
@@ -746,15 +757,28 @@ public :
    TBranch        *b_TrueNumInteractions;   //!
    TBranch        *b_Weight;   //!
    TBranch        *b_ZCandidates;   //!
+   TBranch        *b_prob;   //!
+   TBranch        *b_probup;   //!
+   TBranch        *b_probdn;   //!
+   TBranch        *b_METRatioFilter;   //!
+   TBranch        *b_MuonJetFilter;   //!
+   TBranch        *b_FakeJetFilter;   //!
+   TBranch        *b_EcalNoiseJetFilter;   //!
+   TBranch        *b_HTRatioFilter;   //!
+   TBranch        *b_HTRatioTightFilter;   //!
+   TBranch        *b_HTRatioDPhiFilter;   //!
+   TBranch        *b_HTRatioDPhiTightFilter;   //!
+   TBranch        *b_LowNeutralJetFilter;   //!
+   TBranch        *b_LowNeutralJetTightFilter;   //!
    TBranch        *b_RA2binBranch;   //!
    TBranch        *b_RA2bins;   //!
 
-   RA2bTree(TChain *tree=0);
+   RA2bTree(TTree *tree=0);
    virtual ~RA2bTree();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
-   virtual void     Init(TChain *tree);
+   virtual void     Init(TTree *tree);
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
@@ -763,14 +787,14 @@ public :
 #endif
 
 #ifdef RA2bTree_cxx
-RA2bTree::RA2bTree(TChain *tree) : fChain(0) 
+RA2bTree::RA2bTree(TTree *tree) : fChain(0) 
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJetLoose_CleanVars/tree_GJets_HT-400to600_MC2017.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/home/whitbeck/raid/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_GJets_HT-400to600_MC2017.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJetLoose_CleanVars/tree_GJets_HT-400to600_MC2017.root");
+         f = new TFile("/home/whitbeck/raid/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_GJets_HT-400to600_MC2017.root");
       }
       f->GetObject("tree",tree);
 
@@ -803,16 +827,8 @@ Long64_t RA2bTree::LoadTree(Long64_t entry)
    return centry;
 }
 
-void RA2bTree::Init(TChain *tree)
+void RA2bTree::Init(TTree *tree)
 {
-   // The Init() function is called when the selector needs to initialize
-   // a new tree or chain. Typically here the branch addresses and branch
-   // pointers of the tree will be set.
-   // It is normally not necessary to make changes to the generated
-   // code, but the routine can be extended by the user if needed.
-   // Init() will be called many times when running on PROOF
-   // (once per file to be processed).
-
    // Set object pointer
    Electrons = 0;
    Electrons_charge = 0;
@@ -1408,6 +1424,19 @@ void RA2bTree::Init(TChain *tree)
    fChain->SetBranchAddress("TrueNumInteractions", &TrueNumInteractions, &b_TrueNumInteractions);
    fChain->SetBranchAddress("Weight", &Weight, &b_Weight);
    fChain->SetBranchAddress("ZCandidates", &ZCandidates, &b_ZCandidates);
+   fChain->SetBranchAddress("NonPrefiringProb", &NonPrefiringProb, &b_prob);
+   fChain->SetBranchAddress("NonPrefiringProbUp", &NonPrefiringProbUp, &b_probup);
+   fChain->SetBranchAddress("NonPrefiringProbDn", &NonPrefiringProbDn, &b_probdn);
+   fChain->SetBranchAddress("METRatioFilter", &METRatioFilter, &b_METRatioFilter);
+   fChain->SetBranchAddress("MuonJetFilter", &MuonJetFilter, &b_MuonJetFilter);
+   fChain->SetBranchAddress("FakeJetFilter", &FakeJetFilter, &b_FakeJetFilter);
+   fChain->SetBranchAddress("EcalNoiseJetFilter", &EcalNoiseJetFilter, &b_EcalNoiseJetFilter);
+   fChain->SetBranchAddress("HTRatioFilter", &HTRatioFilter, &b_HTRatioFilter);
+   fChain->SetBranchAddress("HTRatioTightFilter", &HTRatioTightFilter, &b_HTRatioTightFilter);
+   fChain->SetBranchAddress("HTRatioDPhiFilter", &HTRatioDPhiFilter, &b_HTRatioDPhiFilter);
+   fChain->SetBranchAddress("HTRatioDPhiTightFilter", &HTRatioDPhiTightFilter, &b_HTRatioDPhiTightFilter);
+   fChain->SetBranchAddress("LowNeutralJetFilter", &LowNeutralJetFilter, &b_LowNeutralJetFilter);
+   fChain->SetBranchAddress("LowNeutralJetTightFilter", &LowNeutralJetTightFilter, &b_LowNeutralJetTightFilter);
    fChain->SetBranchAddress("RA2bin", &RA2bin, &b_RA2binBranch);
    fChain->SetBranchAddress("RA2bins", &RA2bins, &b_RA2bins);
    Notify();
