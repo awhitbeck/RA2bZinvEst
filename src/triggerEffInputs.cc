@@ -41,16 +41,17 @@ int main(int argc, char** argv){
   
     vector<TString> xlabels;
     xlabels.push_back("H_{T}^{miss} [GeV]");
+    xlabels.push_back("H_{T}^{miss} [GeV]");
     xlabels.push_back("p_{T,#gamma} [GeV]");
     xlabels.push_back("H_{T} [GeV]");
     xlabels.push_back("n_{j}");
-    const int MHTbins = 8;
-    const int HTbins = 7;
-    double MHTbinning[MHTbins]={ 150. , 200. , 250. , 300. , 350. , 500. , 750. , 1500. };
-    double HTbinning[HTbins]={ 300. ,  350. , 400. , 475. , 600. , 800. , 1200. };
-    //plot tarMHTplot(*fillMHT<RA2bTree>,"MHT_tarTrigger","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
-    //plot tarMHTplotEB(*fillMHT<RA2bTree>,"MHT_tarTrigger_EB","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
-    //plot tarMHTplotEE(*fillMHT<RA2bTree>,"MHT_tarTrigger_EE","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    const int MHTbins = 6;
+    double MHTbinning[MHTbins]={ 250. , 300. , 350. , 600. , 900. , 1500. };
+
+    plot tarMHTra2plot(*fillMHT<RA2bTree>,"MHTra2_tarTrigger","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    plot tarMHTra2plotEB(*fillMHT<RA2bTree>,"MHTra2_tarTrigger_EB","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    plot tarMHTra2plotEE(*fillMHT<RA2bTree>,"MHTra2_tarTrigger_EE","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+
     plot tarMHTplot(*fillMHT<RA2bTree>,"MHT_tarTrigger","H_{T}^{miss} [GeV]",90,100,1000);
     plot tarMHTplotEB(*fillMHT<RA2bTree>,"MHT_tarTrigger_EB","H_{T}^{miss} [GeV]",90,100,1000);
     plot tarMHTplotEE(*fillMHT<RA2bTree>,"MHT_tarTrigger_EE","H_{T}^{miss} [GeV]",90,100,1000);
@@ -67,9 +68,10 @@ int main(int argc, char** argv){
     plot tarNJetsplotEB(*fillNJets<RA2bTree>,"NJets_tarTrigger_EB","n_{j}",7,1.5,8.5);
     plot tarNJetsplotEE(*fillNJets<RA2bTree>,"NJets_tarTrigger_EE","n_{j}",7,1.5,8.5);
 
-    //plot refMHTplot(*fillMHT<RA2bTree>,"MHT_refTrigger","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
-    //plot refMHTplotEB(*fillMHT<RA2bTree>,"MHT_refTrigger_EB","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
-    //plot refMHTplotEE(*fillMHT<RA2bTree>,"MHT_refTrigger_EE","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    plot refMHTra2plot(*fillMHT<RA2bTree>,"MHTra2_refTrigger","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    plot refMHTra2plotEB(*fillMHT<RA2bTree>,"MHTra2_refTrigger_EB","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+    plot refMHTra2plotEE(*fillMHT<RA2bTree>,"MHTra2_refTrigger_EE","H_{T}^{miss} [GeV]",MHTbins-1,MHTbinning);
+
     plot refMHTplot(*fillMHT<RA2bTree>,"MHT_refTrigger","H_{T}^{miss} [GeV]",90,100,1000);
     plot refMHTplotEB(*fillMHT<RA2bTree>,"MHT_refTrigger_EB","H_{T}^{miss} [GeV]",90,100,1000);
     plot refMHTplotEE(*fillMHT<RA2bTree>,"MHT_refTrigger_EE","H_{T}^{miss} [GeV]",90,100,1000);
@@ -77,7 +79,6 @@ int main(int argc, char** argv){
     plot refPhotonPtplot(*photonPt<RA2bTree>,"photonPt_refTrigger","H_{T}^{miss} [GeV]",90,100,1000);
     plot refPhotonPtplotEB(*photonPt<RA2bTree>,"photonPt_refTrigger_EB","H_{T}^{miss} [GeV]",90,100,1000);
     plot refPhotonPtplotEE(*photonPt<RA2bTree>,"photonPt_refTrigger_EE","H_{T}^{miss} [GeV]",90,100,1000);
-
 
     plot refHTplot(*fillHT<RA2bTree>,"HT_refTrigger","H_{T} [GeV]",30,200,1700);
     plot refHTplotEB(*fillHT<RA2bTree>,"HT_refTrigger_EB","H_{T} [GeV]",30,200,1700);
@@ -87,42 +88,38 @@ int main(int argc, char** argv){
     plot refNJetsplotEB(*fillNJets<RA2bTree>,"NJets_refTrigger_EB","n_{j}",7,1.5,8.5);
     plot refNJetsplotEE(*fillNJets<RA2bTree>,"NJets_refTrigger_EE","n_{j}",7,1.5,8.5);
 
-    vector<plot> refPlotMHTversusHT,tarPlotMHTversusHT;
-    for( int iPlot = 0 ; iPlot < HTbins-1 ; iPlot++ ){
-        TString plotName = "HT_refTrigger_HT";
-        plotName+=HTbinning[iPlot];
-        refPlotMHTversusHT.push_back(plot(*fillMHT<RA2bTree>,plotName,"H_{T} [GeV]",MHTbins-1,MHTbinning));
-        plotName = "HT_tarTrigger_HT";
-        plotName+=HTbinning[iPlot];
-        tarPlotMHTversusHT.push_back(plot(*fillMHT<RA2bTree>,plotName,"H_{T} [GeV]",MHTbins-1,MHTbinning));
-    }
-
     vector<plot> plotsTarget;
+    plotsTarget.push_back(tarMHTra2plot);
     plotsTarget.push_back(tarMHTplot);
     plotsTarget.push_back(tarPhotonPtplot);
     plotsTarget.push_back(tarHTplot);
     plotsTarget.push_back(tarNJetsplot);
     vector<plot> plotsTargetEB;
+    plotsTargetEB.push_back(tarMHTra2plotEB);
     plotsTargetEB.push_back(tarMHTplotEB);
     plotsTargetEB.push_back(tarPhotonPtplotEB);
     plotsTargetEB.push_back(tarHTplotEB);
     plotsTargetEB.push_back(tarNJetsplotEB);
     vector<plot> plotsTargetEE;
+    plotsTargetEE.push_back(tarMHTra2plotEE);
     plotsTargetEE.push_back(tarMHTplotEE);
     plotsTargetEE.push_back(tarPhotonPtplotEE);
     plotsTargetEE.push_back(tarHTplotEE);
     plotsTargetEE.push_back(tarNJetsplotEE);
     vector<plot> plotsReference;
+    plotsReference.push_back(refMHTra2plot);
     plotsReference.push_back(refMHTplot);
     plotsReference.push_back(refPhotonPtplot);
     plotsReference.push_back(refHTplot);
     plotsReference.push_back(refNJetsplot);
     vector<plot> plotsReferenceEB;
+    plotsReferenceEB.push_back(refMHTra2plotEB);
     plotsReferenceEB.push_back(refMHTplotEB);
     plotsReferenceEB.push_back(refPhotonPtplotEB);
     plotsReferenceEB.push_back(refHTplotEB);
     plotsReferenceEB.push_back(refNJetsplotEB);
     vector<plot> plotsReferenceEE;
+    plotsReferenceEE.push_back(refMHTra2plotEE);
     plotsReferenceEE.push_back(refMHTplotEE);
     plotsReferenceEE.push_back(refPhotonPtplotEE);
     plotsReferenceEE.push_back(refHTplotEE);
@@ -134,7 +131,7 @@ int main(int argc, char** argv){
     vector<TString> sampleNames;
     TChain* JetHTdata = new TChain("tree");
     if( region == 0 )
-      JetHTdata->Add("/Volumes/Whitbeck Backup/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJetLoose_CleanVars/tree_JetHT_2017*.root");
+      JetHTdata->Add("~/raid/CMS_DATA/SusyRA2Analysis2015/Skims/Run2ProductionV16/tree_GJet_CleanVars/tree_JetHT_2016*.root");
       
     samples.push_back(new RA2bTree(JetHTdata));
     sampleNames.push_back("JetHTdata");
@@ -160,12 +157,6 @@ int main(int argc, char** argv){
         }
         for( int iPlot = 0 ; iPlot < plotsReferenceEE.size() ; iPlot++){
             plotsReferenceEE[iPlot].addDataNtuple(ntuple,sampleNames[iSample]);
-        }
-        for( int iPlot = 0 ; iPlot < tarPlotMHTversusHT.size() ; iPlot++){
-            tarPlotMHTversusHT[iPlot].addDataNtuple(ntuple,sampleNames[iSample]);
-        }
-        for( int iPlot = 0 ; iPlot < refPlotMHTversusHT.size() ; iPlot++){
-            refPlotMHTversusHT[iPlot].addDataNtuple(ntuple,sampleNames[iSample]);
         }
 
 	vector<int> reference_triggers={67,68,69,70,73,74,75,81,85,89,92,93,94,96,97,100,103,104,105,106,107,108};
@@ -193,31 +184,18 @@ int main(int argc, char** argv){
 	    }
 	    //cout << "pass target trigger?: " << pass_tar_trigger << endl;
 
-	    if( !RA2bBaselineWideCut(ntuple) ) continue;
-
-            int HTbin = -1;
-            for( int iHT = 0 ; iHT < HTbins-1 ; iHT++ ){
-                if( iHT == HTbins-1 ){
-                    if( ntuple->HT > HTbinning[iHT] )
-                        HTbin = iHT;
-                }else if( ntuple->HT > HTbinning[iHT] && ntuple->HT < HTbinning[iHT+1] ) 
-                    HTbin = iHT;
-            }
-
-            if( HTbin < 0 ) continue;
-	    //cout << "HTbin: " << HTbin << endl;
+	    if( !RA2bBaselinePhotonWideCut(ntuple) ) continue;
+	    //if( ntuple->Photons->at(0).Pt() < 250. ) continue;
 	    
             for( int iPlot = 0 ; iPlot < plotsTarget.size() ; iPlot++ ){
                 if( ntuple->Photons_isEB->at(0) ){
 		    //cout << "barrel photon" << endl;
                     plotsReferenceEB[iPlot].fillData(ntuple);
                     plotsReference[iPlot].fillData(ntuple);
-                    refPlotMHTversusHT[HTbin].fillData(ntuple);
                     if( pass_tar_trigger ){
 		        //cout << "pass target trigger" << endl;
                         plotsTarget[iPlot].fillData(ntuple);
                         plotsTargetEB[iPlot].fillData(ntuple);
-                        tarPlotMHTversusHT[HTbin].fillData(ntuple);
                     }// end if pass target trigger
                 }// if endcap photon
             
@@ -225,12 +203,10 @@ int main(int argc, char** argv){
 		    //cout << "endcap photon" << endl;
                     plotsReferenceEE[iPlot].fillData(ntuple);
                     plotsReference[iPlot].fillData(ntuple);
-                    refPlotMHTversusHT[HTbin].fillData(ntuple);
                     if( pass_tar_trigger ){
 		        //cout << "pass target trigger" << endl;
                         plotsTarget[iPlot].fillData(ntuple);
                         plotsTargetEE[iPlot].fillData(ntuple);
-                        tarPlotMHTversusHT[HTbin].fillData(ntuple);
                     }// end if pass target trigger
                 }// if barrel photon
             }// end loop over plots
@@ -242,11 +218,6 @@ int main(int argc, char** argv){
         outputFile = new TFile("triggerEff_histo.root","RECREATE");
     if( region == 1 )
         outputFile = new TFile("triggerEff_LDP_histo.root","RECREATE");
-
-    for( int iHT = 0 ; iHT < HTbins-1 ; iHT++ ){
-        refPlotMHTversusHT[iHT].Write();
-        tarPlotMHTversusHT[iHT].Write();
-    }
 
     TCanvas* can = new TCanvas("can","can",500,500);
     for( int iPlot = 0 ; iPlot < plotsTarget.size() ; iPlot++){
@@ -302,46 +273,6 @@ int main(int argc, char** argv){
             can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+"_LDP.eps");
             can->SaveAs("../plots/triggerEff_plots/"+TString(plotsTarget[iPlot].dataHist->GetName())+"_LDP.pdf");
         }
-
-
-//         cout << " - - - - - - - - - - - - - - - - - - - - - - " << endl;
-//         cout << plotsTarget[iPlot].dataHist->GetName() << endl;
-//         cout << " - - - - - - - - - - - - - - - - - - - - - - " << endl;        
-//         TString heading="Trigger $\\epsilon$[\\%] & ";
-//         TString inclEffic="Incl. & ";
-//         TString EBeffic="Barrel & ";
-//         TString EEeffic="Endcap & ";
-//         double x,y;
-//         double yEB;
-//         double yEE;
-//         char temp[128];
-//         cout << "Trigger $\\epsilon$[\\%] & Incl. & Barrel & Endcap \\\\ \\hline " << endl;
-//         for( int i = 0 ; i < plotsTarget[iPlot].dataHist->GetNbinsX() ; i++ ){
-//             ratio->GetPoint(i,x,y);
-//             ratioEB->GetPoint(i,x,yEB);
-//             ratioEE->GetPoint(i,x,yEE);
-//             /*
-//               sprintf(temp," %i $<$ %s $<$ %i & ",int(x-ratio->GetErrorXlow(i)),plotsTarget[iPlot].dataHist->GetTitle(),int(x+ratio->GetErrorXhigh(i)));
-//               heading+=TString(temp);
-//               sprintf(temp," %.3f$_{%.3f}^{%.3f}$ & ",y,ratio->GetErrorYlow(i),ratio->GetErrorYhigh(i));
-//               inclEffic+=TString(temp);
-
-//               ratioEB->GetPoint(i,x,y);
-//               sprintf(temp," %.3f$_{%.3f}^{%.3f}$ & ",y,ratioEB->GetErrorYlow(i),ratioEB->GetErrorYhigh(i));
-//               EBeffic+=TString(temp);
-
-//               ratioEE->GetPoint(i,x,y);
-//               sprintf(temp," %.3f$_{%.3f}^{%.3f}$ & ",y,ratioEE->GetErrorYlow(i),ratioEE->GetErrorYhigh(i));
-//               EEeffic+=TString(temp);
-//             */
-//             sprintf(temp," %i $<%s<$ %i & %.3f$_{%.3f}^{%.3f}$ & %.3f$_{%.3f}^{%.3f}$ &%.3f$_{%.3f}^{%.3f}$ \\\\",int(x-ratio->GetErrorXlow(i)),plotsTarget[iPlot].dataHist->GetTitle(),int(x+ratio->GetErrorXhigh(i)),y,ratio->GetErrorYlow(i),ratio->GetErrorYhigh(i),yEB,ratioEB->GetErrorYlow(i),ratioEB->GetErrorYhigh(i),yEE,ratioEE->GetErrorYlow(i),ratioEE->GetErrorYhigh(i)  );
-//             cout << temp << endl;
-//         }       
-	
-        //cout << heading << endl;
-        //cout << inclEffic << endl;
-        //cout << EBeffic << endl;
-        //cout << EEeffic << endl;
 
     }
     outputFile->Close();
