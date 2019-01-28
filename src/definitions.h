@@ -56,6 +56,7 @@ double CalcdPhi( double phi1 , double phi2 ){
 template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("*",0);
   ntuple->fChain->SetBranchStatus("NMuons",1);
+  ntuple->fChain->SetBranchStatus("NonPrefiringProb*",1);
   ntuple->fChain->SetBranchStatus("NElectrons",1);
   ntuple->fChain->SetBranchStatus("iso*Tracks",1);
   ntuple->fChain->SetBranchStatus("Jets",1);
