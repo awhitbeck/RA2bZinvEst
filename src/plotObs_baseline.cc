@@ -187,7 +187,7 @@ void process(int region, string backgroundSample, string dataSample){
 	}
 
 	// ----------- weights -----------------
-	weight = lumi*ntuple->Weight;
+	weight = lumi*ntuple->Weight*ntuple->NonPrefiringProb;
 	//if( reg == skimSamples::kPhoton || reg == skimSamples::kPhotonLDP ) 
 	//weight *= photonTriggerWeight(ntuple);
 	//if( skims.sampleName[iSample] == "GJets" ){
