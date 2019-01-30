@@ -242,7 +242,6 @@ int main(int argc, char** argv){
         }
 
         // weights applied here 
- //      weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt)*ntuple->NonPrefiringProb;
   
         weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt);
         if( skims.sampleName[iSample] == "GJets" ) weight *= dRweights(ntuple);

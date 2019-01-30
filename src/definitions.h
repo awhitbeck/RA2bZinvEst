@@ -176,7 +176,7 @@ template<typename ntupleType> double customPUweights(ntupleType* ntuple){
 
 
 template<typename ntupleType> double dRweights(ntupleType* ntuple){
-    return 1. /( (min(ntuple->MHT, 900.0) - 400.2)*( -0.00039455 *2/3) + 0.8401 ) ;
+    return 1. /( (min(ntuple->MHT, 900.0) - 399.6)*(  -0.00040321 *2/3) + 0.8389);  
 }
 
 
@@ -570,8 +570,11 @@ template<typename ntupleType> double fillAnalysisBins(ntupleType* ntuple){
 template<typename ntupleType> double fillRA2b10Bins(ntupleType* ntuple){
   double MHT = ntuple->MHT;
   double HT = ntuple->HT;
+  double HT5 = ntuple->HT5;
+  double DeltaPhi1 = ntuple->DeltaPhi1;
 
-if( HT >= MHT  ){
+if( HT >= MHT && DeltaPhi1 >= ( (1.025*(HT5/HT)) - 0.5875) ){
+
   if( MHT > 300. && MHT < 350. ){
     if( HT > 300. && HT < 600. ){
       if(ntuple->NJets>=8)
@@ -636,13 +639,14 @@ if( HT >= MHT  ){
       return -999999.;
   }else
     return -999999.;
-}
-}
+ }
+  else
+   return -999999.;
+} 
 
 template<typename ntupleType> double fillRA2b13Bins(ntupleType* ntuple){
   double MHT = ntuple->MHT;
   double HT = ntuple->HT;
-
   if( MHT > 250. && MHT < 300. ){
     if( HT > 300. && HT < 500. )
       if( ntuple->NJets>=7 )
@@ -723,7 +727,7 @@ template<typename ntupleType> double fillRA2b13Bins(ntupleType* ntuple){
       return -999999.;
   }else
     return -999999.;
-}
+ }
 
 template<typename ntupleType> double fillRA2b59Bins( ntupleType* ntuple ){
 

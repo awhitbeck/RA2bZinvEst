@@ -262,7 +262,7 @@ for i in range(nBins) :
         #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
     else:
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1))
-        outputDict["REr1"].append(RzGamma.GetBinError(i+1)/outputDict["ZgR"][i])
+        outputDict["REr1"].append(RzGamma.GetBinError(i+1))
         #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1)*0.00475132) + (dataEEHisto.GetBinContent(i+1)*0.00941128))/(dataEBHisto.GetBinContent(i+1)+dataEEHisto.GetBinContent(i+1) ))
         #2018
         outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
@@ -280,8 +280,6 @@ for i in range(nBins) :
     outputDict["DRup"].append(0.000)
     outputDict["DRlow"].append(0.000)
     outputDict["trigW"].append(1.0)
-    #outputDict["trigWerr"].append(sqrt(((GJetsEBHisto.GetBinContent(i+1)*0.00475132)*(GJetsEBHisto.GetBinContent(i+1)*0.00475132)) + ((GJetsEEHisto.GetBinContent(i+1)*0.00941128)*(GJetsEEHisto.GetBinContent(i+1)*0.00941128)))) 
-    #outputDict["trigWerr"].append(((GJetsEBHisto.GetBinContent(i+1)*0.00475132) + (GJetsEEHisto.GetBinContent(i+1)*0.00941128))/(GJetsEBHisto.GetBinContent(i+1)+GJetsEEHisto.GetBinContent(i+1) )) 
     outputDict["trigWsysErr"].append(0.02)
     
     outputDict["Yield"].append(outputDict["ZgR"][i]/outputDict["trigW"][i]/outputDict["SF"][i]*outputDict["f"][i]*(outputDict["nEB"][i]*outputDict["pEB"][i]+outputDict["nEC"][i]*outputDict["pEC"][i]))

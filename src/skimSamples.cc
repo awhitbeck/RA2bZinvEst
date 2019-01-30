@@ -255,13 +255,6 @@ public :
         else
             basename="tree_SinglePhoton_";
 
- /*     SinglePhotonFileNames.push_back(basename+"2017B.root");
-        SinglePhotonFileNames.push_back(basename+"2017C.root");
-        SinglePhotonFileNames.push_back(basename+"2017D.root");
-        SinglePhotonFileNames.push_back(basename+"2017E.root");
-        SinglePhotonFileNames.push_back(basename+"2017F.root");
-   */ 
-
        SinglePhotonFileNames.push_back("tree_EGamma_2018A.root");
        SinglePhotonFileNames.push_back("tree_EGamma_2018B.root");
        SinglePhotonFileNames.push_back("tree_EGamma_2018C.root");
