@@ -19,7 +19,7 @@
 
 using namespace std;
 int main(int argc, char** argv){
-    bool DR0p4 = false;
+    bool DR0p4 = true;
 
     if( argc != 2 ){ 
         cout << "1 argument needed:" << endl;
@@ -94,13 +94,13 @@ int main(int argc, char** argv){
         skimType=BASE_DIR+"tree_LDP/";
 
     vector<TString> ZJetsFileNames;
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2017.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2017.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2016.root");
     TChain* ZJets = new TChain("tree");
     for( int i = 0 ; i < ZJetsFileNames.size() ; i++ ){
         ZJets->Add(skimType+"/"+ZJetsFileNames[i]);
@@ -115,15 +115,15 @@ int main(int argc, char** argv){
 
     vector<TString> GJetsFileNames;
     if( DR0p4 ){ 
-        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf_MC2016.root");
     }else{
-        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2017.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2017.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2016.root");
     }
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
@@ -160,7 +160,7 @@ int main(int argc, char** argv){
 		    if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
            // weight applied here      
            weight = lumi*ntuple->Weight; 
-           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);
+           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple)*ntuple->NonPrefiringProb;
 
   
          
@@ -181,9 +181,9 @@ int main(int argc, char** argv){
 
     TFile* outputFile;
     if( DR0p4 ) 
-        outputFile = new TFile("RzGamma_PUweightOnly_"+regionNames[region]+"_histo.root","RECREATE");
+        outputFile = new TFile("RzGamma_PUweightOnly_"+regionNames[region]+"_histo_2016.root","RECREATE");
     else 
-        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo_2018.root","RECREATE");
+        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo_2016.root","RECREATE");
 
     TCanvas* can = new TCanvas("can","can",500,500);
 

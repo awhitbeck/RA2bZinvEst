@@ -28,25 +28,17 @@ outputFileName=""
 if region == "signal" :
     nBins = 46
     
-#    MChistoFileName = "plotObs_photon_baseline_2016.root"
-#    MChistoFileName = "plotObs_photon_baseline_2017.root"
-    MChistoFileName = "plotObs_photon_baseline_2018.root"
+    MChistoFileName = "plotObs_photon_baseline_2016.root"
     MChistoTag = "AnalysisBins_BTag0_photon_baseline"
 
-#    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2016.root"
-#    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2017.root"
-    RzgHistoFileName = "RzGamma_DR0p05_PUweightOnly_signal_histo_2018.root"
+    RzgHistoFileName = "RzGamma_PUweightOnly_signal_histo_2016.root"
     RzgHistoTag = "AnalysisBins_BTag0_RzGamma_signal"
    
     fragmentationFileName = "fragmentation_28_jan.txt"
  
- #   purityFileName = "../data/purity_2016.txt"
- #   purityFileName = "../data/purity_2017.txt"
-    purityFileName = "../data/purity_2018.txt"
- 
-  #  outputFileName = "gJets_signal_2016.dat"
- #   outputFileName = "gJets_signal_2017.dat"
-    outputFileName = "gJets_signal_2018.dat"
+    purityFileName = "../data/purity_2016.txt"
+
+    outputFileName = "gJets_signal_2016.dat"
 
 elif region == "ldp" : 
     nBins = 59
@@ -247,27 +239,15 @@ for i in range(nBins) :
     if ( i >= 30 and i < 38 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-10))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1-10)/outputDict["ZgR"][i+1-10])
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00475132) + (dataEEHisto.GetBinContent(i+1-10)*0.00941128))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
-        #2018
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
-        #2016
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
     elif ( i >= 38 and i < 46 ) :
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1-18))
         outputDict["REr1"].append(RzGamma.GetBinError(i+1-18)/outputDict["ZgR"][i+1-18])
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-18)*0.00475132) + (dataEEHisto.GetBinContent(i+1-18)*0.00941128))/(dataEBHisto.GetBinContent(i+1-18)+dataEEHisto.GetBinContent(i+1-18) ))
-        #2018
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
-        #2016
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
     else:
         outputDict["ZgR"].append(RzGamma.GetBinContent(i+1))
-        outputDict["REr1"].append(RzGamma.GetBinError(i+1))
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1)*0.00475132) + (dataEEHisto.GetBinContent(i+1)*0.00941128))/(dataEBHisto.GetBinContent(i+1)+dataEEHisto.GetBinContent(i+1) ))
-        #2018
-        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.00880785) + (dataEEHisto.GetBinContent(i+1-10)*0.0179556))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
-        #2016
-        #outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
+        outputDict["REr1"].append(RzGamma.GetBinError(i+1)/outputDict["ZgR"][i])
+        outputDict["trigWerr"].append(((dataEBHisto.GetBinContent(i+1-10)*0.0109291) + (dataEEHisto.GetBinContent(i+1-10)*0.0188934))/(dataEBHisto.GetBinContent(i+1-10)+dataEEHisto.GetBinContent(i+1-10) )) 
 
 
     if( outputDict["nEB"][i] == 0 and outputDict["nEC"][i] == 0 ):
@@ -368,4 +348,4 @@ LUMItext.SetTextSize(0.045)
 #LUMItext.Draw()
 
 
-can.SaveAs("prediction_2018.png")
+can.SaveAs("prediction_2016.png")

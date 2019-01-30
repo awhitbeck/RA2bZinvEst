@@ -164,14 +164,10 @@ public :
         }
 
         vector<TString> GJets0p4FileNames;
-        /*GJets0p4FileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2016.root");
+        GJets0p4FileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2016.root");
         GJets0p4FileNames.push_back("tree_GJets_DR-0p4_HT-200to400_MC2016.root");
         GJets0p4FileNames.push_back("tree_GJets_DR-0p4_HT-400to600_MC2016.root");
         GJets0p4FileNames.push_back("tree_GJets_DR-0p4_HT-600toInf_MC2016.root");
-      */  GJets0p4FileNames.push_back("tree_GJets_HT-100to200_MC2016.root");
-        GJets0p4FileNames.push_back("tree_GJets_HT-200to400_MC2016.root");
-        GJets0p4FileNames.push_back("tree_GJets_HT-400to600_MC2016.root");
-        GJets0p4FileNames.push_back("tree_GJets_HT-600toInf_MC2016.root");
         GJets0p4 = new TChain("tree");
         for( int i = 0 ; i < GJets0p4FileNames.size() ; i++ ){
             GJets0p4->Add(skimType+"/"+GJets0p4FileNames[i]);
