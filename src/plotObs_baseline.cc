@@ -50,9 +50,16 @@ int main(int argc, char** argv){
 
     plot PhotonPtplot(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline","p_{T,#gamma} [GeV]",50,200,1400);
     plot PhotonEtaplot(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline","#eta_{#gamma}",60,-3.,3.);
+    plot PhotonPhiplot(*photonPhi<RA2bTree>,"PhotonPhi_"+skims.regionNames[regInt]+"_baseline","#phi_{#gamma}",70,-3.5,3.5);
 
+    plot JetPtplot(*jetPt<RA2bTree>,"JetPt_"+skims.regionNames[regInt]+"_baseline_","p_{T,leading_Jet} [GeV]",120,20,1400);
+    plot JetEtaplot(*jetEta<RA2bTree>,"JetEta_"+skims.regionNames[regInt]+"_baseline_","#eta_{leading_Jet}",60,-3.,3.);
+    plot JetPhiplot(*jetPhi<RA2bTree>,"JetPhi_"+skims.regionNames[regInt]+"_baseline_","#phi_{leading_Jet}",70,-3.5,3.5);
+    plot JetSubleadPtplot(*jetSubleadPt<RA2bTree>,"JetSubleadPt_"+skims.regionNames[regInt]+"_baseline_","p_{T,Sub-leading_Jet} [GeV]",120,20,1400);
+    plot JetSubleadEtaplot(*jetSubleadEta<RA2bTree>,"JetSubleadEta_"+skims.regionNames[regInt]+"_baseline_","#eta_{Sub-leading_Jet}",60,-3.,3.);
+    plot JetSubleadPhiplot(*jetSubleadPhi<RA2bTree>,"JetSubleadPhi_"+skims.regionNames[regInt]+"_baseline_","#phi_{Sub-leading_Jet}",70,-3.5,3.5);
+ 
     plot PhotonMinDeltaR(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline","min#Delta R(jet,#gamma)",40,0,4);
-
     plot verticesplot(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline","n_{vtx}",40,0,80);
 
     vector<plot> plotsAllEvents;
@@ -70,6 +77,16 @@ int main(int argc, char** argv){
     plotsAllEvents.push_back(DeltaPhi4plot);
     plotsAllEvents.push_back(PhotonPtplot);
     plotsAllEvents.push_back(PhotonEtaplot);
+    plotsAllEvents.push_back(PhotonPhiplot);
+
+    plotsAllEvents.push_back(JetPtplot);
+    plotsAllEvents.push_back(JetEtaplot);
+    plotsAllEvents.push_back(JetPhiplot);
+
+    plotsAllEvents.push_back(JetSubleadPtplot);
+    plotsAllEvents.push_back(JetSubleadEtaplot);
+    plotsAllEvents.push_back(JetSubleadPhiplot);
+
     plotsAllEvents.push_back(PhotonMinDeltaR);
     plotsAllEvents.push_back(verticesplot);
 
@@ -89,9 +106,16 @@ int main(int argc, char** argv){
 
     plot PhotonPtplotEB(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline_EB","p_{T,#gamma} [GeV]",50,200,1400);
     plot PhotonEtaplotEB(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline_EB","#eta_{#gamma}",60,-3.,3.);
+    plot PhotonPhiplotEB(*photonPhi<RA2bTree>,"PhotonPhi_"+skims.regionNames[regInt]+"_baseline_EB","#phi_{#gamma}",70,-3.5,3.5);
 
-    plot PhotonMinDeltaREB(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EB","min#Delta R(jet,#gamma)",40,0,4);
+    plot JetPtplotEB(*jetPt<RA2bTree>,"JetPt_"+skims.regionNames[regInt]+"_baseline_EB","p_{T,leading_Jet} [GeV]",120,20,1400);
+    plot JetEtaplotEB(*jetEta<RA2bTree>,"JetEta_"+skims.regionNames[regInt]+"_baseline_EB","#eta_{leading_Jet}",60,-3.,3.);
+    plot JetPhiplotEB(*jetPhi<RA2bTree>,"JetPhi_"+skims.regionNames[regInt]+"_baseline_EB","#phi_{leading_Jet}",70,-3.5,3.5);
+    plot JetSubleadPtplotEB(*jetSubleadPt<RA2bTree>,"JetSubleadPt_"+skims.regionNames[regInt]+"_baseline_EB","p_{T,Sub-leading_Jet} [GeV]",120,20,1400);
+    plot JetSubleadEtaplotEB(*jetSubleadEta<RA2bTree>,"JetSubleadEta_"+skims.regionNames[regInt]+"_baseline_EB","#eta_{Sub-leading_Jet}",60,-3.,3.);
+    plot JetSubleadPhiplotEB(*jetSubleadPhi<RA2bTree>,"JetSubleadPhi_"+skims.regionNames[regInt]+"_baseline_EB","#phi_{Sub-leading_Jet}",70,-3.5,3.5);
   
+    plot PhotonMinDeltaREB(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EB","min#Delta R(jet,#gamma)",40,0,4);
     plot verticesplotEB(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EB","n_{vtx}",40,0,80);
 
     vector<plot> plotsEBevents;
@@ -109,8 +133,19 @@ int main(int argc, char** argv){
     plotsEBevents.push_back(DeltaPhi4plotEB);
     plotsEBevents.push_back(PhotonPtplotEB);
     plotsEBevents.push_back(PhotonEtaplotEB);
-    plotsEBevents.push_back(PhotonMinDeltaREB);
+    plotsEBevents.push_back(PhotonPhiplotEB);
+
+    plotsEBevents.push_back(JetPtplotEB);
+    plotsEBevents.push_back(JetEtaplotEB);
+    plotsEBevents.push_back(JetPhiplotEB);
+
+    plotsEBevents.push_back(JetSubleadPtplotEB);
+    plotsEBevents.push_back(JetSubleadEtaplotEB);
+    plotsEBevents.push_back(JetSubleadPhiplotEB);
+
     plotsEBevents.push_back(verticesplotEB);
+
+    plotsEBevents.push_back(PhotonMinDeltaREB);
 
     plot MHTplotEE(*fillMHT<RA2bTree>,"MHT_"+skims.regionNames[regInt]+"_baseline_EE","H_{T}^{miss} [GeV]",64,200.,1800.);
     plot HTplotEE(*fillHT<RA2bTree>,"HT_"+skims.regionNames[regInt]+"_baseline_EE","H_{T} [GeV]",50,300,2800.);
@@ -128,10 +163,20 @@ int main(int argc, char** argv){
 
     plot PhotonPtplotEE(*photonPt<RA2bTree>,"PhotonPt_"+skims.regionNames[regInt]+"_baseline_EE","p_{T,#gamma} [GeV]",50,200,1400);
     plot PhotonEtaplotEE(*photonEta<RA2bTree>,"PhotonEta_"+skims.regionNames[regInt]+"_baseline_EE","#eta_{#gamma}",60,-3.,3.);
+    plot PhotonPhiplotEE(*photonPhi<RA2bTree>,"PhotonPhi_"+skims.regionNames[regInt]+"_baseline_EE","#phi_{#gamma}",70,-3.5,3.5);
 
+ 
+    plot JetPtplotEE(*jetPt<RA2bTree>,"JetPt_"+skims.regionNames[regInt]+"_baseline_EE","p_{T,leading_Jet} [GeV]",120,20,1400);
+    plot JetEtaplotEE(*jetEta<RA2bTree>,"JetEta_"+skims.regionNames[regInt]+"_baseline_EE","#eta_{leading_Jet}",60,-3.,3.);
+    plot JetPhiplotEE(*jetPhi<RA2bTree>,"JetPhi_"+skims.regionNames[regInt]+"_baseline_EE","#phi_{leading_Jet}",70,-3.5,3.5);
+    plot JetSubleadPtplotEE(*jetSubleadPt<RA2bTree>,"JetSubleadPt_"+skims.regionNames[regInt]+"_baseline_EE","p_{T,Sub-leading_Jet} [GeV]",120,20,1400);
+    plot JetSubleadEtaplotEE(*jetSubleadEta<RA2bTree>,"JetSubleadEta_"+skims.regionNames[regInt]+"_baseline_EE","#eta_{Sub-leading_Jet}",60,-3.,3.);
+    plot JetSubleadPhiplotEE(*jetSubleadPhi<RA2bTree>,"JetSubleadPhi_"+skims.regionNames[regInt]+"_baseline_EE","#phi_{Sub-leading_Jet}",70,-3.5,3.5);
+  
     plot PhotonMinDeltaREE(*fillRecoPhotonDeltaR<RA2bTree>,"PhotonMinDeltaR_"+skims.regionNames[regInt]+"_baseline_EE","min#Delta R(jet,#gamma)",40,0,4);
 
     plot verticesplotEE(*fillNumVertices<RA2bTree>,"NumVertices_"+skims.regionNames[regInt]+"_baseline_EE","n_{vtx}",40,0,80);
+ 
     Trigger_weights();               // Initiating trigger Efficiency Function
     vector<plot> plotsEEevents;
     plotsEEevents.push_back(MHTplotEE);
@@ -146,8 +191,19 @@ int main(int argc, char** argv){
     plotsEEevents.push_back(DeltaPhi2plotEE);
     plotsEEevents.push_back(DeltaPhi3plotEE);
     plotsEEevents.push_back(DeltaPhi4plotEE);
+
     plotsEEevents.push_back(PhotonPtplotEE);
     plotsEEevents.push_back(PhotonEtaplotEE);
+    plotsEEevents.push_back(PhotonPhiplotEE);
+
+    plotsEEevents.push_back(JetPtplotEE);
+    plotsEEevents.push_back(JetEtaplotEE);
+    plotsEEevents.push_back(JetPhiplotEE);
+
+    plotsEEevents.push_back(JetSubleadPtplotEE);
+    plotsEEevents.push_back(JetSubleadEtaplotEE);
+    plotsEEevents.push_back(JetSubleadPhiplotEE);
+  
     plotsEEevents.push_back(PhotonMinDeltaREE);
     plotsEEevents.push_back(verticesplotEE);
 
@@ -186,8 +242,9 @@ int main(int argc, char** argv){
         }
 
         // weights applied here 
-        weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt)*ntuple->NonPrefiringProb;
- 
+ //      weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt)*ntuple->NonPrefiringProb;
+  
+        weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt);
         if( skims.sampleName[iSample] == "GJets" ) weight *= dRweights(ntuple);
 
 
@@ -220,7 +277,6 @@ int main(int argc, char** argv){
         if( iEvt % 10000 == 0 ) cout << "data: " << iEvt << "/" << numEvents << endl;
         if( ( reg == skimSamples::kPhotonLDP ) && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
         if( ( reg == skimSamples::kPhoton ) && !RA2bBaselinePhotonCut(ntuple) ) continue;
-
  
        /*......................Trigger Weight ...............................*/
 
@@ -240,7 +296,7 @@ int main(int argc, char** argv){
 
     }
 
-    TFile* outputFile = new TFile("plotObs_"+skims.regionNames[regInt]+"_baseline_2017.root","UPDATE");
+    TFile* outputFile = new TFile("plotObs_"+skims.regionNames[regInt]+"_baseline_2018.root","RECREATE");
 
     for( int iPlot = 0 ; iPlot < plotsAllEvents.size() ; iPlot++){
         TCanvas* can = new TCanvas("can","can",500,500);

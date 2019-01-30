@@ -77,6 +77,10 @@ template<typename ntupleType>void ntupleBranchStatus(ntupleType* ntuple){
   ntuple->fChain->SetBranchStatus("NVtx",1);
   ntuple->fChain->SetBranchStatus("JetID",1);
   ntuple->fChain->SetBranchStatus("ZCandidates",1);
+  ntuple->fChain->SetBranchStatus("NonPrefiringProb",1);
+  ntuple->fChain->SetBranchStatus("NonPrefiringProbUp",1);
+  ntuple->fChain->SetBranchStatus("NonPrefiringProbDn",1);
+
 }
 
 /******************************************************************/
@@ -169,9 +173,13 @@ template<typename ntupleType> double customPUweights(ntupleType* ntuple){
     int nVtx = ntuple->TrueNumInteractions;
     return puWeightHist->GetBinContent(puWeightHist->GetXaxis()->FindBin(min(ntuple->TrueNumInteractions,puWeightHist->GetBinLowEdge(puWeightHist->GetNbinsX()+1))));
 }
+
+
 template<typename ntupleType> double dRweights(ntupleType* ntuple){
-    return 1. /( (min(ntuple->MHT, 900.0) - 397.7)*( -0.00058276 *2/3) + 0.8401 ); 
+    return 1. /( (min(ntuple->MHT, 900.0) - 400.2)*( -0.00039455 *2/3) + 0.8401 ) ;
 }
+
+
 
 template<typename ntupleType> double GJets0p4Weights(ntupleType* ntuple){
     if( ntuple->madHT > 100. && ntuple->madHT < 200. )
@@ -303,13 +311,51 @@ template<typename ntupleType> int isPromptPhoton(ntupleType* ntuple){
   return ntuple->Photons_nonPrompt->at(0)==0;
 }
 
+
 template<typename ntupleType> double photonPt(ntupleType* ntuple){
   return ntuple->Photons->at(0).Pt();
+}
+
+template<typename ntupleType> double photonPhi(ntupleType* ntuple){
+  return ntuple->Photons->at(0).Phi();
 }
 
 template<typename ntupleType> double photonEta(ntupleType* ntuple){
   return ntuple->Photons->at(0).Eta();
 }
+
+
+
+
+
+template<typename ntupleType> double jetPt(ntupleType* ntuple){
+  return ntuple->Jets->at(0).Pt();
+}
+
+template<typename ntupleType> double jetPhi(ntupleType* ntuple){
+  return ntuple->Jets->at(0).Phi();
+}
+
+template<typename ntupleType> double jetEta(ntupleType* ntuple){
+  return ntuple->Jets->at(0).Eta();
+}
+
+
+
+
+template<typename ntupleType> double jetSubleadPt(ntupleType* ntuple){
+  return ntuple->Jets->at(1).Pt();
+}
+
+template<typename ntupleType> double jetSubleadPhi(ntupleType* ntuple){
+  return ntuple->Jets->at(1).Phi();
+}
+
+template<typename ntupleType> double jetSubleadEta(ntupleType* ntuple){
+  return ntuple->Jets->at(1).Eta();
+}
+
+
 
 template<typename ntupleType> double photonSieie(ntupleType* ntuple){
   return ntuple->Photons_sigmaIetaIeta->at(0);
@@ -925,7 +971,7 @@ template<typename ntupleType> bool RA2bLDPBaselineCut(ntupleType* ntuple){
 
 
 
-TFile *f1 = new TFile("L1PrefiringMaps_new.root");
+TFile *f1 = new TFile("../data/L1PrefiringMaps_new.root");
 TH2F* h_photon = (TH2F*)f1->Get("L1prefiring_photonptvseta_2017BtoF");
 TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
 
@@ -946,7 +992,7 @@ TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
   /*****************.>>>>>>>>>>>>>>>>>>>>   Photon Trigger Efficiency <<<<<<<<<<<<<<<***********/
   /*****................................................................................********/
  
-  TFile *ftrigger = new TFile("trigger_efficiency_PhotonPt.root","READ");
+  TFile *ftrigger = new TFile("../data/trigger_efficiency_PhotonPt_2018.root","READ");
   std::vector<TF1*> fTrigEff_;
   void Trigger_weights()
 	{

@@ -159,8 +159,10 @@ int main(int argc, char** argv){
        	    if( region == 1 )
 		    if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;  
            // weight applied here      
-           weight = lumi*ntuple->Weight*ntuple->NonPrefiringProb; 
-           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
+           weight = lumi*ntuple->Weight; 
+           if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple)*ntuple->NonPrefiringProb;
+
+  
          
            /* if ( sampleNames[iSample] == "GJets" ) weight*= prefiring_weight_photon(ntuple,iEvt)*Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple);  
            for (int unsigned s = 0; s < ntuple->Jets->size();s++){
@@ -181,7 +183,7 @@ int main(int argc, char** argv){
     if( DR0p4 ) 
         outputFile = new TFile("RzGamma_PUweightOnly_"+regionNames[region]+"_histo.root","RECREATE");
     else 
-        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo_2017.root","RECREATE");
+        outputFile = new TFile("RzGamma_DR0p05_PUweightOnly_"+regionNames[region]+"_histo_2016.root","RECREATE");
 
     TCanvas* can = new TCanvas("can","can",500,500);
 

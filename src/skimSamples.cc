@@ -254,12 +254,20 @@ public :
             basename="tree_SinglePhoton_re";
         else
             basename="tree_SinglePhoton_";
-        SinglePhotonFileNames.push_back(basename+"2017B.root");
+
+ /*     SinglePhotonFileNames.push_back(basename+"2017B.root");
         SinglePhotonFileNames.push_back(basename+"2017C.root");
         SinglePhotonFileNames.push_back(basename+"2017D.root");
         SinglePhotonFileNames.push_back(basename+"2017E.root");
         SinglePhotonFileNames.push_back(basename+"2017F.root");
-        if( r == kPhoton || r == kPhotonLDP || r == kPhotonLoose || r == kPhotonLDPLoose ){
+   */ 
+
+       SinglePhotonFileNames.push_back("tree_EGamma_2018A.root");
+       SinglePhotonFileNames.push_back("tree_EGamma_2018B.root");
+       SinglePhotonFileNames.push_back("tree_EGamma_2018C.root");
+       SinglePhotonFileNames.push_back("tree_EGamma_2018D.root");
+
+       if( r == kPhoton || r == kPhotonLDP || r == kPhotonLoose || r == kPhotonLDPLoose ){
             data = new TChain("tree");
             for( int i = 0 ; i < SinglePhotonFileNames.size() ; i++ ){
                 data->Add(skimType+"/"+SinglePhotonFileNames[i]);
