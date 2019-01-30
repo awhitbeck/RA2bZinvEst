@@ -996,7 +996,7 @@ TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
   /*****************.>>>>>>>>>>>>>>>>>>>>   Photon Trigger Efficiency <<<<<<<<<<<<<<<***********/
   /*****................................................................................********/
  
-  TFile *ftrigger = new TFile("../data/trigger_efficiency_PhotonPt_2018.root","READ");
+  TFile *ftrigger = new TFile("../data/trigger_efficiency_PhotonPt_2016.root","READ");
   std::vector<TF1*> fTrigEff_;
   void Trigger_weights()
 	{
