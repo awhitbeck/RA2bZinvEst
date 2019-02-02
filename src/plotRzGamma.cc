@@ -153,7 +153,11 @@ int main(int argc, char** argv){
             if( sampleNames[iSample] == "GJets" && !( ntuple->madMinPhotonDeltaR>0.4 ) ) continue;
             if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
             if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
-         
+
+            if( region == 0 )     
+	            if( sampleNames[iSample] == "GJets" && !RA2bBaselinePhotonCut(ntuple) ) continue;  
+       	    if( region == 1 )
+                    if( sampleNames[iSample] == "GJets" && !RA2bLDPBaselinePhotonCut(ntuple) ) continue;    
             // weight applied here      
             weight = lumi*ntuple->Weight; 
             if ( sampleNames[iSample] == "GJets" ) weight*= Trigger_weights_apply(ntuple,iEvt)*dRweights(ntuple)*ntuple->NonPrefiringProb;
