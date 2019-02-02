@@ -861,7 +861,7 @@ template<typename ntupleType> bool RA2bBaselineCut(ntupleType* ntuple){
            || (NJets > 3 && DeltaPhi1 > 0.5 && DeltaPhi2 > 0.5 && DeltaPhi3 > 0.3 && DeltaPhi4 > 0.3 ) )
     && MHT>300. && HT>300.
     && cutFlow_leptonVeto(ntuple)
-    && cutFlow_filters(ntuple)
+ //   && cutFlow_filters(ntuple)
       ;
 
 }
@@ -1008,9 +1008,6 @@ TH2F* h_jet = (TH2F*)f1->Get("L1prefiring_jetptvseta_2017BtoF");
   
   double Trigger_weights_apply(RA2bTree* ntuple, int iEvt){
   ntuple->GetEntry(iEvt);
- // fTrigEff_.clear();
- // fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_eb"));
- // fTrigEff_.push_back((TF1*)ftrigger->Get("f_trig_ec"));
   
   if( ntuple->Photons_isEB->at(0) && fTrigEff_.at(0) != nullptr ) 
        return  fTrigEff_.at(0)->Eval(max(double(205),ntuple->Photons->at(0).Pt()));  
