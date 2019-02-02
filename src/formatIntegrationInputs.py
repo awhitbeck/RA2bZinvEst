@@ -102,7 +102,7 @@ print "ZJets:",RzGamma.GetBinContent(1)
 RzGamma.SetNameTitle("RzGamma","RzGamma")
 RzGamma.Divide(GJetsHisto_Rzg)
 print "GJets:",GJetsHisto_Rzg.GetBinContent(1)
-print "GJets/ZJets:",RzGamma.GetBinContent(1)
+print "ZJets/GJets:",RzGamma.GetBinContent(1)
 print "RzG:",RzGamma.GetBinContent(1)
 
 if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
@@ -110,7 +110,10 @@ if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
     assert(0)
 
 for i in range(RzGamma.GetNbinsX()):
+
     print RzGamma.GetBinContent(i+1)
+    print ZJetsHisto_Rzg.GetBinContent(i+1)
+    print GJetsHisto_Rzg.GetBinContent(i+1)
 print "---------------------------------------"
 print "================ FRAGMENTATION FRACTION =============="
 fragFrac = [0.]*nBins

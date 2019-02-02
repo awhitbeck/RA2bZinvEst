@@ -244,10 +244,10 @@ int main(int argc, char** argv){
         // weights applied here 
   
         weight = lumi*ntuple->Weight*Trigger_weights_apply(ntuple,iEvt)*ntuple->NonPrefiringProb;
-        if( skims.sampleName[iSample] == "GJets" ) weight *= dRweights(ntuple);
+       // if( skims.sampleName[iSample] == "GJets" ) weight *= dRweights(ntuple);
 
 
-       /* if( skims.sampleName[iSample] == "GJets" )weight*=prefiring_weight_photon(ntuple,iEvt)*dRweights(ntuple);
+       /* if( skims.sampleName[iSample] == "GJets" )weight*=prefiring_weight_photon(ntuple,iEvt);
         for (int unsigned s = 0; s < ntuple->Jets->size();s++){
             weight*=prefiring_weight_jet(ntuple,iEvt,s);
         }
