@@ -96,13 +96,13 @@ int main(int argc, char** argv){
         skimType=BASE_DIR+"tree_LDP/";
 
     vector<TString> ZJetsFileNames;
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500.root");
-    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-100to200_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-200to400_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-400to600_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-600to800_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-800to1200_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-1200to2500_MC2016.root");
+    ZJetsFileNames.push_back("tree_ZJetsToNuNu_HT-2500toInf_MC2016.root");
     TChain* ZJets = new TChain("tree");
     for( int i = 0 ; i < ZJetsFileNames.size() ; i++ ){
         ZJets->Add(skimType+"/"+ZJetsFileNames[i]);
@@ -117,15 +117,15 @@ int main(int argc, char** argv){
 
     vector<TString> GJetsFileNames;
     if( DR0p4 ){ 
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf_MC2016.root");
     }else{
-        GJetsFileNames.push_back("tree_GJets_HT-100to200.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf.root");
+        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2016.root");
     }
     TChain* GJets = new TChain("tree");
     for( int i = 0 ; i < GJetsFileNames.size() ; i++ ){
@@ -146,17 +146,22 @@ int main(int argc, char** argv){
         double weight = 1.0;
         for( int iEvt = 0 ; iEvt < numEvents ; iEvt++ ){
             ntuple->GetEntry(iEvt);
-            if( iEvt % 1000000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
-            if( sampleNames[iSample] == "GJets" && ntuple->Photons->size() != 1 ) continue;      
-            if( sampleNames[iSample] == "GJets" && !isPromptPhoton(ntuple) ) continue;
-            if( sampleNames[iSample] == "GJets" && ntuple->Photons_fullID->at(0)!=1 ) continue;
-            if( sampleNames[iSample] == "GJets" && !( ntuple->madMinPhotonDeltaR>0.4 ) ) continue;
-            if( sampleNames[iSample] == "GJets" && ntuple->Photons->at(0).Pt() < 200. ) continue;      
-            if( ( region == 0 && !RA2bBaselineCut(ntuple) ) || ( region == 1 && !RA2bLDPBaselineCut(ntuple) ) ) continue;
-            
-            weight = lumi*ntuple->Weight*customPUweights(ntuple);//*photonTriggerWeight(ntuple));
-            if( sampleNames[iSample] == "GJets" && DR0p4 ) 
-                weight*=GJets0p4Weights(ntuple)*dRweights(ntuple);
+	    if( iEvt % 1000000 == 0 ) cout << sampleNames[iSample] << ": " << iEvt << "/" << numEvents << endl;
+            if( region == 0 ){
+	      if( sampleNames[iSample] == "GJets" ){
+		if( !RA2bBaselinePhotonCut(ntuple) ) continue;
+	      }else{
+		if( !RA2bBaselineCut(ntuple) ) continue;
+	      }
+	    }else{// end signal region cuts
+	      if( sampleNames[iSample] == "GJets" ){
+		if( !RA2bLDPBaselinePhotonCut(ntuple) ) continue;
+	      }else{
+		if( !RA2bLDPBaselineCut(ntuple) ) continue;
+	      }
+	    }// end LDP region cuts
+	       
+            weight = lumi*ntuple->Weight;
 
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ){ 
