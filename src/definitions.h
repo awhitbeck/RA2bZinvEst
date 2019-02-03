@@ -148,13 +148,13 @@ template<typename ntupleType> bool cutFlow_btagsZero(ntupleType* ntuple){
     return ntuple->BTagsDeepCSV==0;
 }
 template<typename ntupleType> bool cutFlow_filters(ntupleType* ntuple){
-    return ( ntuple->HT5/ntuple->HT < 2.
-	     && ntuple->PFCaloMETRatio < 5. 
+  return (   ntuple->HT5/ntuple->HT < 2. &&
+	     ntuple->PFCaloMETRatio < 5. 
 	     && ntuple->globalSuperTightHalo2016Filter==1
 	     && ntuple->HBHENoiseFilter==1
 	     && ntuple->HBHEIsoNoiseFilter==1
 	     && ntuple->eeBadScFilter==1
-	     && ntuple->ecalBadCalibFilter==1 
+	     //&& ntuple->ecalBadCalibFilter==1 
 	     && ntuple->EcalDeadCellTriggerPrimitiveFilter == 1
 	     && ntuple->BadChargedCandidateFilter == 1
 	     && ntuple->BadPFMuonFilter == 1
