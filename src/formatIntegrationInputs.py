@@ -34,10 +34,10 @@ if region == "signal" :
     RzgHistoFileName = "RzGamma_PUweightOnly_signal_histo_2016.root"
     RzgHistoTag = "AnalysisBins_BTag0_RzGamma_signal"
    
-    fragmentationFileName = "fragmentation_28_jan.txt"
+    fragmentationFileName = "../data/fragmentation_28_jan.txt"
  
     purityFileName = "../data/purity_2016.txt"
-
+ 
     outputFileName = "gJets_signal_2016.dat"
 
 elif region == "ldp" : 
@@ -70,9 +70,9 @@ yieldInputFile = TFile(MChistoFileName,"READ")
 GJetsEBHisto = yieldInputFile.Get(MChistoTag+"_EB_GJets")
 GJetsEEHisto = yieldInputFile.Get(MChistoTag+"_EE_GJets")
 GJetsHisto = yieldInputFile.Get(MChistoTag+"_GJets")
-dataHisto = yieldInputFile.Get(MChistoTag+"_data")
-dataEBHisto = yieldInputFile.Get(MChistoTag+"_EB_data")
-dataEEHisto = yieldInputFile.Get(MChistoTag+"_EE_data")
+dataHisto = yieldInputFile.Get(MChistoTag+"_Data")
+dataEBHisto = yieldInputFile.Get(MChistoTag+"_EB_Data")
+dataEEHisto = yieldInputFile.Get(MChistoTag+"_EE_Data")
 
 
 if GJetsEBHisto.GetNbinsX() != GJetsEEHisto.GetNbinsX() : 
@@ -93,16 +93,17 @@ if dataEEHisto.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
 
 print "================ RzGamma =============="
 ratioInputFile = TFile(RzgHistoFileName)
-ZJetsHisto_Rzg = TH1F(ratioInputFile.Get(RzgHistoTag+"_ZJets"))
+ZJetsHisto_Rzg = TH1D(ratioInputFile.Get(RzgHistoTag+"_ZJets"))
 ZJetsHisto_Rzg.SetNameTitle("ZJetsHisto_Rzg","ZJetsHisto_Rzg")
-GJetsHisto_Rzg = TH1F(ratioInputFile.Get(RzgHistoTag+"_GJets"))
+GJetsHisto_Rzg = TH1D(ratioInputFile.Get(RzgHistoTag+"_GJets"))
 GJetsHisto_Rzg.SetNameTitle("GJetsHisto_Rzg","GJetsHisto_Rzg")
-RzGamma = TH1F(ZJetsHisto_Rzg)
+RzGamma = TH1D(ZJetsHisto_Rzg)
 print "ZJets:",RzGamma.GetBinContent(1)
 RzGamma.SetNameTitle("RzGamma","RzGamma")
 RzGamma.Divide(GJetsHisto_Rzg)
 print "GJets:",GJetsHisto_Rzg.GetBinContent(1)
-print "ZJets/GJets:",RzGamma.GetBinContent(1)
+print "GJets/ZJets:",RzGamma.GetBinContent(1)
+RzGamma.Scale(1./1.25)
 print "RzG:",RzGamma.GetBinContent(1)
 
 if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
@@ -110,10 +111,7 @@ if RzGamma.GetNbinsX() != GJetsEEHisto.GetNbinsX() :
     assert(0)
 
 for i in range(RzGamma.GetNbinsX()):
-
     print RzGamma.GetBinContent(i+1)
-    print ZJetsHisto_Rzg.GetBinContent(i+1)
-    print GJetsHisto_Rzg.GetBinContent(i+1)
 print "---------------------------------------"
 print "================ FRAGMENTATION FRACTION =============="
 fragFrac = [0.]*nBins
@@ -128,12 +126,6 @@ for line in fragFracFile:
     fragFrac[int(line_tokens[0])-1] = float(line_tokens[1])
     fragFracErrUp[int(line_tokens[0])-1] = float(line_tokens[2])
     fragFracErrDn[int(line_tokens[0])-1] = float(line_tokens[3])
-    #if( float(line_tokens[1]) == 1.0 ) :
-    #    fragFracErrUp[int(line_tokens[0])-1] = 0.0
-    #    fragFracErrDn[int(line_tokens[0])-1] = 0.03
-    #else : 
-    #    fragFracErrUp[int(line_tokens[0])-1] = float(line_tokens[2])
-    #    fragFracErrDn[int(line_tokens[0])-1] = float(line_tokens[3])
 
 print fragFrac
 print fragFracErrUp

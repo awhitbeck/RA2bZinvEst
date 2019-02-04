@@ -6,10 +6,13 @@ r.gROOT.ProcessLine(".L ~/tdrstyle.C")
 r.gROOT.ProcessLine("setTDRStyle()")
 
 plot_dir="plotPurityProperties_plots"
-
 input_file_name = "plotPurityProperties_photonLoose.root"
+output_file_name = "purityInputs.root"
+
+#plot_dir="plotObs_baseline_plots"
 #input_file_name = "plotObs_photon_baseline.root"
-#input_file_name = "plotObs_photonLoose_baseline.root"
+#output_file_name = "baselineInputs.root"
+
 input_file = r.TFile(input_file_name,"READ")    
 
 def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
@@ -21,17 +24,20 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
               "QCD_300to500",
               "QCD_500to700",
               "QCD_700to1000"],
-             ["GJets_100to200",
-              "GJets_100to200",
-              "GJets_200to400",
-              "GJets_400to600",
-              "GJets_600toInf"]]
+             ["GJets0p4_100to200",
+              "GJets0p4_100to200",
+              "GJets0p4_200to400",
+              "GJets0p4_400to600",
+              "GJets0p4_600toInf"]]
     
-    data_samples=["SinglePhoton_2017B",
-                  "SinglePhoton_2017C",
-                  "SinglePhoton_2017D",
-                  "SinglePhoton_2017E",
-                  "SinglePhoton_2017F"]
+    data_samples=["SinglePhoton_2016B",
+                  "SinglePhoton_2016C",
+                  "SinglePhoton_2016D",
+                  "SinglePhoton_2016E",
+                  "SinglePhoton_2016F",
+                  "SinglePhoton_2016G",
+                  "SinglePhoton_2016H"
+                  ]
 
     samples_labels = ["QCD","GJets"]
     samples_fill_color = [r.kGray,r.kGreen]
@@ -49,7 +55,7 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
                 if samples_histo[-1]==None :
                     print "looking for:",plot_var+"_"+sample_name
                     print input_file.ls(plot_var+"_"+sample_name)
-                    input_file.ls()
+                    #input_file.ls()
                     assert(samples_histo[-1]!=None)
                 elif samples_histo[-1].Integral() < 0.0001 :
                     print "oops.",plot_var+"_"+sample_name,"is empty"
@@ -67,8 +73,8 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
             data_histo[-1].SetName(plot_var+"_Data")
             if data_histo[-1]==None :
                 print "looking for:",plot_var+"_"+sample_name
-                input_file.ls(plot_var+"*")
-                input_file.ls("*"+sample_name)
+                #input_file.ls(plot_var+"*")
+                #input_file.ls("*"+sample_name)
                 assert(data_histo[-1]!=None)
         else : 
             data_histo[-1].Add(input_file.Get(plot_var+"_"+s))
@@ -123,7 +129,7 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
     SIMtext.SetTextSize(0.08)
     SIMtext.Draw()
     
-    LUMItext = r.TText(.65,.95,"13 TeV (41.X/fb)")
+    LUMItext = r.TText(.65,.95,"13 TeV (41.5/fb)")
     LUMItext.SetNDC()
     LUMItext.SetTextFont(51)
     LUMItext.SetTextSize(0.08)
@@ -161,9 +167,8 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
         r.TH1D(h).Write()
     data_histo[0].Write()
 
-#output_file = r.TFile("baselineInputs.root","RECREATE")
-output_file = r.TFile("purityInputs.root","RECREATE")
-
+output_file = r.TFile(output_file_name,"RECREATE")
+    
 vars = []
 list = input_file.GetListOfKeys()
 next = r.TIter(list);
