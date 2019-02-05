@@ -1,16 +1,15 @@
 # RA2bZinvEst
-RA2bZinvEst
-Setup CMS environment:
+# Setup CMS environment:
 
-cmsrel CMSSW_8_1_0_pre9
-cd CMSSW_8_1_0_pre9/src/
+cmsrel CMSSW_9_4_6
+cd CMSSW_9_4_6/src/
 cmsenv
 
 Checkout code:
 
-git clone https://github.com/awhitbeck/RA2bZinvEst
+git clone https://github.com/tmishra2018/RA2bZinvEst
 cd RA2bZinvEst
-git checkout RA2b_V12_v0.1.2
+git checkout RA2b_V16_2016
 
 Setup local environment:
 
@@ -25,4 +24,4 @@ make all
 Submit jobs:
 
 bash makeTar.sh
-bash submitBatch.sh RA2b_V12_v0.1.2
+bash submitBatch.sh RA2b_V16_2016
