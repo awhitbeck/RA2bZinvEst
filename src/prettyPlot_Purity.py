@@ -17,15 +17,14 @@ input_file = r.TFile(input_file_name,"READ")
 
 def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
     
-    samples=[["QCD_1000to1500",
-              "QCD_1500to2000",
-              "QCD_2000toInf",
-              "QCD_200to300",
+    samples=[["QCD_200to300",
               "QCD_300to500",
               "QCD_500to700",
-              "QCD_700to1000"],
+              "QCD_700to1000",
+              "QCD_1000to1500",
+              "QCD_1500to2000",
+              "QCD_2000toInf"],
              ["GJets0p4_100to200",
-              "GJets0p4_100to200",
               "GJets0p4_200to400",
               "GJets0p4_400to600",
               "GJets0p4_600toInf"]]
@@ -129,7 +128,7 @@ def plot(plot_var = "photonIsoChrgLowSieie_EB_photonLoose" ):
     SIMtext.SetTextSize(0.08)
     SIMtext.Draw()
     
-    LUMItext = r.TText(.65,.95,"13 TeV (41.5/fb)")
+    LUMItext = r.TText(.65,.95,"13 TeV (39/fb)")
     LUMItext.SetNDC()
     LUMItext.SetTextFont(51)
     LUMItext.SetTextSize(0.08)

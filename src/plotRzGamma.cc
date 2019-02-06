@@ -197,9 +197,9 @@ int main(int argc, char** argv){
         can->GetFrame()->Draw();
     
         if( DR0p4 )
-            can->SaveAs("../plots_2016/RzGamma_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
+            can->SaveAs("../plots/RzGamma_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
         else
-            can->SaveAs("../plots_2016/RzGamma_DR0p05_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
+            can->SaveAs("../plots/RzGamma_DR0p05_plots/"+TString(plots[iPlot].histoMap[samples[0]]->GetName())+".png");
         
    }
 
