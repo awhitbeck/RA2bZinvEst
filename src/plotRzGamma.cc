@@ -158,7 +158,7 @@ int main(int argc, char** argv){
            // weight applied here      
            
             weight = lumi*ntuple->Weight; 
-            if ( sampleNames[iSample] == "GJets" ) weight*= trig_eff(ntuple,iEvt)/*dRweights(ntuple)*/*ntuple->NonPrefiringProb;
+            if ( sampleNames[iSample] == "GJets" ) weight*= trig_eff(ntuple,iEvt)*dRweights(ntuple)*ntuple->NonPrefiringProb;
            
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ) 
