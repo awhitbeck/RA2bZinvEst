@@ -115,10 +115,10 @@ int main(int argc, char** argv){
 
     vector<TString> GJetsFileNames;
     if( DR0p4 ){ 
-        GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2016.root");
-        GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2016.root");
-        GJetsFileNames.push_back("tree_GJets_HT-400to600_MC2016.root");
-        GJetsFileNames.push_back("tree_GJets_HT-600toInf_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-100to200_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-200to400_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-400to600_MC2016.root");
+        GJetsFileNames.push_back("tree_GJets_DR-0p4_HT-600toInf_MC2016.root");
     }else{
         GJetsFileNames.push_back("tree_GJets_HT-100to200_MC2016.root");
         GJetsFileNames.push_back("tree_GJets_HT-200to400_MC2016.root");
@@ -157,8 +157,8 @@ int main(int argc, char** argv){
          
            // weight applied here      
            
-            weight = lumi*ntuple->Weight; 
-            if ( sampleNames[iSample] == "GJets" ) weight*= trig_eff(ntuple,iEvt)*dRweights(ntuple)*ntuple->NonPrefiringProb;
+            weight = lumi*ntuple->Weight*ntuple->NonPrefiringProb; 
+            if ( sampleNames[iSample] == "GJets" ) weight*= trig_eff(ntuple,iEvt)*dRweights(ntuple);
            
             for( int iPlot = 0 ; iPlot < plots.size() ; iPlot++ ){
                 if( sampleNames[iSample] == "GJets" ) 
